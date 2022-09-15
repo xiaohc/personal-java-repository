@@ -79,9 +79,15 @@ personal-java-repository
 
 > 常用设置
 
-- 基础设置请参考：[新手必备的IDEA常用设置总结](https://www.jb51.net/article/213565.htm);
-- `CopyRight` 设置入口：File -> Settings -> Editor -> Copyright
-- `自动整理imports` 设置入口：File -> Settings -> Editor -> General -> Auto Import
+- 详细设置请参考：[官方文档](https://www.jetbrains.com/help/idea/2021.3/configuring-project-and-ide-settings.html)
+- `定义CopyRight内容` 设置入口：File -> Settings -> Editor -> Copyright
+- `定义文件头的注释内容` 设置入口：File -> Settings -> Editor -> File and Code Templates -> Includes:File header
+- `设置新建文件的换行符类型` 设置入口：File -> Settings -> Editor -> Code Style -> General:Line separator
+- `设置新建文件的编码类型` 设置入口：File -> Settings -> Editor -> File Encodings -> *:"UTF-8"
+- `显示代码间的空白字符` 设置入口：File -> Settings -> Editor -> General -> Appearance -> Show whitespaces
+- `文件保存时自动整理imports` 设置入口：File -> Settings -> Editor -> General -> Auto Import
+- `Alt+Enter自动添加serialVersionUID` 设置入口：File -> Settings -> Editor -> Inspections -> Find:"serialVersionUID"
+- `实现快捷键增加注释文档` 设置入口：File -> Settings -> Keymap -> Find:"Fix doc comment"
 
 
 > 常用插件
