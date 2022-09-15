@@ -1,7 +1,7 @@
 # 个人Java库
 
 ## 简介
-个人Java库，整理一些日常经验范例，也用于快速搭建项目
+个人Java库，用于快速搭建项目，内容主要是收集的范例，整理的日常经验。
 
 ## 组织结构
 
@@ -10,6 +10,7 @@ personal-java-repository
 ├── commons -- 工具类及通用代码模块
 ├── commons-dependencies -- 通用模块三方件的依赖版本统一管理
 ├── demo -- 演示项目
+│   ├── demo-consumer -- 消费者演示项目
 ├── demo-dependencies -- 演示项目二方件的依赖版本统一管理
 └── demo-parent -- 演示项目统一的Maven父类
 ```
@@ -58,7 +59,7 @@ personal-java-repository
 
 ## 环境搭建
 
-### 开发环境
+### 开发工具
 
 | 工具          | 版本号 | 下载                                                         |
 | ------------- | ------ | ------------------------------------------------------------ |
@@ -76,12 +77,15 @@ personal-java-repository
 
 #### IDEA
 
-> Windows环境部署
+> 常用设置
 
-- Windows环境搭建请参考：[mall-swarm在Windows环境下的部署](https://www.macrozheng.com/mall/deploy/mall_swarm_deploy_windows.html);
-- `mall-admin-web`项目的安装及部署请参考：[mall前端项目的安装与部署](https://www.macrozheng.com/mall/deploy/mall_deploy_web.html);
-- `ELK`日志收集系统的搭建请参考：[SpringBoot应用整合ELK实现日志收集](https://www.macrozheng.com/mall/reference/mall_tiny_elk.html);
-- 使用MinIO存储文件请参考：[前后端分离项目，如何优雅实现文件存储](https://www.macrozheng.com/mall/technology/minio_use.html);
-- 读写分离解决方案请参考：[你还在代码里做读写分离么，试试这个中间件吧](https://www.macrozheng.com/project/gaea.html);
-- `分布式事务`解决方案请参考：[使用Seata彻底解决Spring Cloud中的分布式事务问题！](https://www.macrozheng.com/cloud/seata.html) 。
+- 基础设置请参考：[新手必备的IDEA常用设置总结](https://www.jb51.net/article/213565.htm);
+- `CopyRight` 设置入口：File -> Settings -> Editor -> Copyright
+- `自动整理imports` 设置入口：File -> Settings -> Editor -> General -> Auto Import
 
+
+> 常用插件
+
+| 插件               |     介绍                                                                          |
+| -------------------|---------------------------------------------------------------------------------- |
+| IdeaVim            |     VIM操作方式支持插件                                                           |
