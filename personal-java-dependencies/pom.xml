@@ -10,11 +10,6 @@
     <packaging>pom</packaging>
 
     <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
         <commons-lang_version>3.12.0</commons-lang_version>
         <lombok_version>1.18.22</lombok_version>
         <validator_version>6.2.0.Final</validator_version>
@@ -51,16 +46,19 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco_version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>${pitest_version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-junit5-plugin</artifactId>
                 <version>${pitest-junit5_version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
