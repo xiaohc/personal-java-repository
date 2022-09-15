@@ -16,19 +16,11 @@
     <packaging>pom</packaging>
 
     <properties>
-        <personal-java-dependencies_version>1.0.0</personal-java-dependencies_version>
         <demo-dependencies_version>1.0.0-SNAPSHOT</demo-dependencies_version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.example</groupId>
-                <artifactId>personal-java-dependencies</artifactId>
-                <version>${personal-java-dependencies_version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>org.example.demo</groupId>
                 <artifactId>demo-dependencies</artifactId>
