@@ -92,6 +92,36 @@ personal-java-repository
 
 > 常用插件
 
-| 插件               |     介绍                                                                          |
-| -------------------|---------------------------------------------------------------------------------- |
-| IdeaVim            |     VIM操作方式支持插件                                                           |
+| 插件                  |   分类    |          介绍                                                            |
+| ----------------------|-----------|------------------------------------------------------------------------- |
+| IdeaVim               | 编码效率  |   使IDEA支持VIM操作方式                                                  |
+| Lombok                | 编码效率  |   Java代码增强库                                                         |
+| GenerateAllSetter     | 编码效率  |   一键生成所有setter方法                                                 |
+| GsonFormatPlus        | 编码效率  |   一键根据json文本生成java类                                             |
+| Java bean to json     | 编码效率  |   一键根据java类生成json文本                                             |
+| MyBatisX              | 编码效率  |   数据库操作增强                                                         |
+| MyBatisCodeHelperPro  | 编码效率  |   数据库操作增强                                                         |
+| CamelCase             | 编码效率  |   代码的大小写切换                                                       |
+| String Manipulation   | 编码效率  |   字符串操作增强                                                         |
+| Diffblue cover        | 编码效率  |   自动生成单元测试                                                       |
+| Arthas idea           | 调试增强  |   程序在线调试命令的生成工具                                             |
+| Json Helper           | 调试增强  |   快速格式化 Json 文本                                                   |
+| Restful Fast Request  | 调试增强  |   idea版Postman                                                          |
+| DubboTest             | 调试增强  |   dubbo接口测试                                                          |
+| RestfulToolkit        | 调试增强  |   根据url部分参数，快速搜索Controller方法                                |
+| SonarLint             | 代码质量  |   静态代码检查                                                           |
+| SpotBugs              | 代码质量  |   静态代码检查                                                           |
+| Alibaba Java Coding G.| 代码质量  |   Java代码规范                                                           |
+| CheckStyle            | 代码质量  |   代码格式检查                                                           |
+| Maven Helper          | 源码阅读  |   高效分析POM的依赖关系                                                  |
+| Translation           | 源码阅读  |   内置翻译                                                               |
+| Statistic             | 源码阅读  |   统计代码行数                                                           |
+| CodeGlance Pro        | 源码阅读  |   右侧显示代码轮廓                                                       |
+| Rainbow Brackets      | 源码阅读  |   代码中特殊颜色加强括号，强调配对关系                                   |
+| Grep Console          | 源码阅读  |   Console日志过滤及上色                                                  |
+| SequenceDiagram       | 源码阅读  |   生成时序图，及导航到代码                                               |
+| IDE Eval Reset        | 其他插件  |   延迟试用期                                                             |
+
+> 常用技巧
+
+- `改参，但不修改配置文件进行调试` 方法：使用程序启动参数，e.g. -Dspring.datasource.url=jdbc:mysql ... ...
