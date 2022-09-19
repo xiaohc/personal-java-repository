@@ -10,15 +10,55 @@
     <packaging>pom</packaging>
 
     <properties>
-        <commons-base_version>1.0.0-SNAPSHOT</commons-base_version>
+        <commons-lang_version>3.12.0</commons-lang_version>
+        <lombok_version>1.18.22</lombok_version>
+        <validator_version>6.2.0.Final</validator_version>
+        <swagger_version>3.0.0</swagger_version>
+        <jacoco_version>0.8.7</jacoco_version>
+        <pitest_version>1.7.4</pitest_version>
+        <pitest-junit5_version>0.14</pitest-junit5_version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.example.commons</groupId>
-                <artifactId>commons-base</artifactId>
-                <version>${commons-base_version}</version>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok_version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${validator_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco_version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest_version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-junit5-plugin</artifactId>
+                <version>${pitest-junit5_version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

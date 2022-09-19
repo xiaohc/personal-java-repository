@@ -16,7 +16,13 @@
     <packaging>pom</packaging>
 
     <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <demo-dependencies_version>1.0.0-SNAPSHOT</demo-dependencies_version>
+        <demo-commons-base_version>1.0.0-SNAPSHOT</demo-commons-base_version>
     </properties>
 
     <dependencyManagement>
@@ -27,6 +33,11 @@
                 <version>${demo-dependencies_version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.example.demo.commons</groupId>
+                <artifactId>commons-base</artifactId>
+                <version>${demo-commons-base_version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
