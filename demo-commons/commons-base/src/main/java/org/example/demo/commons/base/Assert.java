@@ -16,4 +16,11 @@ public final class Assert {
      */
     private Assert() {
     }
+
+    public static void isTrue(boolean b, RuntimeException e) {
+        if (b) {
+            throw e;
+        }
+    }
+
 }

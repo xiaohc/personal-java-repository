@@ -10,7 +10,7 @@ package org.example.demo.commons.base;
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface ICauseAble {
+public interface ICauseAble extends IErrorContext {
     /**
      * 因为 ... 原因导致的
      *
@@ -18,7 +18,7 @@ public interface ICauseAble {
      * @return 自定义业务异常
      */
     default RuntimeException becauseOf(String message) {
-        return new BizRuntimeException(message);
+        return new BizRuntimeException(this, message);
     }
 
     /**

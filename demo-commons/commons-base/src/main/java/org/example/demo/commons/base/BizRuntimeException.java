@@ -15,10 +15,26 @@ public class BizRuntimeException extends RuntimeException {
     private static final long serialVersionUID = -3546073653800972528L;
 
     /**
-     * 构造函数
+     * 错误上下文
+     */
+    private IErrorContext errorContext;
+
+    /**
+     * 无参构造函数
      */
     public BizRuntimeException() {
         super();
+    }
+
+    /**
+     * 构造函数
+     *
+     * @param causeAble 错误上下文
+     * @param message   详细消息（保存以供以后通过getMessage()方法检索）。
+     */
+    public BizRuntimeException(ICauseAble causeAble, String message) {
+        super(message);
+        this.errorContext = causeAble;
     }
 
     /**

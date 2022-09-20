@@ -15,7 +15,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum DemoErrorEnum implements ICauseAble {
+public enum DemoErrorEnum implements IAssertAble, ICauseAble {
     /**
      * 请求内容错误
      */
