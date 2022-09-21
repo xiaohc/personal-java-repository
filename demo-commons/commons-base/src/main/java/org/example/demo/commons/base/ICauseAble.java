@@ -10,7 +10,7 @@ package org.example.demo.commons.base;
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface ICauseAble extends IErrorContext {
+public interface ICauseAble {
     /**
      * 因为 ... 原因导致的
      *
@@ -18,7 +18,7 @@ public interface ICauseAble extends IErrorContext {
      * @return 自定义业务异常
      */
     default RuntimeException becauseOf(String message) {
-        return new BizRuntimeException(this, message);
+        return new BizRuntimeException(message, (IErrorContext) this);
     }
 
     /**
@@ -29,7 +29,7 @@ public interface ICauseAble extends IErrorContext {
      * @return 自定义业务异常
      */
     default RuntimeException becauseOf(String message, Exception e) {
-        return new BizRuntimeException(message, e);
+        return new BizRuntimeException(message, (IErrorContext) this, e);
     }
 
     /**
@@ -39,6 +39,6 @@ public interface ICauseAble extends IErrorContext {
      * @return 自定义业务异常
      */
     default RuntimeException becauseOf(Exception e) {
-        return new BizRuntimeException(e);
+        return new BizRuntimeException((IErrorContext) this, e);
     }
 }

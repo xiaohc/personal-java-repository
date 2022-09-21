@@ -21,7 +21,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <demo-dependencies_version>1.0.0-SNAPSHOT</demo-dependencies_version>
+        <demo-bom_version>1.0.0-SNAPSHOT</demo-bom_version>
         <demo-commons-base_version>1.0.0-SNAPSHOT</demo-commons-base_version>
     </properties>
 
@@ -29,8 +29,8 @@
         <dependencies>
             <dependency>
                 <groupId>org.example.demo</groupId>
-                <artifactId>demo-dependencies</artifactId>
-                <version>${demo-dependencies_version}</version>
+                <artifactId>demo-bom</artifactId>
+                <version>${demo-bom_version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

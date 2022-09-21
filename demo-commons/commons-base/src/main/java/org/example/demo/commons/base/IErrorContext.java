@@ -4,13 +4,15 @@
 
 package org.example.demo.commons.base;
 
+import java.io.Serializable;
+
 /**
  * 错误上下文
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface IErrorContext {
+public interface IErrorContext extends Serializable {
     /**
      * 获取错误码
      *
