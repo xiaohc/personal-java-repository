@@ -5,13 +5,9 @@
 package org.example.xhc.common.base;
 
 
-import com.sun.deploy.nativesandbox.comm.Request;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.example.xhc.common.base.DemoErrorEnum.REQUEST_ERROR;
-import static org.example.xhc.common.base.ErrorContext.mark;
 
 /**
  * TODO

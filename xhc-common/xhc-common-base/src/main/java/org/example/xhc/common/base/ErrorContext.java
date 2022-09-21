@@ -100,15 +100,22 @@ public class ErrorContext implements Serializable {
     }
 
     /**
-     * 重置原ErrorContext内容，并从ThreadLocal中移除
+     * 从ThreadLocal中移除
      */
-    public void reset() {
+    public void remove() {
+        LOCAL.remove();
+    }
+
+    /**
+     * 重置原ErrorContext内容
+     */
+    public ErrorContext reset() {
         code = null;
         message = null;
         reason = null;
         cause = null;
         previous = null;
-        LOCAL.remove();
+        return this;
     }
 
     /**
@@ -117,14 +124,13 @@ public class ErrorContext implements Serializable {
      * @param errorRecord 错误记录
      * @return ErrorContext对象
      */
-    public static ErrorContext mark(IRecordable errorRecord) {
-        ErrorContext context = instance();
+    public ErrorContext mark(IRecordable errorRecord) {
         Optional.ofNullable(errorRecord)
                 .ifPresent(v -> {
-                    context.code = v.getCode();
-                    context.message = v.getMessage();
+                    this.code = v.getCode();
+                    this.message = v.getMessage();
                 });
-        return context;
+        return this;
     }
 
     /**
@@ -139,9 +145,22 @@ public class ErrorContext implements Serializable {
     }
 
     /**
+     * 设置引起错误的异常信息
+     *
+     * @param cause 异常
+     * @return ErrorContext对象
+     */
+    public ErrorContext cause(Throwable cause) {
+        this.cause = cause;
+        return this;
+    }
+
+    /**
+     * 转为业务异常
+     *
      * @return 业务异常
      */
-    public BizRuntimeException failed() {
+    public BizRuntimeException toException() {
         return new BizRuntimeException(this);
     }
 

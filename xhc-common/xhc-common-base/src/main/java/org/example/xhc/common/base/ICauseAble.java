@@ -18,7 +18,7 @@ public interface ICauseAble extends IRecordable {
      * @return 自定义业务异常
      */
     default RuntimeException becauseOf(String message) {
-        return ErrorContext.mark(this).becauseOf(message).failed();
+        return ErrorContext.instance().reset().mark(this).becauseOf(message).toException();
     }
 
     /**
