@@ -12,8 +12,8 @@ import java.util.Optional;
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface IAssertAble extends IErrorContext {
-    default Optional<IErrorContext> assertIsTrue(boolean expression) {
+public interface IAssertAble extends IRecordable {
+    default Optional<IRecordable> assertIsTrue(boolean expression) {
         if (expression) {
             return Optional.of(this);
         }

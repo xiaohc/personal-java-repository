@@ -10,7 +10,7 @@ package org.example.xhc.common.base;
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface ICauseAble {
+public interface ICauseAble extends IRecordable {
     /**
      * 因为 ... 原因导致的
      *
@@ -18,7 +18,7 @@ public interface ICauseAble {
      * @return 自定义业务异常
      */
     default RuntimeException becauseOf(String message) {
-        return new BizRuntimeException(message, (IErrorContext) this);
+        return ErrorContext.mark(this).becauseOf(message).failed();
     }
 
     /**
@@ -29,16 +29,7 @@ public interface ICauseAble {
      * @return 自定义业务异常
      */
     default RuntimeException becauseOf(String message, Exception e) {
-        return new BizRuntimeException(message, (IErrorContext) this, e);
+        return becauseOf(message);
     }
 
-    /**
-     * 因为 ... 原因导致的
-     *
-     * @param e 引起错误的异常
-     * @return 自定义业务异常
-     */
-    default RuntimeException becauseOf(Exception e) {
-        return new BizRuntimeException((IErrorContext) this, e);
-    }
 }

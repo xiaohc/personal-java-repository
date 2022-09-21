@@ -7,23 +7,23 @@ package org.example.xhc.common.base;
 import java.io.Serializable;
 
 /**
- * 错误上下文
+ * 值得记录的
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface IErrorContext extends Serializable {
+public interface IRecordable extends Serializable {
     /**
-     * 获取错误码
+     * 获取标识码
      *
-     * @return 错误码
+     * @return 标识码
      */
     int getCode();
 
     /**
-     * 获取错误描述
+     * 获取描述信息
      *
-     * @return 错误描述
+     * @return 描述信息
      */
-    String getDescription();
+    String getMessage();
 }

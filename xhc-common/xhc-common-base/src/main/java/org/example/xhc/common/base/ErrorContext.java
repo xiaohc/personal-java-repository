@@ -4,12 +4,10 @@
 
 package org.example.xhc.common.base;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * 错误上下文
@@ -17,12 +15,14 @@ import java.io.Serializable;
  * @author xiaohongchao
  * @since 1.0.0
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter
 public class ErrorContext implements Serializable {
     private static final long serialVersionUID = 800312585448987400L;
+
+    /**
+     * 当前操作系统的换行符
+     */
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator", "\n");
 
     /**
      * 性能增强，兼顾多线程
@@ -32,7 +32,7 @@ public class ErrorContext implements Serializable {
     /**
      * 错误码
      */
-    private int code;
+    private Integer code;
 
     /**
      * 错误消息
@@ -55,7 +55,15 @@ public class ErrorContext implements Serializable {
     private ErrorContext previous;
 
     /**
-     * @return
+     * 防止外部实例化
+     */
+    private ErrorContext() {
+    }
+
+    /**
+     * 从ThreadLocal取出已经实例化的ErrorContext，或者实例化一个ErrorContext放入ThreadLocal
+     *
+     * @return ErrorContext实例
      */
     public static ErrorContext instance() {
         ErrorContext context = LOCAL.get();
@@ -68,7 +76,8 @@ public class ErrorContext implements Serializable {
 
     /**
      * 创建一个包装了原有ErrorContext的新ErrorContext
-     * @return 新的ErrorContext
+     *
+     * @return 新的ErrorContext实例
      */
     public ErrorContext store() {
         ErrorContext newContext = new ErrorContext();
@@ -79,6 +88,7 @@ public class ErrorContext implements Serializable {
 
     /**
      * 剥离出当前ErrorContext的内部ErrorContext
+     *
      * @return 剥离出的ErrorContext对象
      */
     public ErrorContext recall() {
@@ -89,30 +99,84 @@ public class ErrorContext implements Serializable {
         return LOCAL.get();
     }
 
-    public ErrorContext reset() {
-        resource = null;
-        activity = null;
-        object = null;
+    /**
+     * 重置原ErrorContext内容，并从ThreadLocal中移除
+     */
+    public void reset() {
+        code = null;
         message = null;
-        sql = null;
+        reason = null;
         cause = null;
+        previous = null;
         LOCAL.remove();
+    }
+
+    /**
+     * 记录错误信息
+     *
+     * @param errorRecord 错误记录
+     * @return ErrorContext对象
+     */
+    public static ErrorContext mark(IRecordable errorRecord) {
+        ErrorContext context = instance();
+        Optional.ofNullable(errorRecord)
+                .ifPresent(v -> {
+                    context.code = v.getCode();
+                    context.message = v.getMessage();
+                });
+        return context;
+    }
+
+    /**
+     * 设置错误原因
+     *
+     * @param reason 原因
+     * @return ErrorContext对象
+     */
+    public ErrorContext becauseOf(String reason) {
+        this.reason = reason;
         return this;
     }
 
-    public ErrorContext resetBy(DemoErrorEnum errorEnum) {
-        return new ErrorContext();
-    }
-
+    /**
+     * @return 业务异常
+     */
     public BizRuntimeException failed() {
         return new BizRuntimeException(this);
     }
 
-    /**
-     * @param reason 原因
-     * @return
-     */
-    public ErrorContext becauseOf(String reason) {
-        return new ErrorContext();
+    @Override
+    public String toString() {
+        StringBuilder description = new StringBuilder();
+
+        // code
+        if (code != null) {
+            description.append(LINE_SEPARATOR);
+            description.append("### The error code is ");
+            description.append(code);
+        }
+
+        // message
+        if (this.message != null) {
+            description.append(LINE_SEPARATOR);
+            description.append("### ");
+            description.append(this.message);
+        }
+
+        // reason
+        if (reason != null) {
+            description.append(LINE_SEPARATOR);
+            description.append("### The reason for the error is ");
+            description.append(reason);
+        }
+
+        // cause
+        if (cause != null) {
+            description.append(LINE_SEPARATOR);
+            description.append("### Cause: ");
+            description.append(cause);
+        }
+
+        return description.toString();
     }
 }

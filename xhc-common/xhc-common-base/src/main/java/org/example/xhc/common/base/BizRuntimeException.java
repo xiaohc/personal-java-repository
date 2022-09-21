@@ -25,44 +25,22 @@ public class BizRuntimeException extends RuntimeException {
     /**
      * 构造函数
      *
-     * @param message 详细消息（保存以供以后通过getMessage()方法检索）。
+     * @param errorContext 错误上下文（保存以供以后通过getErrorContext()方法检索）。
      */
-    public BizRuntimeException(String message) {
-        this(message, null);
-    }
-
     public BizRuntimeException(ErrorContext errorContext) {
-        this(errorContext.getMessage(), null);
-    }
-
-    /**
-     * 构造函数
-     *
-     * @param message 详细消息（保存以供以后通过getMessage()方法检索）。
-     */
-    public BizRuntimeException(String message, ErrorContext errorContext) {
-        super(message);
+        super(errorContext.toString());
         this.errorContext = errorContext;
     }
 
     /**
      * 构造函数
      *
-     * @param message 详细消息（保存以供以后通过getMessage()方法检索）。
-     * @param cause   原因（保存以供以后通过getCause()方法检索）。 （允许使用空值，表示原因不存在或未知。）
-     */
-    public BizRuntimeException(String message, ErrorContext errorContext, Throwable cause) {
-        super(message, cause);
-        this.errorContext = errorContext;
-    }
-
-    /**
-     * 构造函数
-     *
-     * @param cause 原因（保存以供以后通过getCause()方法检索）。 （允许使用空值，表示原因不存在或未知。）
+     * @param errorContext 错误上下文（保存以供以后通过getErrorContext()方法检索）。
+     * @param cause        原因（保存以供以后通过getCause()方法检索）。 （允许使用空值，表示原因不存在或未知。）
      */
     public BizRuntimeException(ErrorContext errorContext, Throwable cause) {
-        super(cause);
+        super(errorContext.toString(), cause);
         this.errorContext = errorContext;
     }
+
 }

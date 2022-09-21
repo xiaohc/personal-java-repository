@@ -5,9 +5,13 @@
 package org.example.xhc.common.base;
 
 
+import com.sun.deploy.nativesandbox.comm.Request;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+
+import static org.example.xhc.common.base.DemoErrorEnum.REQUEST_ERROR;
+import static org.example.xhc.common.base.ErrorContext.mark;
 
 /**
  * TODO
@@ -19,12 +23,14 @@ class DemoErrorEnumTest {
 
     @Test
     void testAssert() {
-        Optional<IErrorContext> iErrorContext = DemoErrorEnum.REQUEST_ERROR.assertIsTrue(1 == 1);
-        System.out.println(iErrorContext);
+//        Optional<IRecordable> iErrorContext = REQUEST_ERROR.assertIsTrue(1 == 1);
+//        System.out.println(iErrorContext);
 
         // 通过AssertJ改进这个语法糖
         // Assert.isTrue(1 == 1).failed
         // Check.expectTrue().ifNot().becauseOf().throw();
-        DemoErrorEnum.REQUEST_ERROR.assertIsTrue(1 == 1).ifPresent(v -> v.getCode());
+//        REQUEST_ERROR.assertIsTrue(1 == 1).ifPresent(v -> v.getCode());
+//        throw mark(REQUEST_ERROR).becauseOf("错误的输入内容： 0").failed();
+        throw REQUEST_ERROR.becauseOf("错误的输入内容： 0");
     }
 }
