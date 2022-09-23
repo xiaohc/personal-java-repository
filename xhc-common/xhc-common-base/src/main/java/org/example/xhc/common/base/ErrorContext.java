@@ -5,6 +5,7 @@
 package org.example.xhc.common.base;
 
 import lombok.Getter;
+import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 
 import java.io.Serializable;
@@ -148,18 +149,6 @@ public class ErrorContext implements Serializable {
     /**
      * 设置错误原因
      *
-     * @param reasonPattern 原因待格式化字符串
-     * @param params        参数（支持最后1个参数为Throwable）
-     * @return ErrorContext对象
-     */
-    public ErrorContext reason(String reasonPattern, final Object... params) {
-        this.reason = MessageFormatter.arrayFormat(reasonPattern, params).getMessage();
-        return this;
-    }
-
-    /**
-     * 设置错误原因
-     *
      * @param reason 原因
      * @return ErrorContext对象
      */
@@ -175,7 +164,10 @@ public class ErrorContext implements Serializable {
      * @return ErrorContext对象
      */
     public ErrorContext becauseOf(String reasonPattern, final Object... params) {
-        return reason(reasonPattern, params);
+        FormattingTuple formattingTuple = MessageFormatter.arrayFormat(reasonPattern, params);
+        this.reason = formattingTuple.getMessage();
+        this.cause = formattingTuple.getThrowable();
+        return this;
     }
 
     /**
