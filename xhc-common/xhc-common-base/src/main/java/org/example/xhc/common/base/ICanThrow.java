@@ -10,7 +10,7 @@ package org.example.xhc.common.base;
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface ICauseAble extends IRecordable {
+public interface ICanThrow extends IRecordable {
     /**
      * 因为 ... 原因导致的
      *
@@ -24,12 +24,12 @@ public interface ICauseAble extends IRecordable {
     /**
      * 因为 ... 原因导致的
      *
-     * @param message 详细消息
-     * @param e       引起错误的异常
+     * @param messagePattern 原因待格式化字符串
+     * @param params         参数（支持最后1个参数为Throwable）
      * @return 自定义业务异常
      */
-    default RuntimeException becauseOf(String message, Exception e) {
-        return becauseOf(message);
+    default RuntimeException becauseOf(String messagePattern, final Object... params) {
+        return ErrorContext.instance().reset().mark(this).becauseOf(messagePattern, params).toException();
     }
 
 }

@@ -5,6 +5,7 @@
 package org.example.xhc.common.base;
 
 import lombok.Getter;
+import org.slf4j.helpers.MessageFormatter;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -139,9 +140,42 @@ public class ErrorContext implements Serializable {
      * @param reason 原因
      * @return ErrorContext对象
      */
-    public ErrorContext becauseOf(String reason) {
+    public ErrorContext reason(String reason) {
         this.reason = reason;
         return this;
+    }
+
+    /**
+     * 设置错误原因
+     *
+     * @param reasonPattern 原因待格式化字符串
+     * @param params        参数（支持最后1个参数为Throwable）
+     * @return ErrorContext对象
+     */
+    public ErrorContext reason(String reasonPattern, final Object... params) {
+        this.reason = MessageFormatter.arrayFormat(reasonPattern, params).getMessage();
+        return this;
+    }
+
+    /**
+     * 设置错误原因
+     *
+     * @param reason 原因
+     * @return ErrorContext对象
+     */
+    public ErrorContext becauseOf(String reason) {
+        return reason(reason);
+    }
+
+    /**
+     * 设置错误原因
+     *
+     * @param reasonPattern 原因待格式化字符串
+     * @param params        参数（支持最后1个参数为Throwable）
+     * @return ErrorContext对象
+     */
+    public ErrorContext becauseOf(String reasonPattern, final Object... params) {
+        return reason(reasonPattern, params);
     }
 
     /**
@@ -161,7 +195,9 @@ public class ErrorContext implements Serializable {
      * @return 业务异常
      */
     public BizRuntimeException toException() {
-        return new BizRuntimeException(this);
+        return cause == null
+                ? new BizRuntimeException(this)
+                : new BizRuntimeException(this, cause);
     }
 
     @Override
@@ -171,28 +207,28 @@ public class ErrorContext implements Serializable {
         // code
         if (code != null) {
             description.append(LINE_SEPARATOR);
-            description.append("### The error code is ");
+            description.append(">>> The error code is ");
             description.append(code);
         }
 
         // message
         if (this.message != null) {
             description.append(LINE_SEPARATOR);
-            description.append("### ");
+            description.append(">>> ");
             description.append(this.message);
         }
 
         // reason
         if (reason != null) {
             description.append(LINE_SEPARATOR);
-            description.append("### The reason for the error is ");
+            description.append(">>> The reason for the error is ");
             description.append(reason);
         }
 
         // cause
         if (cause != null) {
             description.append(LINE_SEPARATOR);
-            description.append("### Cause: ");
+            description.append(">>> Cause: ");
             description.append(cause);
         }
 

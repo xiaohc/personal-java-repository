@@ -27,6 +27,9 @@ class DemoErrorEnumTest {
         // Check.expectTrue().ifNot().becauseOf().throw();
 //        REQUEST_ERROR.assertIsTrue(1 == 1).ifPresent(v -> v.getCode());
 //        throw mark(REQUEST_ERROR).becauseOf("错误的输入内容： 0").failed();
-        throw REQUEST_ERROR.becauseOf("错误的输入内容： 0");
+        throw REQUEST_ERROR.becauseOf("错误的输入内容： {} 中包含了 {}", "#ok", "#", new RuntimeException("单测异常"));
+//        REQUEST_ERROR.ifIn().ifPresent(v -> {
+//            throw v.becauseOf("错误的输入内容： 0");
+//        });
     }
 }

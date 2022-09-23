@@ -14,6 +14,7 @@
         <lombok_version>1.18.22</lombok_version>
         <validator_version>6.2.0.Final</validator_version>
         <swagger_version>3.0.0</swagger_version>
+        <log_version>1.7.30</log_version>
         <junit_version>5.6.2</junit_version>
         <jacoco_version>0.8.7</jacoco_version>
         <pitest_version>1.7.4</pitest_version>
@@ -42,6 +43,12 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${swagger_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${log_version}</version>
+                <scope>compile</scope>
             </dependency>
             <!--test-->
             <dependency>
