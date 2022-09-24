@@ -2,7 +2,9 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.base;
+package org.example.xhc.common.base.checker;
+
+import org.example.xhc.common.base.IRecordable;
 
 import java.util.Optional;
 

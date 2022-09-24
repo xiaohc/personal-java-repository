@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import static org.example.xhc.common.base.DemoErrorEnum.REQUEST_ERROR;
+import static org.example.xhc.common.base.StdErrorEnum.REQUEST_ERROR;
 
 /**
  * TODO
@@ -18,7 +18,7 @@ import static org.example.xhc.common.base.DemoErrorEnum.REQUEST_ERROR;
  * @author xiaohongchao
  * @since 1.0.0
  */
-class DemoErrorEnumTest {
+class StdErrorEnumTest {
 
     @Test
     void testAssert() {

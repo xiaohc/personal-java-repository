@@ -8,14 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 错误枚举
+ * 标准错误码
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
 @Getter
 @AllArgsConstructor
-public enum DemoErrorEnum implements ICanThrow {
+public enum StdErrorEnum implements ICanThrow {
     /**
      * 请求内容错误
      */

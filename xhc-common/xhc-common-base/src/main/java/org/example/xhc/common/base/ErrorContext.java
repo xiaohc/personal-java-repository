@@ -186,10 +186,10 @@ public class ErrorContext implements Serializable {
      *
      * @return 业务异常
      */
-    public BizRuntimeException toException() {
+    public StdBizException toException() {
         return cause == null
-                ? new BizRuntimeException(this)
-                : new BizRuntimeException(this, cause);
+                ? new StdBizException(this)
+                : new StdBizException(this, cause);
     }
 
     @Override
