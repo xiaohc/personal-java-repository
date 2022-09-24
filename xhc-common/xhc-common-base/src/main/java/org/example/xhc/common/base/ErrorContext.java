@@ -5,8 +5,8 @@
 package org.example.xhc.common.base;
 
 import lombok.Getter;
-import org.slf4j.helpers.FormattingTuple;
-import org.slf4j.helpers.MessageFormatter;
+import org.example.xhc.common.base.helper.FormattingTuple;
+import org.example.xhc.common.base.helper.MessageFormatter;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -196,18 +196,18 @@ public class ErrorContext implements Serializable {
     public String toString() {
         StringBuilder description = new StringBuilder();
 
-        // code
-        if (code != null) {
-            description.append(LINE_SEPARATOR);
-            description.append(">>> The error code is ");
-            description.append(code);
-        }
-
         // message
         if (this.message != null) {
             description.append(LINE_SEPARATOR);
             description.append(">>> ");
             description.append(this.message);
+        }
+
+        // code
+        if (code != null) {
+            description.append(LINE_SEPARATOR);
+            description.append(">>> The error code is ");
+            description.append(code);
         }
 
         // reason
