@@ -12,8 +12,8 @@ personal-java-repository
 │   ├── common-base -- 基础支撑模块
 ├── xhc-demo -- 演示项目
 │   ├── demo-parent -- 统一的Maven父类
-│   ├── demo-consumer -- 提供者服务
-└   └── demo-consumer -- 消费者服务
+│   ├── demo-provider -- 服务提供者
+└   └── demo-consumer -- 服务消费者
 ```
 
 ## 技术选型
