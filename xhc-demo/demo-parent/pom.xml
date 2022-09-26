@@ -8,6 +8,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.12.RELEASE</version>
+        <relativePath/>
     </parent>
 
     <groupId>org.example.xhc.demo</groupId>
