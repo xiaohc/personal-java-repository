@@ -7,12 +7,13 @@
 
 ``` lua
 personal-java-repository
-├── commons -- 工具类及通用代码模块
-├── commons-dependencies -- 通用模块三方件的依赖版本统一管理
-├── demo -- 演示项目
-│   ├── demo-consumer -- 消费者演示项目
-├── demo-dependencies -- 演示项目二方件的依赖版本统一管理
-└── demo-parent -- 演示项目统一的Maven父类
+├── xhc-bom -- （依赖的二方件）版本统一管理
+├── xhc-common -- 通用代码模块
+│   ├── xhc-common-base -- 基础支撑模块
+├── xhc-demo -- 演示项目
+│   ├── demo-parent -- 统一的Maven父类
+│   ├── demo-consumer -- 提供者服务
+└   └── demo-consumer -- 消费者服务
 ```
 
 ## 技术选型
