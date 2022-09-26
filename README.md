@@ -9,7 +9,7 @@
 personal-java-repository
 ├── xhc-bom -- （依赖的二方件）版本统一管理
 ├── xhc-common -- 通用代码模块
-│   ├── xhc-common-base -- 基础支撑模块
+│   ├── common-base -- 基础支撑模块
 ├── xhc-demo -- 演示项目
 │   ├── demo-parent -- 统一的Maven父类
 │   ├── demo-consumer -- 提供者服务
