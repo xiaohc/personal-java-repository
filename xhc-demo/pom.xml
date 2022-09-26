@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example.xhc.demo</groupId>
-    <artifactId>xhc-demo</artifactId>
+    <artifactId>demo-all</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
