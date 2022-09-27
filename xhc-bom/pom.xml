@@ -16,6 +16,7 @@
         <swagger_version>3.0.0</swagger_version>
         <log_version>1.7.30</log_version>
         <junit_version>5.6.2</junit_version>
+        <assertj_version>3.23.1</assertj_version>
         <jacoco_version>0.8.7</jacoco_version>
         <pitest_version>1.7.4</pitest_version>
         <pitest-junit5_version>0.14</pitest-junit5_version>
@@ -57,6 +58,12 @@
                 <version>${junit_version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj_version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.jacoco</groupId>

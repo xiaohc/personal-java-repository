@@ -5,20 +5,39 @@
 package org.example.xhc.common.base;
 
 
+import org.example.xhc.common.base.util.Validate;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.base.StdErrorEnum.REQUEST_ERROR;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * TODO
+ * 测试标准错误码的使用
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
 class StdErrorEnumTest {
+
+    @Test
+    void testValidate() {
+        Executable validate = () -> {
+            Validate.isTrue(new Object() == null,
+                    REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate"));
+        };
+
+        StdBizException exception = assertThrows(StdBizException.class, validate);
+        // windows
+        assertThat(exception).hasMessage("\r\n" +
+                ">>> 请求内容错误\r\n" +
+                ">>> The error code is 400\r\n" +
+                ">>> The reason for the error is 测试业务检查工具类: Validate");
+    }
 
     @Test
     void testAssert() {
