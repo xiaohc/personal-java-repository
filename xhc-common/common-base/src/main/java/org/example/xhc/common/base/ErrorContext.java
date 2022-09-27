@@ -126,7 +126,7 @@ public class ErrorContext implements Serializable {
      * @param errorRecord 错误记录
      * @return ErrorContext对象
      */
-    public ErrorContext mark(IRecordable errorRecord) {
+    public ErrorContext mark(final IRecordable errorRecord) {
         Optional.ofNullable(errorRecord)
                 .ifPresent(v -> {
                     this.code = v.getCode();
@@ -141,7 +141,7 @@ public class ErrorContext implements Serializable {
      * @param reason 原因
      * @return ErrorContext对象
      */
-    public ErrorContext reason(String reason) {
+    public ErrorContext reason(final String reason) {
         this.reason = reason;
         return this;
     }
@@ -152,7 +152,7 @@ public class ErrorContext implements Serializable {
      * @param reason 原因
      * @return ErrorContext对象
      */
-    public ErrorContext becauseOf(String reason) {
+    public ErrorContext becauseOf(final String reason) {
         return reason(reason);
     }
 
@@ -163,7 +163,7 @@ public class ErrorContext implements Serializable {
      * @param params        参数（支持最后1个参数为Throwable）
      * @return ErrorContext对象
      */
-    public ErrorContext becauseOf(String reasonPattern, final Object... params) {
+    public ErrorContext becauseOf(final String reasonPattern, final Object... params) {
         FormattingTuple formattingTuple = MessageFormatter.arrayFormat(reasonPattern, params);
         this.reason = formattingTuple.getMessage();
         this.cause = formattingTuple.getThrowable();
@@ -176,7 +176,7 @@ public class ErrorContext implements Serializable {
      * @param cause 异常
      * @return ErrorContext对象
      */
-    public ErrorContext cause(Throwable cause) {
+    public ErrorContext cause(final Throwable cause) {
         this.cause = cause;
         return this;
     }
