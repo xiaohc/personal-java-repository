@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example.xhc</groupId>
-    <artifactId>xhc-common-parent</artifactId>
+    <artifactId>common-parent</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
@@ -19,7 +19,7 @@
     </properties>
 
     <modules>
-        <module>xhc-common-base</module>
+        <module>common-base</module>
     </modules>
 
     <dependencyManagement>
