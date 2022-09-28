@@ -2,11 +2,11 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.base;
+package org.example.xhc.common;
 
 import lombok.Getter;
-import org.example.xhc.common.base.helper.FormattingTuple;
-import org.example.xhc.common.base.helper.MessageFormatter;
+import org.example.xhc.common.helper.FormattingTuple;
+import org.example.xhc.common.helper.MessageFormatter;
 
 import java.io.Serializable;
 import java.util.Optional;

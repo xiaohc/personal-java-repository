@@ -1,4 +1,4 @@
-package org.example.xhc.common.base.util;
+package org.example.xhc.common.util;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
