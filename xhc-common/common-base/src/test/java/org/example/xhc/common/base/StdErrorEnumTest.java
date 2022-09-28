@@ -4,7 +4,6 @@
 
 package org.example.xhc.common.base;
 
-
 import org.example.xhc.common.base.util.Validate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;

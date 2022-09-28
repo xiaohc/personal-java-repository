@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>common-parent</module>
         <module>common-base</module>
     </modules>
 
