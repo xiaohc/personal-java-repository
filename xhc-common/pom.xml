@@ -14,4 +14,17 @@
         <module>common-base</module>
     </modules>
 
+    <properties>
+        <common-base_version>1.0.0-SNAPSHOT</common-base_version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.example.xhc.common</groupId>
+                <artifactId>common-base</artifactId>
+                <version>${common-base_version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

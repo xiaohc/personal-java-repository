@@ -17,15 +17,17 @@
     <packaging>pom</packaging>
 
     <properties>
-        <common-base_version>1.0.0-SNAPSHOT</common-base_version>
+        <xhc-common_version>1.0.0</xhc-common_version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.example.xhc.common</groupId>
-                <artifactId>common-base</artifactId>
-                <version>${common-base_version}</version>
+                <groupId>org.example.xhc</groupId>
+                <artifactId>xhc-common</artifactId>
+                <version>${xhc-common_version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
