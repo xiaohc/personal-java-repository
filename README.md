@@ -7,11 +7,10 @@
 
 ``` lua
 personal-java-repository
-├── xhc-bom -- （依赖的二方件）版本统一管理
+├── xhc-parent -- 统一的Maven父类，统一管理依赖的二方件版本
 ├── xhc-common -- 通用代码模块
-│   ├── common-base -- 基础支撑模块
 ├── xhc-demo -- 演示项目
-│   ├── demo-parent -- 统一的Maven父类
+│   ├── demo-parent -- Maven父类
 │   ├── demo-provider -- 服务提供者
 └   └── demo-consumer -- 服务消费者
 ```
