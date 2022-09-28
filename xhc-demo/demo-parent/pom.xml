@@ -17,7 +17,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <xhc-common_version>1.0.0</xhc-common_version>
+        <xhc-common_version>1.0.0-SNAPSHOT</xhc-common_version>
     </properties>
 
     <dependencyManagement>
@@ -26,8 +26,6 @@
                 <groupId>org.example.xhc</groupId>
                 <artifactId>xhc-common</artifactId>
                 <version>${xhc-common_version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
