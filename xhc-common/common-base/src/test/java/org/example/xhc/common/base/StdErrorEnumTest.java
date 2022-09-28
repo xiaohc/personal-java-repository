@@ -41,19 +41,6 @@ class StdErrorEnumTest {
 
     @Test
     void testAssert() {
-//        Optional<IRecordable> iErrorContext = REQUEST_ERROR.assertIsTrue(1 == 1);
-//        System.out.println(iErrorContext);
-
-        // 通过AssertJ改进这个语法糖
-        // Assert.isTrue(1 == 1).failed
-        // Check.expectTrue().ifNot().becauseOf().throw();
-//        REQUEST_ERROR.assertIsTrue(1 == 1).ifPresent(v -> v.getCode());
-//        throw mark(REQUEST_ERROR).becauseOf("错误的输入内容： 0").failed();
-//        REQUEST_ERROR.ifIn().ifPresent(v -> {
-//            throw v.becauseOf("错误的输入内容： 0");
-//        });
-
-
         try {
             System.out.println("随机读取一段文件内容：");
             // 打开一个随机访问文件流，按只读方式
@@ -74,6 +61,19 @@ class StdErrorEnumTest {
         } catch (IOException e) {
             throw REQUEST_ERROR.becauseOf("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e);
         }
+
+//        Optional<IRecordable> iErrorContext = REQUEST_ERROR.assertIsTrue(1 == 1);
+//        System.out.println(iErrorContext);
+
+        // 通过AssertJ改进这个语法糖
+        // Assert.isTrue(1 == 1).failed
+        // Check.expectTrue().ifNot().becauseOf().throw();
+//        REQUEST_ERROR.assertIsTrue(1 == 1).ifPresent(v -> v.getCode());
+//        throw mark(REQUEST_ERROR).becauseOf("错误的输入内容： 0").failed();
+//        REQUEST_ERROR.ifIn().ifPresent(v -> {
+//            throw v.becauseOf("错误的输入内容： 0");
+//        });
+
 
     }
 }

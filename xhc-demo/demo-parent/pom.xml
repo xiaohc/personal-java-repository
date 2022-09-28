@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <xhc-bom_version>1.0.0-SNAPSHOT</xhc-bom_version>
-        <xhc-common-base_version>1.0.0-SNAPSHOT</xhc-common-base_version>
+        <common-base_version>1.0.0-SNAPSHOT</common-base_version>
     </properties>
 
     <dependencyManagement>
@@ -37,13 +37,18 @@
             </dependency>
             <dependency>
                 <groupId>org.example.xhc.common</groupId>
-                <artifactId>xhc-common-base</artifactId>
-                <version>${xhc-common-base_version}</version>
+                <artifactId>common-base</artifactId>
+                <version>${common-base_version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+<!--            <version>6.2.5.Final</version>-->
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

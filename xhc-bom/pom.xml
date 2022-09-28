@@ -12,7 +12,7 @@
     <properties>
         <commons-lang_version>3.12.0</commons-lang_version>
         <lombok_version>1.18.22</lombok_version>
-        <validator_version>6.2.0.Final</validator_version>
+        <hibernate-validator_version>6.2.5.Final</hibernate-validator_version>
         <swagger_version>3.0.0</swagger_version>
         <log_version>1.7.30</log_version>
         <junit_version>5.6.2</junit_version>
@@ -36,9 +36,9 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.hibernate</groupId>
+                <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>${validator_version}</version>
+                <version>${hibernate-validator_version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>
