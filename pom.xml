@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>xhc-bom</module>
         <module>xhc-parent</module>
         <module>xhc-common</module>
         <module>xhc-demo</module>
