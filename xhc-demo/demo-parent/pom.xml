@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.12.RELEASE</version>
+        <groupId>org.example.xhc</groupId>
+        <artifactId>xhc-bom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
@@ -17,24 +17,11 @@
     <packaging>pom</packaging>
 
     <properties>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <xhc-bom_version>1.0.0-SNAPSHOT</xhc-bom_version>
         <common-base_version>1.0.0-SNAPSHOT</common-base_version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.example.xhc</groupId>
-                <artifactId>xhc-bom</artifactId>
-                <version>${xhc-bom_version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>org.example.xhc.common</groupId>
                 <artifactId>common-base</artifactId>
@@ -44,11 +31,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-<!--            <version>6.2.5.Final</version>-->
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
