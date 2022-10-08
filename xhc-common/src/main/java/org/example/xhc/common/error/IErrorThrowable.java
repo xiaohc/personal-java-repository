@@ -2,7 +2,10 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common;
+package org.example.xhc.common.error;
+
+import org.example.xhc.common.IRecordable;
+import org.example.xhc.common.error.ErrorContext;
 
 /**
  * 需要说明原因的
@@ -10,7 +13,7 @@ package org.example.xhc.common;
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface ICanThrow extends IRecordable {
+public interface IErrorThrowable extends IRecordable {
     /**
      * 因为 ... 原因导致的
      *

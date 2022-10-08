@@ -2,8 +2,10 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common;
+package org.example.xhc.common.error;
 
+import org.example.xhc.common.exception.BusinessException;
+import org.example.xhc.common.error.ErrorEnum;
 import org.example.xhc.common.util.Validate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -20,16 +22,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author xiaohongchao
  * @since 1.0.0
  */
-class StdErrorEnumTest {
+class ErrorEnumTest {
 
     @Test
     void testValidate() {
         Executable validate = () -> {
             Validate.isTrue(new Object() == null,
-                    StdErrorEnum.REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate"));
+                    ErrorEnum.REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate"));
         };
 
-        StdBizException exception = assertThrows(StdBizException.class, validate);
+        BusinessException exception = assertThrows(BusinessException.class, validate);
         // windows
         assertThat(exception).hasMessage("\r\n" +
                 ">>> 请求内容错误\r\n" +
@@ -58,11 +60,11 @@ class StdErrorEnumTest {
                     System.out.write(bytes, 0, byteread);
                 }
             } catch (IOException e) {
-                throw StdErrorEnum.REQUEST_ERROR.becauseOf("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e);
+                throw ErrorEnum.REQUEST_ERROR.becauseOf("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e);
             }
         };
 
-        StdBizException exception = assertThrows(StdBizException.class, validate);
+        BusinessException exception = assertThrows(BusinessException.class, validate);
 //        Optional<IRecordable> iErrorContext = REQUEST_ERROR.assertIsTrue(1 == 1);
 //        System.out.println(iErrorContext);
 

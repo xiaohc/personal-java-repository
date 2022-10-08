@@ -2,9 +2,11 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common;
+package org.example.xhc.common.error;
 
 import lombok.Getter;
+import org.example.xhc.common.IRecordable;
+import org.example.xhc.common.exception.BusinessException;
 import org.example.xhc.common.helper.FormattingTuple;
 import org.example.xhc.common.helper.MessageFormatter;
 
@@ -186,10 +188,10 @@ public class ErrorContext implements Serializable {
      *
      * @return 业务异常
      */
-    public StdBizException toException() {
+    public BusinessException toException() {
         return cause == null
-                ? new StdBizException(this)
-                : new StdBizException(this, cause);
+                ? new BusinessException(this)
+                : new BusinessException(this, cause);
     }
 
     @Override

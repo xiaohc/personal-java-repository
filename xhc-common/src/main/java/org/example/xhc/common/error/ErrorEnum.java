@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common;
+package org.example.xhc.common.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum StdErrorEnum implements ICanThrow {
+public enum ErrorEnum implements IErrorThrowable {
     /**
      * 请求内容错误
      */
