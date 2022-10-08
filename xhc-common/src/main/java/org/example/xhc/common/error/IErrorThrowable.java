@@ -4,16 +4,13 @@
 
 package org.example.xhc.common.error;
 
-import org.example.xhc.common.IRecordable;
-import org.example.xhc.common.error.ErrorContext;
-
 /**
- * 需要说明原因的
+ * 可被直接抛出的错误
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface IErrorThrowable extends IRecordable {
+public interface IErrorThrowable extends IErrorDescribable {
     /**
      * 因为 ... 原因导致的
      *

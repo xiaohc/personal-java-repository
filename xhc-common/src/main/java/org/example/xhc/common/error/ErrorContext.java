@@ -5,7 +5,6 @@
 package org.example.xhc.common.error;
 
 import lombok.Getter;
-import org.example.xhc.common.IRecordable;
 import org.example.xhc.common.exception.BusinessException;
 import org.example.xhc.common.helper.FormattingTuple;
 import org.example.xhc.common.helper.MessageFormatter;
@@ -128,7 +127,7 @@ public class ErrorContext implements Serializable {
      * @param errorRecord 错误记录
      * @return ErrorContext对象
      */
-    public ErrorContext mark(final IRecordable errorRecord) {
+    public ErrorContext mark(final IErrorDescribable errorRecord) {
         Optional.ofNullable(errorRecord)
                 .ifPresent(v -> {
                     this.code = v.getCode();

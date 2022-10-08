@@ -2,17 +2,17 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common;
+package org.example.xhc.common.error;
 
 import java.io.Serializable;
 
 /**
- * 值得记录的
+ * 可被描述的错误
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface IRecordable extends Serializable {
+public interface IErrorDescribable extends Serializable {
     /**
      * 获取标识码
      *
