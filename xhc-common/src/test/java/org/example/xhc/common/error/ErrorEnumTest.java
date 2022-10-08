@@ -5,8 +5,7 @@
 package org.example.xhc.common.error;
 
 import org.example.xhc.common.exception.BusinessException;
-import org.example.xhc.common.error.ErrorEnum;
-import org.example.xhc.common.util.Validate;
+import org.example.xhc.common.validation.BusinessAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -27,7 +26,7 @@ class ErrorEnumTest {
     @Test
     void testValidate() {
         Executable validate = () -> {
-            Validate.isTrue(new Object() == null,
+            BusinessAssert.isTrue(new Object() == null,
                     ErrorEnum.REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate"));
         };
 

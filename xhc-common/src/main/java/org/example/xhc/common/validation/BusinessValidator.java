@@ -1,4 +1,4 @@
-package org.example.xhc.common.util;
+package org.example.xhc.common.validation;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -6,16 +6,16 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Collection;
 
 /**
- * 验证业务的断言实用程序类
+ * 业务验证工具类
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-public final class Validate {
+public final class BusinessValidator {
     /**
      * 防止实例化
      */
-    private Validate() {
+    private BusinessValidator() {
     }
 
     /**
