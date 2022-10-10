@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -31,11 +32,9 @@ class ErrorEnumTest {
         };
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
-        // windows
-        assertThat(exception).hasMessage("\r\n" +
-                ">>> 请求内容错误\r\n" +
-                ">>> The error code is 400\r\n" +
-                ">>> The reason for the error is 测试业务检查工具类: Validate");
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 请求内容错误" +
+                LINE_SEPARATOR + ">>> The error code is 400" +
+                LINE_SEPARATOR + ">>> The reason for the error is 测试业务检查工具类: Validate");
     }
 
     @Test

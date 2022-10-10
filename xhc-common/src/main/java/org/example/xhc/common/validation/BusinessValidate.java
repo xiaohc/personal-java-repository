@@ -1,6 +1,7 @@
 package org.example.xhc.common.validation;
 
 import lombok.Builder;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.example.xhc.common.error.ErrorContext;
 import org.example.xhc.common.error.IErrorDescribable;
@@ -29,9 +30,7 @@ public final class BusinessValidate {
     private static final Validator VALIDATOR;
 
     static {
-        ValidatorFactory validatorFactory = Validation
-                .byProvider(HibernateValidator.class)
-                .configure()
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure()
                 .failFast(false)
                 .buildValidatorFactory();
         VALIDATOR = validatorFactory.getValidator();
@@ -88,7 +87,7 @@ public final class BusinessValidate {
      * @return
      */
     private static <T> ValidationResult buildValidationResult(Set<ConstraintViolation<T>> validateSet) {
-        if (validateSet == null || validateSet.isEmpty()) {
+        if (CollectionUtils.isEmpty(validateSet)) {
             return ValidationResult.DEFAULT_SUCCESS;
         }
 
@@ -145,9 +144,9 @@ public final class BusinessValidate {
                 return StringUtils.EMPTY;
             }
             StringBuilder message = new StringBuilder();
-            errorMsg.forEach((key, value) -> {
-                message.append(MessageFormat.format("{0}:{1} \r\n", key, value));
-            });
+            errorMsg.forEach((key, value) ->
+                message.append(MessageFormat.format("{0}:{1}", key, value))
+            );
             return message.toString();
         }
     }

@@ -17,9 +17,17 @@
     <packaging>pom</packaging>
 
     <properties>
-        <commons-lang_version>3.12.0</commons-lang_version>
-        <lombok_version>1.18.22</lombok_version>
+        <lombok_version>1.18.24</lombok_version>
+        <commons-lang3_version>3.12.0</commons-lang3_version>
+        <commons-collections4_version>4.4</commons-collections4_version>
+        <commons-io_version>2.11.0</commons-io_version>
+        <commons-beanutils_version>1.9.4</commons-beanutils_version>
+        <commons-text_version>1.9</commons-text_version>
+        <commons-csv_version>1.8</commons-csv_version>
+        <commons-crypto_version>1.1.0</commons-crypto_version>
+        <guava_version>31.1-jre</guava_version>
         <hibernate-validator_version>6.2.5.Final</hibernate-validator_version>
+        <javax.el_version>3.0.0</javax.el_version>
         <swagger_version>3.0.0</swagger_version>
         <log_version>1.7.30</log_version>
         <junit_version>5.6.2</junit_version>
@@ -32,20 +40,61 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang_version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok_version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>${commons-text_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-csv</artifactId>
+                <version>${commons-csv_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-crypto</artifactId>
+                <version>${commons-crypto_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava_version}</version>
+                <type>bundle</type>
+            </dependency>
+            <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${javax.el_version}</version>
             </dependency>
             <dependency>
                 <groupId>io.springfox</groupId>

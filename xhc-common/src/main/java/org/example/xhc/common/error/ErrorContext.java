@@ -12,6 +12,8 @@ import org.example.xhc.common.helper.MessageFormatter;
 import java.io.Serializable;
 import java.util.Optional;
 
+import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
+
 /**
  * 错误上下文
  *
@@ -21,11 +23,6 @@ import java.util.Optional;
 @Getter
 public class ErrorContext implements Serializable {
     private static final long serialVersionUID = 800312585448987400L;
-
-    /**
-     * 当前操作系统的换行符
-     */
-    private static final String LINE_SEPARATOR = System.getProperty("line.separator", "\n");
 
     /**
      * 性能增强，兼顾多线程
