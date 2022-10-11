@@ -30,15 +30,15 @@ class BusinessValidateTest {
         RequestDTO request = RequestDTO.builder().build();
 
         Executable validate = () -> {
-            validate(request).throwIfWrong(ErrorEnum.REQUEST_ERROR);
+            validate(request).throwIfWrong(ErrorEnum.INTERNAL_SERVER_ERROR);
 
-            Expect.isTrue(false).throwIfFailed(ErrorEnum.REQUEST_ERROR.becauseOf("yes"));
+            Expect.isTrue(false).throwIfFailed(ErrorEnum.INTERNAL_SERVER_ERROR.becauseOf("yes"));
         };
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
 
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 请求内容错误" +
-                LINE_SEPARATOR + ">>> The error code is 400" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+                LINE_SEPARATOR + ">>> The error code is 500" +
                 LINE_SEPARATOR + ">>> The reason for the error is requestTime:请求时间不能为空ip:请求IP不能为空");
     }
 

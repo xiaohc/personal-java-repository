@@ -17,14 +17,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorEnum implements IErrorDescribable, IErrorDefinable {
     /**
-     * 请求内容错误
+     * 系统内部错误
      */
-    REQUEST_ERROR(400, "请求内容错误"),
-
-    /**
-     * 应答内容错误
-     */
-    REPLY_ERROR(501, "应答内容错误"),
+    INTERNAL_SERVER_ERROR(500, "系统内部错误"),
     ;
 
     /**
