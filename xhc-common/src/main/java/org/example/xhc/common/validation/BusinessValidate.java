@@ -1,21 +1,21 @@
 package org.example.xhc.common.validation;
 
-import lombok.Builder;
-import org.apache.commons.collections4.CollectionUtils;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.example.xhc.common.error.ErrorContext;
 import org.example.xhc.common.error.IErrorDescribable;
 import org.hibernate.validator.HibernateValidator;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import javax.validation.groups.Default;
-import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+
+import static java.util.stream.Collectors.*;
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
+import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.common.util.SetUtils.isOnlyNullElement;
 
 /**
  * 业务验证工具类
@@ -49,7 +49,7 @@ public final class BusinessValidate {
      * @param <T> 实体类类型
      * @return 校验结果
      */
-    public static <T> ValidationResult checkErrors(T t) {
+    public static <T> IValidationResult checkErrors(T t) {
         return validate(t, Default.class);
     }
 
@@ -62,7 +62,7 @@ public final class BusinessValidate {
      * @param <T>    实体类类型
      * @return 校验结果
      */
-    public static <T> ValidationResult checkErrors(T t, Class<?>... groups) {
+    public static <T> IValidationResult checkErrors(T t, Class<?>... groups) {
         return validate(t, groups);
     }
 
@@ -74,7 +74,7 @@ public final class BusinessValidate {
      * @param <T>    实体类类型
      * @return 校验结果
      */
-    public static <T> ValidationResult validate(T t, Class<?>... groups) {
+    public static <T> IValidationResult validate(T t, Class<?>... groups) {
         Set<ConstraintViolation<T>> constraintViolations = VALIDATOR.validate(t, groups);
         return buildValidationResult(constraintViolations);
     }
@@ -82,52 +82,51 @@ public final class BusinessValidate {
     /**
      * 将异常结果封装返回
      *
-     * @param <T>
-     * @param validateSet
-     * @return
+     * @param <T>          校验类型
+     * @param validatedSet 校验结果的集合
+     * @return 校验结果
      */
-    private static <T> ValidationResult buildValidationResult(Set<ConstraintViolation<T>> validateSet) {
-        if (CollectionUtils.isEmpty(validateSet)) {
-            return ValidationResult.DEFAULT_SUCCESS;
+    private static <T> IValidationResult buildValidationResult(Set<ConstraintViolation<T>> validatedSet) {
+        if (isEmpty(validatedSet) || isOnlyNullElement(validatedSet)) {
+            return ValidationResultImpl.VALIDATION_SUCCESS;
         }
 
-        ValidationResult.ValidationResultBuilder resultBuilder = ValidationResult.builder().hasErrors(true);
+        Map<Path, String> errorDetails = validatedSet.stream()
+                .filter(Objects::nonNull)
+                .collect(groupingBy(
+                        ConstraintViolation::getPropertyPath,
+                        mapping(ConstraintViolation::getMessage, joining(" and ", " : ", "."))));
 
-        Map<String, String> errorMsgMap = new HashMap<>();
-        for (ConstraintViolation<T> constraintViolation : validateSet) {
-            errorMsgMap.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
-        }
-
-        return resultBuilder.errorMsg(errorMsgMap).build();
-
+        return new ValidationResultImpl(true, errorDetails);
     }
 
     /**
      * 校验结果
      */
-    @Builder
-    public static class ValidationResult {
+    @AllArgsConstructor
+    private static class ValidationResultImpl implements IValidationResult {
 
         /**
          * 校验正常常量
          */
-        private static final ValidationResult DEFAULT_SUCCESS = new ValidationResult(false, null);
+        private static final ValidationResultImpl VALIDATION_SUCCESS = new ValidationResultImpl(false, null);
 
         /**
          * 是否有异常
          */
-        private boolean hasErrors;
+        private final boolean hasErrors;
 
         /**
          * 异常消息记录
          */
-        private Map<String, String> errorMsg;
+        private final Map<Path, String> errorDetails;
 
         /**
          * 如果校验结果为有异常，则抛出业务错误
          *
          * @param errorDescribable 错误定义
          */
+        @Override
         public void throwIfWrong(final IErrorDescribable errorDescribable) {
             if (hasErrors) {
                 throw ErrorContext.instance().reset().mark(errorDescribable).becauseOf(getMessage()).toException();
@@ -140,14 +139,15 @@ public final class BusinessValidate {
          * @return 校验异常详情
          */
         public String getMessage() {
-            if (errorMsg == null || errorMsg.isEmpty()) {
+            if (isEmpty(errorDetails)) {
                 return StringUtils.EMPTY;
             }
-            StringBuilder message = new StringBuilder();
-            errorMsg.forEach((key, value) ->
-                message.append(MessageFormat.format("{0}:{1}", key, value))
-            );
-            return message.toString();
+
+            return errorDetails
+                    .entrySet()
+                    .stream()
+                    .map(v -> v.getKey() + v.getValue())
+                    .collect(joining(LINE_SEPARATOR, "JSR-303 Bean Validation." + LINE_SEPARATOR, ""));
         }
     }
 }
