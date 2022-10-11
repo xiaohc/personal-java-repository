@@ -124,7 +124,7 @@ public class ErrorContext implements Serializable {
      * @param errorRecord 错误记录
      * @return ErrorContext对象
      */
-    public ErrorContext mark(final IErrorDescribable errorRecord) {
+    public ErrorContext mark(final IErrorDefinable errorRecord) {
         Optional.ofNullable(errorRecord)
                 .ifPresent(v -> {
                     this.code = v.getCode();

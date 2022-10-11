@@ -4,26 +4,32 @@
 
 package org.example.xhc.common.error;
 
-import java.io.Serializable;
-
 /**
- * 可被描述的错误
+ * 可进行错误描述的
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface IErrorDescribable extends Serializable {
+public interface IErrorDescribable extends IErrorDefinable {
     /**
-     * 获取标识码
+     * 因为 ... 原因导致的
      *
-     * @return 标识码
+     * @param message 详细消息
+     * @return 自定义业务异常
      */
-    int getCode();
+    default RuntimeException becauseOf(String message) {
+        return ErrorContext.instance().reset().mark(this).becauseOf(message).toException();
+    }
 
     /**
-     * 获取描述信息
+     * 因为 ... 原因导致的
      *
-     * @return 描述信息
+     * @param messagePattern 原因待格式化字符串
+     * @param params         参数（支持最后1个参数为Throwable）
+     * @return 自定义业务异常
      */
-    String getMessage();
+    default RuntimeException becauseOf(String messagePattern, final Object... params) {
+        return ErrorContext.instance().reset().mark(this).becauseOf(messagePattern, params).toException();
+    }
+
 }

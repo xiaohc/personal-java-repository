@@ -31,6 +31,8 @@ class BusinessValidateTest {
 
         Executable validate = () -> {
             validate(request).throwIfWrong(ErrorEnum.REQUEST_ERROR);
+
+            Expect.isTrue(false).throwIfFailed(ErrorEnum.REQUEST_ERROR.becauseOf("yes"));
         };
 
         BusinessException exception = assertThrows(BusinessException.class, validate);

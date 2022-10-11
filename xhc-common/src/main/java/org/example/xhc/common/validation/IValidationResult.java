@@ -1,6 +1,6 @@
 package org.example.xhc.common.validation;
 
-import org.example.xhc.common.error.IErrorDescribable;
+import org.example.xhc.common.error.IErrorDefinable;
 
 /**
  * 校验结果定义
@@ -14,5 +14,5 @@ public interface IValidationResult {
      *
      * @param errorDescribable 错误定义
      */
-    void throwIfWrong(IErrorDescribable errorDescribable);
+    void throwIfWrong(IErrorDefinable errorDescribable);
 }

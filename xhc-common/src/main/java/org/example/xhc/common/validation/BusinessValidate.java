@@ -2,7 +2,7 @@ package org.example.xhc.common.validation;
 
 import lombok.AllArgsConstructor;
 import org.example.xhc.common.error.ErrorContext;
-import org.example.xhc.common.error.IErrorDescribable;
+import org.example.xhc.common.error.IErrorDefinable;
 import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
@@ -123,9 +123,9 @@ public final class BusinessValidate {
          * @param errorDescribable 错误定义
          */
         @Override
-        public void throwIfWrong(final IErrorDescribable errorDescribable) {
+        public void throwIfWrong(final IErrorDefinable errorDescribable) {
             if (hasErrors) {
-                throw ErrorContext.instance().reset().mark(errorDescribable).becauseOf(getErrorMessage()).toException();
+                throw ErrorContext.instance().reset().mark(errorDescribable).becauseOf(getErrorDetails()).toException();
             }
         }
 
@@ -134,7 +134,7 @@ public final class BusinessValidate {
          *
          * @return 校验异常详情
          */
-        public String getErrorMessage() {
+        private String getErrorDetails() {
             if (!hasErrors) {
                 return "JSR-303 bean validation succeeded without error";
             }
@@ -143,8 +143,8 @@ public final class BusinessValidate {
                 return "JSR-303 bean validation failed, no error message found";
             }
 
-            // errorDetails
-            String errorDetails = validatedSet.stream()
+            // errorMessage
+            String errorMessage = validatedSet.stream()
                     .filter(Objects::nonNull)
                     .sorted(Comparator.comparing(v -> v.getPropertyPath().toString()))
                     .collect(groupingBy(
@@ -159,7 +159,7 @@ public final class BusinessValidate {
                     LINE_SEPARATOR +
                     ">>> The error message of verification is as follows:" +
                     LINE_SEPARATOR +
-                    errorDetails +
+                    errorMessage +
                     LINE_SEPARATOR;
         }
     }
