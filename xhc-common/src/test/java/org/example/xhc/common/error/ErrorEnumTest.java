@@ -27,7 +27,7 @@ class ErrorEnumTest {
     @Test
     void testValidate() {
         Executable validate = () -> {
-            BusinessAssert.isTrue(new Object() == null,
+            BusinessAssert.isTrue(false,
                     ErrorEnum.REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate"));
         };
 
@@ -41,7 +41,6 @@ class ErrorEnumTest {
     void testAssert() {
         Executable validate = () -> {
             try {
-                System.out.println("随机读取一段文件内容：");
                 // 打开一个随机访问文件流，按只读方式
                 RandomAccessFile randomFile = new RandomAccessFile("/error.file", "r");
                 // 文件长度，字节数

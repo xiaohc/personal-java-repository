@@ -14,10 +14,11 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.common.validation.BusinessValidate.validate;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * TODO
+ * 测试校验工具类的使用
  *
  * @author xiaohongchao
  * @since 1.0.0
@@ -29,14 +30,14 @@ class BusinessValidateTest {
         RequestDTO request = RequestDTO.builder().build();
 
         Executable validate = () -> {
-            BusinessValidate.checkErrors(request).throwIfWrong(ErrorEnum.REQUEST_ERROR);
+            validate(request).throwIfWrong(ErrorEnum.REQUEST_ERROR);
         };
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
 
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 请求内容错误" +
                 LINE_SEPARATOR + ">>> The error code is 400" +
-                LINE_SEPARATOR +  ">>> The reason for the error is requestTime:请求时间不能为空ip:请求IP不能为空");
+                LINE_SEPARATOR + ">>> The reason for the error is requestTime:请求时间不能为空ip:请求IP不能为空");
     }
 
     @Data

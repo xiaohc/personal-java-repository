@@ -155,16 +155,12 @@ public final class BusinessValidate {
                     .map(v -> ">>>     " + v.getKey() + LINE_SEPARATOR + ">>>       └── " + v.getValue())
                     .collect(joining(LINE_SEPARATOR));
 
-            // message
-            StringBuilder message = new StringBuilder();
-            message.append("JSR-303 bean validation failed");
-            message.append(LINE_SEPARATOR);
-            message.append(">>> The error message of verification is as follows:");
-            message.append(LINE_SEPARATOR);
-            message.append(errorDetails);
-            message.append(LINE_SEPARATOR);
-
-            return message.toString();
+            return "JSR-303 bean validation failed" +
+                    LINE_SEPARATOR +
+                    ">>> The error message of verification is as follows:" +
+                    LINE_SEPARATOR +
+                    errorDetails +
+                    LINE_SEPARATOR;
         }
     }
 }
