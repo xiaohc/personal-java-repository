@@ -177,7 +177,6 @@ public final class MessageFormatter {
         }
     }
 
-    // special treatment of array values was suggested by 'lizongbo'
     private static void deeplyAppendParameter(StringBuilder sbuf, Object o, Map<Object[], Object> seenMap) {
         if (o == null) {
             sbuf.append("null");

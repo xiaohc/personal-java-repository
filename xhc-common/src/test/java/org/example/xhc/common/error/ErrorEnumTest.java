@@ -26,10 +26,8 @@ class ErrorEnumTest {
 
     @Test
     void testValidate() {
-        Executable validate = () -> {
-            BusinessAssert.isTrue(false,
-                    ErrorEnum.REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate").toException());
-        };
+        Executable validate = () -> BusinessAssert.isTrue(false,
+                ErrorEnum.REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate").toException());
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 请求内容错误" +
