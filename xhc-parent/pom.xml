@@ -84,7 +84,6 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava_version}</version>
-                <type>bundle</type>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.validator</groupId>

@@ -1,14 +1,16 @@
 package org.example.xhc.common.validation;
 
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.example.xhc.common.error.ErrorContext;
 import org.example.xhc.common.error.IErrorDescribable;
 import org.hibernate.validator.HibernateValidator;
 
-import javax.validation.*;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import javax.validation.groups.Default;
-import java.util.Map;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -91,25 +93,19 @@ public final class BusinessValidate {
             return ValidationResultImpl.VALIDATION_SUCCESS;
         }
 
-        Map<Path, String> errorDetails = validatedSet.stream()
-                .filter(Objects::nonNull)
-                .collect(groupingBy(
-                        ConstraintViolation::getPropertyPath,
-                        mapping(ConstraintViolation::getMessage, joining(" and ", " : ", "."))));
-
-        return new ValidationResultImpl(true, errorDetails);
+        return new ValidationResultImpl<>(true, validatedSet);
     }
 
     /**
      * 校验结果
      */
     @AllArgsConstructor
-    private static class ValidationResultImpl implements IValidationResult {
+    private static class ValidationResultImpl<T> implements IValidationResult {
 
         /**
          * 校验正常常量
          */
-        private static final ValidationResultImpl VALIDATION_SUCCESS = new ValidationResultImpl(false, null);
+        private static final ValidationResultImpl<?> VALIDATION_SUCCESS = new ValidationResultImpl<>(false, null);
 
         /**
          * 是否有异常
@@ -119,7 +115,7 @@ public final class BusinessValidate {
         /**
          * 异常消息记录
          */
-        private final Map<Path, String> errorDetails;
+        private final Set<ConstraintViolation<T>> validatedSet;
 
         /**
          * 如果校验结果为有异常，则抛出业务错误
@@ -129,7 +125,7 @@ public final class BusinessValidate {
         @Override
         public void throwIfWrong(final IErrorDescribable errorDescribable) {
             if (hasErrors) {
-                throw ErrorContext.instance().reset().mark(errorDescribable).becauseOf(getMessage()).toException();
+                throw ErrorContext.instance().reset().mark(errorDescribable).becauseOf(getErrorMessage()).toException();
             }
         }
 
@@ -138,16 +134,37 @@ public final class BusinessValidate {
          *
          * @return 校验异常详情
          */
-        public String getMessage() {
-            if (isEmpty(errorDetails)) {
-                return StringUtils.EMPTY;
+        public String getErrorMessage() {
+            if (!hasErrors) {
+                return "JSR-303 bean validation succeeded without error";
             }
 
-            return errorDetails
+            if (isEmpty(validatedSet) || isOnlyNullElement(validatedSet)) {
+                return "JSR-303 bean validation failed, no error message found";
+            }
+
+            // errorDetails
+            String errorDetails = validatedSet.stream()
+                    .filter(Objects::nonNull)
+                    .sorted(Comparator.comparing(v -> v.getPropertyPath().toString()))
+                    .collect(groupingBy(
+                            ConstraintViolation::getRootBean,
+                            mapping(v -> "(" + v.getPropertyPath() + ")" + v.getMessage(), joining(", "))))
                     .entrySet()
                     .stream()
-                    .map(v -> v.getKey() + v.getValue())
-                    .collect(joining(LINE_SEPARATOR, "JSR-303 Bean Validation." + LINE_SEPARATOR, ""));
+                    .map(v -> ">>>     " + v.getKey() + LINE_SEPARATOR + ">>>       └── " + v.getValue())
+                    .collect(joining(LINE_SEPARATOR));
+
+            // message
+            StringBuilder message = new StringBuilder();
+            message.append("JSR-303 bean validation failed");
+            message.append(LINE_SEPARATOR);
+            message.append(">>> The error message of verification is as follows:");
+            message.append(LINE_SEPARATOR);
+            message.append(errorDetails);
+            message.append(LINE_SEPARATOR);
+
+            return message.toString();
         }
     }
 }
