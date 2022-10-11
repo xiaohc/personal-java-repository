@@ -28,7 +28,7 @@ class ErrorEnumTest {
     void testValidate() {
         Executable validate = () -> {
             BusinessAssert.isTrue(false,
-                    ErrorEnum.REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate"));
+                    ErrorEnum.REQUEST_ERROR.becauseOf("测试业务检查工具类: {}", "Validate").toException());
         };
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
@@ -57,7 +57,7 @@ class ErrorEnumTest {
                     System.out.write(bytes, 0, byteread);
                 }
             } catch (IOException e) {
-                throw ErrorEnum.REQUEST_ERROR.becauseOf("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e);
+                throw ErrorEnum.REQUEST_ERROR.becauseOf("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e).toException();
             }
         };
 

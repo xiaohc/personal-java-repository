@@ -18,7 +18,7 @@ public interface IErrorDefinable extends Serializable {
      *
      * @return 标识码
      */
-    int getCode();
+    Integer getCode();
 
     /**
      * 获取描述信息

@@ -17,8 +17,8 @@ public interface IErrorDescribable extends IErrorDefinable {
      * @param message 详细消息
      * @return 自定义业务异常
      */
-    default RuntimeException becauseOf(String message) {
-        return ErrorContext.instance().reset().mark(this).becauseOf(message).toException();
+    default IErrorDescribable becauseOf(String message) {
+        return ErrorContext.instance().reset().mark(this).becauseOf(message);
     }
 
     /**
@@ -28,8 +28,16 @@ public interface IErrorDescribable extends IErrorDefinable {
      * @param params         参数（支持最后1个参数为Throwable）
      * @return 自定义业务异常
      */
-    default RuntimeException becauseOf(String messagePattern, final Object... params) {
-        return ErrorContext.instance().reset().mark(this).becauseOf(messagePattern, params).toException();
+    default IErrorDescribable becauseOf(String messagePattern, final Object... params) {
+        return ErrorContext.instance().reset().mark(this).becauseOf(messagePattern, params);
     }
 
+    /**
+     * 转为业务异常
+     *
+     * @return 业务异常
+     */
+    default RuntimeException toException() {
+        return ErrorContext.instance().reset().mark(this).toException();
+    }
 }

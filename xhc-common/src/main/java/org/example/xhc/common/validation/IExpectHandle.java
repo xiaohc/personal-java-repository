@@ -1,5 +1,7 @@
 package org.example.xhc.common.validation;
 
+import org.example.xhc.common.error.IErrorDescribable;
+
 /**
  * 定义如何处理期望
  *
@@ -11,7 +13,7 @@ public interface IExpectHandle {
     /**
      * 如果期望结果为false，抛出免检异常
      *
-     * @param e 错误
+     * @param error 错误
      */
-    void throwIfFailed(RuntimeException e);
+    void throwIfFailed(IErrorDescribable error);
 }

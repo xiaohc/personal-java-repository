@@ -30,7 +30,7 @@ public enum ErrorEnum implements IErrorDescribable, IErrorDefinable {
     /**
      * 错误码
      */
-    private final int code;
+    private final Integer code;
 
     /**
      * 错误消息

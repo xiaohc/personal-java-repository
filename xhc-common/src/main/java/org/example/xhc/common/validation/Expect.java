@@ -22,9 +22,9 @@ public final class Expect {
      * @throws RuntimeException 如果表达式为false，抛出免检异常
      */
     public static IExpectHandle isTrue(final boolean expression) {
-        return (runtimeException) -> {
+        return error -> {
             if (!expression) {
-                throw runtimeException;
+                throw error.toException();
             }
         };
     }

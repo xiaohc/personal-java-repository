@@ -21,7 +21,7 @@ import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
  * @since 1.0.0
  */
 @Getter
-public class ErrorContext implements Serializable {
+public class ErrorContext implements IErrorDescribable, Serializable {
     private static final long serialVersionUID = 800312585448987400L;
 
     /**
@@ -150,6 +150,7 @@ public class ErrorContext implements Serializable {
      * @param reason 原因
      * @return ErrorContext对象
      */
+    @Override
     public ErrorContext becauseOf(final String reason) {
         return reason(reason);
     }
@@ -161,6 +162,7 @@ public class ErrorContext implements Serializable {
      * @param params        参数（支持最后1个参数为Throwable）
      * @return ErrorContext对象
      */
+    @Override
     public ErrorContext becauseOf(final String reasonPattern, final Object... params) {
         FormattingTuple formattingTuple = MessageFormatter.arrayFormat(reasonPattern, params);
         this.reason = formattingTuple.getMessage();
@@ -184,6 +186,7 @@ public class ErrorContext implements Serializable {
      *
      * @return 业务异常
      */
+    @Override
     public BusinessException toException() {
         return cause == null
                 ? new BusinessException(this)
