@@ -13,14 +13,25 @@ import java.util.Set;
  */
 public final class SetUtils {
     /**
-     * 判断 set集合 是否是仅包含null元素
+     * 判断 set集合，仅包含null元素
      *
      * @param collection 集合
-     * @param <T>  集合元素类型
+     * @param <T>        集合元素类型
      * @return true - 是，false - 否
      */
     public static <T> boolean isOnlyNullElement(Set<T> collection) {
         return CollectionUtils.isEqualCollection(collection, Collections.singleton(null));
+    }
+
+    /**
+     * 判断 set集合，不是仅包含null元素
+     *
+     * @param collection 集合
+     * @param <T>        集合元素类型
+     * @return true - 是，false - 否
+     */
+    public static <T> boolean isNotOnlyNullElement(Set<T> collection) {
+        return !isOnlyNullElement(collection);
     }
 
     /**

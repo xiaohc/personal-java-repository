@@ -2,7 +2,6 @@ package org.example.xhc.common.validation;
 
 import lombok.Builder;
 import lombok.Data;
-import org.example.xhc.common.error.ErrorEnum;
 import org.example.xhc.common.exception.BusinessException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -14,7 +13,8 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
-import static org.example.xhc.common.validation.BusinessValidate.validate;
+import static org.example.xhc.common.error.ErrorEnum.INTERNAL_SERVER_ERROR;
+import static org.example.xhc.common.validation.Expect.passValidation;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -23,14 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author xiaohongchao
  * @since 1.0.0
  */
-class BusinessValidateTest {
+class ValidateTest {
 
     @Test
     void checkErrors() {
         RequestDTO request = RequestDTO.builder().build();
 
         Executable validate = () -> {
-            validate(request).throwIfWrong(ErrorEnum.INTERNAL_SERVER_ERROR);
+            passValidation(request).throwIfFailed(INTERNAL_SERVER_ERROR.as("test"));
         };
 
         BusinessException exception = assertThrows(BusinessException.class, validate);

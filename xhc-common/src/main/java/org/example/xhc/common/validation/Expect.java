@@ -2,6 +2,21 @@ package org.example.xhc.common.validation;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.example.xhc.common.error.ErrorContext;
+import org.hibernate.validator.HibernateValidator;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.Set;
+
+import static java.util.stream.Collectors.*;
+import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
+import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.common.util.SetUtils.isNotOnlyNullElement;
 
 /**
  * 业务验证工具类
@@ -10,6 +25,17 @@ import org.apache.commons.lang3.StringUtils;
  * @since 1.0.0
  */
 public final class Expect {
+    /**
+     * Java Bean 校验器
+     */
+    private static final Validator VALIDATOR;
+
+    static {
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure()
+                .failFast(false)
+                .buildValidatorFactory();
+        VALIDATOR = validatorFactory.getValidator();
+    }
 
     /**
      * 防止实例化
@@ -105,5 +131,48 @@ public final class Expect {
                 throw error.toException();
             }
         };
+    }
+
+    /**
+     * 通过组来校验实体类
+     *
+     * @param t      实体类对象
+     * @param groups 校验分组
+     * @param <T>    实体类类型
+     * @return 校验结果
+     */
+    public static <T> IExpectHandle passValidation(T t, Class<?>... groups) {
+        Set<ConstraintViolation<T>> validatedSet = VALIDATOR.validate(t, groups);
+
+        return errorDescribable -> {
+            if (isNotEmpty(validatedSet) && isNotOnlyNullElement(validatedSet)) {
+                throw ErrorContext.instance().reset().mark(errorDescribable).reason(generateErrorDetails(validatedSet)).toException();
+            }
+        };
+    }
+
+    /**
+     * 获取组装好的校验异常详情
+     *
+     * @return 校验异常详情
+     */
+    private static <T> String generateErrorDetails(Set<ConstraintViolation<T>> validatedSet) {
+        String errorMessage = validatedSet.stream()
+                .filter(Objects::nonNull)
+                .sorted(Comparator.comparing(v -> v.getPropertyPath().toString()))
+                .collect(groupingBy(
+                        ConstraintViolation::getRootBean,
+                        mapping(v -> "(" + v.getPropertyPath() + ")" + v.getMessage(), joining(", "))))
+                .entrySet()
+                .stream()
+                .map(v -> ">>>     " + v.getKey() + LINE_SEPARATOR + ">>>       └── " + v.getValue())
+                .collect(joining(LINE_SEPARATOR));
+
+        return "JSR-303 bean validation failed" +
+                LINE_SEPARATOR +
+                ">>> The error message of verification is as follows:" +
+                LINE_SEPARATOR +
+                errorMessage +
+                LINE_SEPARATOR;
     }
 }
