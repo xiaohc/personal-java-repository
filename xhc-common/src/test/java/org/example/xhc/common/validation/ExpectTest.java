@@ -19,7 +19,7 @@ class ExpectTest {
 
     @Test
     void isTrue() {
-        Executable validate = () -> Expect.isTrue(false).throwIfFailed(INTERNAL_SERVER_ERROR.becauseOf("yes"));
+        Executable validate = () -> Expect.isTrue(false).throwIfFailed(INTERNAL_SERVER_ERROR.as("yes"));
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
 

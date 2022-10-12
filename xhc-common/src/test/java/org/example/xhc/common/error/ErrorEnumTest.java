@@ -27,7 +27,7 @@ class ErrorEnumTest {
     @Test
     void testValidate() {
         Executable validate = () -> BusinessAssert.isTrue(false,
-                ErrorEnum.INTERNAL_SERVER_ERROR.becauseOf("测试业务检查工具类: {}", "Validate").toException());
+                ErrorEnum.INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate").toException());
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
@@ -55,7 +55,7 @@ class ErrorEnumTest {
                     System.out.write(bytes, 0, byteread);
                 }
             } catch (IOException e) {
-                throw ErrorEnum.INTERNAL_SERVER_ERROR.becauseOf("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e).toException();
+                throw ErrorEnum.INTERNAL_SERVER_ERROR.as("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e).toException();
             }
         };
 
