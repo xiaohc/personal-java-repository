@@ -5,6 +5,7 @@
 package org.example.xhc.common.error;
 
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.example.xhc.common.exception.BusinessException;
 import org.example.xhc.common.helper.FormattingTuple;
 import org.example.xhc.common.helper.MessageFormatter;
@@ -159,6 +160,21 @@ public class ErrorContext implements IErrorDefinable, Serializable {
     }
 
     /**
+     * 增加错误原因
+     *
+     * @param reason 原因
+     * @return ErrorContext对象
+     */
+    public ErrorContext appendReason(final String reason) {
+        if (StringUtils.isBlank(this.reason)) {
+            this.reason = reason;
+        } else {
+            this.reason = this.reason + LINE_SEPARATOR + reason;
+        }
+        return this;
+    }
+
+    /**
      * 设置引起错误的异常信息
      *
      * @param cause 异常
@@ -201,7 +217,7 @@ public class ErrorContext implements IErrorDefinable, Serializable {
         // reason
         if (reason != null) {
             description.append(LINE_SEPARATOR);
-            description.append(">>> The reason for the error is ");
+            description.append(">>> ");
             description.append(reason);
         }
 
