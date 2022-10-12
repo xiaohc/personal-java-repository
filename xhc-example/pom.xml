@@ -5,15 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example.xhc</groupId>
-    <artifactId>xhc-all</artifactId>
+    <artifactId>xhc-example</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>xhc-parent</module>
-        <module>xhc-common</module>
-        <module>xhc-demo</module>
-        <module>xhc-example</module>
+        <module>example-stream</module>
     </modules>
 
 </project>
