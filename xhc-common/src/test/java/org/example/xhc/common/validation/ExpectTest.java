@@ -27,4 +27,16 @@ class ExpectTest {
                 LINE_SEPARATOR + ">>> The error code is 500" +
                 LINE_SEPARATOR + ">>> The reason for the error is yes");
     }
+
+    @Test
+    void notNull() {
+        Executable validate = () -> Expect.notNull(null)
+                .throwIfFailed(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
+
+        BusinessException exception = assertThrows(BusinessException.class, validate);
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+                LINE_SEPARATOR + ">>> The error code is 500" +
+                LINE_SEPARATOR + ">>> The reason for the error is 测试业务检查工具类: Validate");
+    }
+
 }

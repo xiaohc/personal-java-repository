@@ -5,15 +5,13 @@
 package org.example.xhc.common.error;
 
 import org.example.xhc.common.exception.BusinessException;
-import org.example.xhc.common.validation.BusinessAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.common.error.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -23,17 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @since 1.0.0
  */
 class ErrorEnumTest {
-
-    @Test
-    void testValidate() {
-        Executable validate = () -> BusinessAssert.isTrue(false,
-                ErrorEnum.INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate").toException());
-
-        BusinessException exception = assertThrows(BusinessException.class, validate);
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
-                LINE_SEPARATOR + ">>> The error code is 500" +
-                LINE_SEPARATOR + ">>> The reason for the error is 测试业务检查工具类: Validate");
-    }
 
     @Test
     void testAssert() {
@@ -55,7 +42,7 @@ class ErrorEnumTest {
                     System.out.write(bytes, 0, byteread);
                 }
             } catch (IOException e) {
-                throw ErrorEnum.INTERNAL_SERVER_ERROR.as("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e).toException();
+                throw INTERNAL_SERVER_ERROR.as("随机读取文件错误： 期望 {}， 实际 {}", "success", "failed", e).toException();
             }
         };
 

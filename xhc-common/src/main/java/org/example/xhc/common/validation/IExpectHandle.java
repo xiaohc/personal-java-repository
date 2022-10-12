@@ -11,9 +11,17 @@ import org.example.xhc.common.error.ErrorContext;
 @FunctionalInterface
 public interface IExpectHandle {
     /**
-     * 如果期望结果为false，抛出免检异常
+     * 抛出免检异常或不执行任何操作
+     * <p>
+     * if代码的流式语法糖:
+     * <p>
+     * if (...) {
+     * throw new RuntimeException("出现异常了")；
+     * }
+     * <p>
      *
-     * @param errorContext 错误上下文
+     * @param error 错误
+     * @throws RuntimeException 如果非预期结果，则抛出免检异常
      */
-    void throwIfFailed(ErrorContext errorContext);
+    void throwIfFailed(ErrorContext error);
 }
