@@ -7,9 +7,10 @@
 
 ``` lua
 personal-java-repository
-├── xhc-parent -- 统一的Maven父类，统一管理第三方软件版本
-├── xhc-common -- 通用代码
-├── xhc-demo -- 演示项目
+├── xhc-parent   -- 统一的Maven父类，统一管理第三方软件版本
+├── xhc-common   -- 通用代码
+├── xhc-example  -- 范例代码
+├── xhc-demo     -- 演示项目
 │   ├── demo-parent -- Maven父类
 │   ├── demo-provider -- 服务提供者
 └   └── demo-consumer -- 服务消费者
