@@ -79,8 +79,7 @@ public final class Expect {
 
         return ">>> JSR-303 bean validation failed, details are as follows:" +
                 LINE_SEPARATOR +
-                errorMessage +
-                LINE_SEPARATOR;
+                errorMessage;
     }
 
     /**

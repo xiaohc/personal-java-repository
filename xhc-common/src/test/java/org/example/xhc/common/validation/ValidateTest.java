@@ -27,9 +27,8 @@ class ValidateTest {
 
     @Test
     void checkErrors() {
-        RequestDTO request = RequestDTO.builder().build();
-
         Executable validate = () -> {
+            RequestDTO request = RequestDTO.builder().build();
             passValidation(request).throwIfFailed(INTERNAL_SERVER_ERROR.as("test"));
         };
 
@@ -37,7 +36,10 @@ class ValidateTest {
 
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
                 LINE_SEPARATOR + ">>> The error code is 500" +
-                LINE_SEPARATOR + ">>> The reason for the error is requestTime:请求时间不能为空ip:请求IP不能为空");
+                LINE_SEPARATOR + ">>> test" +
+                LINE_SEPARATOR + ">>> JSR-303 bean validation failed, details are as follows:" +
+                LINE_SEPARATOR + ">>>     ValidateTest.RequestDTO(ip=null, requestTime=null)" +
+                LINE_SEPARATOR + ">>>       └── (ip)请求IP不能为空, (requestTime)请求时间不能为空");
     }
 
     @Data

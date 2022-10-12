@@ -11,6 +11,8 @@ import org.junit.jupiter.api.function.Executable;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 import static org.example.xhc.common.error.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -47,6 +49,10 @@ class ErrorEnumTest {
         };
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+                LINE_SEPARATOR + ">>> The error code is 500" +
+                LINE_SEPARATOR + ">>> 随机读取文件错误： 期望 success， 实际 failed" +
+                LINE_SEPARATOR + ">>> Cause: java.io.FileNotFoundException: \\error.file (系统找不到指定的文件。)");
 //        Optional<IRecordable> iErrorContext = REQUEST_ERROR.assertIsTrue(1 == 1);
 //        System.out.println(iErrorContext);
 
