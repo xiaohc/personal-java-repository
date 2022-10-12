@@ -8,22 +8,64 @@ package org.example.xhc.common.constant;
  */
 public final class NumberConstants {
     /**
-     * 常用整数常量
+     * 常用整数常量: -1
      */
     public static final int MINUS_ONE = -1;
+    /**
+     * 常用整数常量: 0
+     */
     public static final int ZERO = 0;
+    /**
+     * 常用整数常量: 1
+     */
     public static final int ONE = 1;
+    /**
+     * 常用整数常量: 2
+     */
     public static final int TWO = 2;
+    /**
+     * 常用整数常量: 3
+     */
     public static final int THREE = 3;
+    /**
+     * 常用整数常量: 4
+     */
     public static final int FOUR = 4;
+    /**
+     * 常用整数常量: 5
+     */
     public static final int FIVE = 5;
+    /**
+     * 常用整数常量: 6
+     */
     public static final int SIX = 6;
+    /**
+     * 常用整数常量: 7
+     */
     public static final int SEVEN = 7;
+    /**
+     * 常用整数常量: 8
+     */
     public static final int EIGHT = 8;
+    /**
+     * 常用整数常量: 9
+     */
     public static final int NINE = 9;
+    /**
+     * 常用整数常量: 10
+     */
     public static final int TEN = 10;
+    /**
+     * 常用整数常量: 16
+     */
     public static final int SIXTEEN = 16;
+    /**
+     * 常用整数常量: 32
+     */
     public static final int THIRTY_TWO = 32;
+    /**
+     * 常用整数常量: 64
+     */
     public static final int SIXTY_FOUR = 64;
     /**
      * 可重复使用的整数常量: -1
