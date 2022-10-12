@@ -113,8 +113,8 @@ public final class MessageFormatter {
         // use string builder for better multicore performance
         StringBuilder sbuf = new StringBuilder(messagePattern.length() + 50);
 
-        int L;
-        for (L = 0; L < argArray.length; L++) {
+        int k;
+        for (k = 0; k < argArray.length; k++) {
 
             j = messagePattern.indexOf(DELIM_STR, i);
 
@@ -132,7 +132,7 @@ public final class MessageFormatter {
                 if (isEscapedDelimeter(messagePattern, j)) {
                     if (!isDoubleEscaped(messagePattern, j)) {
                         // DELIM_START was escaped, thus should not be incremented
-                        L--;
+                        k--;
                         sbuf.append(messagePattern, i, j - 1);
                         sbuf.append(DELIM_START);
                         i = j + 1;
@@ -141,13 +141,13 @@ public final class MessageFormatter {
                         // itself escaped: "abc x:\\{}"
                         // we have to consume one backward slash
                         sbuf.append(messagePattern, i, j - 1);
-                        deeplyAppendParameter(sbuf, argArray[L], new HashMap<Object[], Object>());
+                        deeplyAppendParameter(sbuf, argArray[k], new HashMap<>());
                         i = j + 2;
                     }
                 } else {
                     // normal case
                     sbuf.append(messagePattern, i, j);
-                    deeplyAppendParameter(sbuf, argArray[L], new HashMap<Object[], Object>());
+                    deeplyAppendParameter(sbuf, argArray[k], new HashMap<>());
                     i = j + 2;
                 }
             }
@@ -161,20 +161,11 @@ public final class MessageFormatter {
         if (delimeterStartIndex == 0) {
             return false;
         }
-        char potentialEscape = messagePattern.charAt(delimeterStartIndex - 1);
-        if (potentialEscape == ESCAPE_CHAR) {
-            return true;
-        } else {
-            return false;
-        }
+        return messagePattern.charAt(delimeterStartIndex - 1) == ESCAPE_CHAR;
     }
 
     private static boolean isDoubleEscaped(String messagePattern, int delimeterStartIndex) {
-        if (delimeterStartIndex >= 2 && messagePattern.charAt(delimeterStartIndex - 2) == ESCAPE_CHAR) {
-            return true;
-        } else {
-            return false;
-        }
+        return delimeterStartIndex >= 2 && messagePattern.charAt(delimeterStartIndex - 2) == ESCAPE_CHAR;
     }
 
     private static void deeplyAppendParameter(StringBuilder sbuf, Object o, Map<Object[], Object> seenMap) {
