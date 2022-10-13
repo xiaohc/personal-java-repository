@@ -1,34 +1,30 @@
-/*
- * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
- */
-
 package org.example.xhc.common.reply;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 标准错误码
+ * 应答内容
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
 @Getter
 @AllArgsConstructor
-public enum ErrorEnum implements IResponseContent {
+public enum ResponseEnum implements IResponseContent {
     /**
-     * 系统内部错误
+     * 处理成功
      */
-    INTERNAL_SERVER_ERROR(9999, "系统内部错误"),
+    SUCCESS(0, "成功"),
     ;
 
     /**
-     * 错误码
+     * 应答码
      */
     private final Integer code;
 
     /**
-     * 错误消息
+     * 应答消息
      */
     private final String message;
 }

@@ -24,7 +24,7 @@ class ExpectTest {
         BusinessException exception = assertThrows(BusinessException.class, validate);
 
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
-                LINE_SEPARATOR + ">>> The error code is 500" +
+                LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> yes");
     }
 
@@ -35,7 +35,7 @@ class ExpectTest {
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
-                LINE_SEPARATOR + ">>> The error code is 500" +
+                LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试业务检查工具类: Validate");
     }
 
