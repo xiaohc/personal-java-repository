@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
-import static org.example.xhc.common.error.ErrorEnum.INTERNAL_SERVER_ERROR;
+import static org.example.xhc.common.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.example.xhc.common.validation.Expect.passValidation;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

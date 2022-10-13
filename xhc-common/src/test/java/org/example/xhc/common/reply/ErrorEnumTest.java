@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.error;
+package org.example.xhc.common.reply;
 
 import org.example.xhc.common.exception.BusinessException;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import java.io.RandomAccessFile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
-import static org.example.xhc.common.error.ErrorEnum.INTERNAL_SERVER_ERROR;
+import static org.example.xhc.common.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**

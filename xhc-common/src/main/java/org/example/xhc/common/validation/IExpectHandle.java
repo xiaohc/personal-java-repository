@@ -1,6 +1,6 @@
 package org.example.xhc.common.validation;
 
-import org.example.xhc.common.error.ErrorContext;
+import org.example.xhc.common.reply.ErrorContext;
 
 /**
  * 定义如何处理期望

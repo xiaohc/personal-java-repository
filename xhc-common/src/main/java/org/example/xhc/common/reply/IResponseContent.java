@@ -2,17 +2,17 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.error;
+package org.example.xhc.common.reply;
 
 import java.io.Serializable;
 
 /**
- * 可给出错误定义的
+ * 定义应答中的内容
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-public interface IErrorDefinable extends Serializable {
+public interface IResponseContent extends Serializable {
     /**
      * 获取标识码
      *

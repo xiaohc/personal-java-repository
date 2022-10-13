@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.error;
+package org.example.xhc.common.reply;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -130,7 +130,7 @@ public class ErrorContext implements Serializable {
      * @param errorRecord 错误记录
      * @return ErrorContext对象
      */
-    public ErrorContext reset(final IErrorDefinable errorRecord) {
+    public ErrorContext reset(final IResponseContent errorRecord) {
         reset();
         Optional.ofNullable(errorRecord)
                 .ifPresent(v -> {
