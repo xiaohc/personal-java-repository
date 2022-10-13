@@ -22,7 +22,7 @@ import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
  * @since 1.0.0
  */
 @Getter
-public class ErrorContext implements IErrorDefinable, Serializable {
+public class ErrorContext implements Serializable {
     private static final long serialVersionUID = 800312585448987400L;
 
     /**
@@ -39,6 +39,11 @@ public class ErrorContext implements IErrorDefinable, Serializable {
      * 错误消息
      */
     private String message;
+
+    /**
+     * 错误描述
+     */
+    private String description;
 
     /**
      * 错误原因
@@ -136,6 +141,30 @@ public class ErrorContext implements IErrorDefinable, Serializable {
     }
 
     /**
+     * 设置错误描述
+     *
+     * @param description 错误描述
+     * @return ErrorContext对象
+     */
+    public ErrorContext description(final String description) {
+        this.description = description;
+        return this;
+    }
+
+    /**
+     * 设置错误描述
+     *
+     * @param descriptionPattern 原因
+     * @return ErrorContext对象
+     */
+    public ErrorContext description(final String descriptionPattern, final Object... params) {
+        FormattingTuple formattingTuple = MessageFormatter.arrayFormat(descriptionPattern, params);
+        this.description = formattingTuple.getMessage();
+        this.cause = formattingTuple.getThrowable();
+        return this;
+    }
+
+    /**
      * 设置错误原因
      *
      * @param reason 原因
@@ -199,36 +228,43 @@ public class ErrorContext implements IErrorDefinable, Serializable {
 
     @Override
     public String toString() {
-        StringBuilder description = new StringBuilder();
+        StringBuilder ret = new StringBuilder();
 
         // message
-        if (this.message != null) {
-            description.append(LINE_SEPARATOR);
-            description.append(">>> ");
-            description.append(this.message);
+        if (message != null) {
+            ret.append(LINE_SEPARATOR);
+            ret.append(">>> ");
+            ret.append(message);
         }
 
         // code
         if (code != null) {
-            description.append(LINE_SEPARATOR);
-            description.append(">>> The error code is ");
-            description.append(code);
+            ret.append(LINE_SEPARATOR);
+            ret.append(">>> The error code is ");
+            ret.append(code);
+        }
+
+        // description
+        if (description != null) {
+            ret.append(LINE_SEPARATOR);
+            ret.append(">>> ");
+            ret.append(description);
         }
 
         // reason
         if (reason != null) {
-            description.append(LINE_SEPARATOR);
-            description.append(">>> ");
-            description.append(reason);
+            ret.append(LINE_SEPARATOR);
+            ret.append(">>> ");
+            ret.append(reason);
         }
 
         // cause
         if (cause != null) {
-            description.append(LINE_SEPARATOR);
-            description.append(">>> Cause: ");
-            description.append(cause);
+            ret.append(LINE_SEPARATOR);
+            ret.append(">>> Cause: ");
+            ret.append(cause);
         }
 
-        return description.toString();
+        return ret.toString();
     }
 }

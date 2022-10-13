@@ -55,7 +55,7 @@ public final class Expect {
 
         return error -> {
             if (isNotEmpty(validatedSet) && isNotOnlyNullElement(validatedSet)) {
-                throw error.appendReason(generateErrorDetails(validatedSet)).toException();
+                throw error.reason(generateErrorDetails(validatedSet)).toException();
             }
         };
     }
@@ -77,7 +77,7 @@ public final class Expect {
                 .map(v -> ">>>     " + v.getKey() + LINE_SEPARATOR + ">>>       └── " + v.getValue())
                 .collect(joining(LINE_SEPARATOR));
 
-        return ">>> JSR-303 bean validation failed, details are as follows:" +
+        return "JSR-303 bean validation failed, details are as follows:" +
                 LINE_SEPARATOR +
                 errorMessage;
     }

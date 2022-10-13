@@ -15,7 +15,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ErrorEnum implements IErrorDescribable {
+public enum ErrorEnum implements IErrorDefinable {
     /**
      * 系统内部错误
      */
