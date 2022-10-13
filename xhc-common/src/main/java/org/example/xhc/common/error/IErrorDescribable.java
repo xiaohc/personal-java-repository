@@ -18,7 +18,7 @@ public interface IErrorDescribable extends IErrorDefinable {
      * @return 自定义业务异常
      */
     default ErrorContext as(String message) {
-        return ErrorContext.instance().reset().mark(this).reason(message);
+        return ErrorContext.instance().reset(this).reason(message);
     }
 
     /**
@@ -29,6 +29,6 @@ public interface IErrorDescribable extends IErrorDefinable {
      * @return 自定义业务异常
      */
     default ErrorContext as(String messagePattern, final Object... params) {
-        return ErrorContext.instance().reset().mark(this).reason(messagePattern, params);
+        return ErrorContext.instance().reset(this).reason(messagePattern, params);
     }
 }

@@ -120,12 +120,13 @@ public class ErrorContext implements IErrorDefinable, Serializable {
     }
 
     /**
-     * 记录错误信息
+     * 重置原ErrorContext内容为指定内容
      *
      * @param errorRecord 错误记录
      * @return ErrorContext对象
      */
-    public ErrorContext mark(final IErrorDefinable errorRecord) {
+    public ErrorContext reset(final IErrorDefinable errorRecord) {
+        reset();
         Optional.ofNullable(errorRecord)
                 .ifPresent(v -> {
                     this.code = v.getCode();
