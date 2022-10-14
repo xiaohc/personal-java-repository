@@ -1,13 +1,12 @@
-# 代码范例库
+# Java8函数式编程心得
 
 ## 简介
-关于java stream的一些操作范例
-
+整理的一些java stream范例
 
 ## 组织结构
 
 ``` lua
-personal-java-repository
+example-stream
 ├── xhc-parent -- 统一的Maven父类，统一管理第三方软件版本
 ├── xhc-common -- 通用代码
 ├── xhc-demo -- 演示项目
