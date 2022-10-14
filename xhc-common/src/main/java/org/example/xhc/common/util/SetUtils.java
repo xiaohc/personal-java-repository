@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
+ */
+
 package org.example.xhc.common.util;
 
 import org.apache.commons.collections4.CollectionUtils;
