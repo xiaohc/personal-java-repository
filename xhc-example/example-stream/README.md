@@ -24,13 +24,18 @@ example-stream
 
 #### Stream
 
-> 常用技巧
+> 常用范例
 
-- 详细设置请参考：[官方文档](https://www.jetbrains.com/help/idea/2021.3/configuring-project-and-ide-settings.html)
-- `挑选` 设置入口：File -> Settings -> Editor -> Copyright
-- `排序` 设置入口：File -> Settings -> Editor -> Copyright
-- `合并` 设置入口：File -> Settings -> Editor -> Copyright
+- `合并` 
+  ``` Java
+  Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
+  
+  结果： asList(1, 2, 3, 3, 4)
+  ```
 - `分组` 分组：File -> Settings -> Editor -> Copyright
+- `挑选`
+- `排序` 设置入口：File -> Settings -> Editor -> Copyright
+- `并集` 分组：File -> Settings -> Editor -> Copyright
 - `交集` 设置入口：File -> Settings -> Editor -> Copyright
 - `并集` 设置入口：File -> Settings -> Editor -> Copyright
 

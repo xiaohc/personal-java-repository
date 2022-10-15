@@ -24,10 +24,8 @@ class ExampleTest {
 
     @Test
     void testUnion() {
-        List<Integer> together = Stream.of(asList(1, 2), asList(3, 4))
-                .flatMap(Collection::stream)
-                .collect(toList());
+        List<Integer> ret = Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList());
 
-        assertThat(together).isEqualTo(asList(1, 2, 3, 4));
+        assertThat(ret).isEqualTo(asList(1, 2, 3, 3, 4));
     }
 }
