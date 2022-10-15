@@ -24,7 +24,7 @@ example-stream
 
 #### Stream
 
-> 常用范例
+> 常用功能
 
 - 合并 `flatMap` 
   ``` Java
