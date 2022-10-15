@@ -26,11 +26,11 @@ example-stream
 
 > 常用范例
 
-- `合并` 
+- 合并 `flatMap` 
   ``` Java
   Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
   
-  结果： asList(1, 2, 3, 3, 4)
+  结果: asList(1, 2, 3, 3, 4)
   ```
 - `分组` 分组：File -> Settings -> Editor -> Copyright
 - `挑选`
