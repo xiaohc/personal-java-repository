@@ -4,18 +4,6 @@
 
 整理的一些java stream范例
 
-## 组织结构
-
-``` lua
-example-stream
-├── xhc-parent -- 统一的Maven父类，统一管理第三方软件版本
-├── xhc-common -- 通用代码
-├── xhc-demo -- 演示项目
-│   ├── demo-parent -- Maven父类
-│   ├── demo-provider -- 服务提供者
-└   └── demo-consumer -- 服务消费者
-```
-
 ## 技术理解
 
 ### 集合操作
