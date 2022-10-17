@@ -21,19 +21,19 @@
   结果: asList(1, 2, 3, 3, 4)
   ```
 - `分组` 分组：File -> Settings -> Editor -> Copyright
-  ``` lua
+  ``` Java
   Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
 
   结果: asList(1, 2, 3, 3, 4)
   ```
 - 挑选 `filter、min、max`
-  ``` java
+  ``` Java
   Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList())
 
   结果: singletonList("1abc")
   ```
-- 排序 `排序` 
-  ``` python
+- 排序 `sorted` 
+  ``` Java
   Stream.of("a2", "abc", "a").sorted(Comparator.naturalOrder()).collect(toList())
 
   结果: asList("a", "a2", "abc")
