@@ -12,6 +12,7 @@
     <modules>
         <module>xhc-parent</module>
         <module>xhc-common</module>
+        <module>xhc-bring</module>
         <module>xhc-demo</module>
         <module>xhc-example</module>
     </modules>
