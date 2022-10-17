@@ -13,7 +13,7 @@ import org.example.xhc.demo.base.helper.MessageFormatter;
 import java.io.Serializable;
 import java.util.Optional;
 
-import static org.example.xhc.demo.base.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 
 /**
  * 错误上下文

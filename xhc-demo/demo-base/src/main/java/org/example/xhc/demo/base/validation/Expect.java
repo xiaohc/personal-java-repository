@@ -20,7 +20,7 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.*;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
-import static org.example.xhc.demo.base.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 
 /**
  * 业务验证工具类

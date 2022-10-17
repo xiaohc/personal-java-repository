@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.demo.base.constant;
+package org.example.xhc.common.constant;
 
 import org.apache.commons.lang3.StringUtils;
 

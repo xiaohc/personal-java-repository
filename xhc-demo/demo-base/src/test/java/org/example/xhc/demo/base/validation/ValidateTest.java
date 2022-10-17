@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.example.xhc.demo.base.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 import static org.example.xhc.demo.base.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.example.xhc.demo.base.validation.Expect.passValidation;
 import static org.junit.jupiter.api.Assertions.assertThrows;
