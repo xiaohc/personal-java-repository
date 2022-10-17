@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.reply;
+package org.example.xhc.bring.reply;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

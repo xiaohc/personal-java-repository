@@ -2,9 +2,9 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.validation;
+package org.example.xhc.bring.validation;
 
-import org.example.xhc.common.reply.ErrorContext;
+import org.example.xhc.bring.reply.ErrorContext;
 
 /**
  * 定义如何处理期望

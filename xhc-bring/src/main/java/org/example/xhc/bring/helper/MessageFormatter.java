@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.helper;
+package org.example.xhc.bring.helper;
 
 import java.util.HashMap;
 import java.util.Map;

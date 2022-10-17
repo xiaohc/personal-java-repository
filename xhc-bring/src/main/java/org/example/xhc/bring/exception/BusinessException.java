@@ -2,10 +2,10 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.exception;
+package org.example.xhc.bring.exception;
 
 import lombok.Getter;
-import org.example.xhc.common.reply.ErrorContext;
+import org.example.xhc.bring.reply.ErrorContext;
 
 /**
  * 标准业务异常，业务服务中的业务相关异常的超类

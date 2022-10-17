@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.validation;
+package org.example.xhc.bring.validation;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,8 +18,8 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.*;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
-import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
-import static org.example.xhc.common.helper.SetUtils.isNotOnlyNullElement;
+import static org.example.xhc.bring.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.bring.helper.SetUtils.isNotOnlyNullElement;
 
 /**
  * 业务验证工具类

@@ -2,18 +2,18 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.reply;
+package org.example.xhc.bring.reply;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import org.example.xhc.common.exception.BusinessException;
-import org.example.xhc.common.helper.FormattingTuple;
-import org.example.xhc.common.helper.MessageFormatter;
+import org.example.xhc.bring.exception.BusinessException;
+import org.example.xhc.bring.helper.FormattingTuple;
+import org.example.xhc.bring.helper.MessageFormatter;
 
 import java.io.Serializable;
 import java.util.Optional;
 
-import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.bring.constant.SystemConstants.LINE_SEPARATOR;
 
 /**
  * 错误上下文

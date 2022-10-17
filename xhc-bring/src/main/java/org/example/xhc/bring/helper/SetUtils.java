@@ -2,7 +2,7 @@
  * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.common.helper;
+package org.example.xhc.bring.helper;
 
 import org.apache.commons.collections4.CollectionUtils;
 
