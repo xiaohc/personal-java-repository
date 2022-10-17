@@ -21,16 +21,26 @@
   结果: asList(1, 2, 3, 3, 4)
   ```
 - `分组` 分组：File -> Settings -> Editor -> Copyright
-- 挑选 `filter`
+  ``` Java
+  Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
+
+  结果: asList(1, 2, 3, 3, 4)
+  ```
+- 挑选 `filter、min、max`
   ``` Java
   Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList())
 
   结果: singletonList("1abc")
   ```
-- `排序` 设置入口：File -> Settings -> Editor -> Copyright
-- `并集` 分组：File -> Settings -> Editor -> Copyright
-- `交集` 设置入口：File -> Settings -> Editor -> Copyright
-- `并集` 设置入口：File -> Settings -> Editor -> Copyright
+- 排序 `排序` 
+  ``` python
+  Stream.of("a2", "abc", "a").sorted(Comparator.naturalOrder()).collect(toList())
+
+  结果: asList("a", "a2", "abc")
+  ```
+- 并集 `并集` 
+- 交集 `交集` 
+- 并集 `并集` 
 
 #### 集合类基本操作
 

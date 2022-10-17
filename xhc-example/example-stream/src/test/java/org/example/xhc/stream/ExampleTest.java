@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 import static java.lang.Character.isDigit;
@@ -32,9 +33,23 @@ class ExampleTest {
     }
 
     @Test
+    void testGroup() {
+        val ret = Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList());
+
+        assertThat(ret).isEqualTo(Collections.singletonList("1abc"));
+    }
+
+    @Test
     void testFilter() {
         val ret = Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList());
 
         assertThat(ret).isEqualTo(Collections.singletonList("1abc"));
+    }
+
+    @Test
+    void testSort() {
+        val ret = Stream.of("a2", "abc", "a").sorted(Comparator.naturalOrder()).collect(toList());
+
+        assertThat(ret).isEqualTo(asList("a", "a2", "abc"));
     }
 }
