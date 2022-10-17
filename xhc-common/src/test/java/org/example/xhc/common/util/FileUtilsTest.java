@@ -6,10 +6,8 @@ package org.example.xhc.common.util;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
- * TODO
+ * 测试读文件
  *
  * @author xiaohongchao
  * @since 1.0.0

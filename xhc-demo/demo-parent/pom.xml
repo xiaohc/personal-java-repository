@@ -20,17 +20,12 @@
         <xhc-common_version>1.0.0-SNAPSHOT</xhc-common_version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.example.xhc</groupId>
-                <artifactId>xhc-common</artifactId>
-                <version>${xhc-common_version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
+        <dependency>
+            <groupId>org.example.xhc</groupId>
+            <artifactId>xhc-common</artifactId>
+            <version>${xhc-common_version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
