@@ -7,8 +7,8 @@ package org.example.xhc.demo.base.reply;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.example.xhc.demo.base.exception.BusinessException;
-import org.example.xhc.demo.base.helper.FormattingTuple;
-import org.example.xhc.demo.base.helper.MessageFormatter;
+import org.example.xhc.common.helper.FormattingTuple;
+import org.example.xhc.common.helper.MessageFormatter;
 
 import java.io.Serializable;
 import java.util.Optional;

@@ -4,7 +4,6 @@
 
 package org.example.xhc.demo.base.validation;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.HibernateValidator;
@@ -13,7 +12,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
@@ -21,6 +19,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.*;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.common.util.SetUtils.isNotOnlyNullElement;
 
 /**
  * 业务验证工具类
@@ -86,18 +85,6 @@ public final class Expect {
                 LINE_SEPARATOR +
                 errorMessage;
     }
-
-    /**
-     * 判断 set集合，不是仅包含null元素
-     *
-     * @param collection 集合
-     * @param <T>        集合元素类型
-     * @return true - 是，false - 否
-     */
-    private static <T> boolean isNotOnlyNullElement(Set<T> collection) {
-        return !CollectionUtils.isEqualCollection(collection, Collections.singleton(null));
-    }
-
 
     /**
      * 验证参数条件是否为true，如果条件表达式的计算结果为false，抛出免检异常
