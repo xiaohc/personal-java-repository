@@ -11,6 +11,7 @@
 
     <modules>
         <module>demo-parent</module>
+        <module>demo-base</module>
         <module>demo-consumer</module>
         <module>demo-provider</module>
     </modules>
