@@ -4,12 +4,14 @@
 
 package org.example.xhc.stream;
 
+import lombok.val;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 import java.util.stream.Stream;
 
+import static java.lang.Character.isDigit;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,8 +26,15 @@ class ExampleTest {
 
     @Test
     void testUnion() {
-        List<Integer> ret = Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList());
+        val ret = Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList());
 
         assertThat(ret).isEqualTo(asList(1, 2, 3, 3, 4));
+    }
+
+    @Test
+    void testFilter() {
+        val ret = Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList());
+
+        assertThat(ret).isEqualTo(Collections.singletonList("1abc"));
     }
 }
