@@ -21,13 +21,13 @@
   结果: asList(1, 2, 3, 3, 4)
   ```
 - `分组` 分组：File -> Settings -> Editor -> Copyright
-  ``` Java
+  ``` lua
   Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
 
   结果: asList(1, 2, 3, 3, 4)
   ```
 - 挑选 `filter、min、max`
-  ``` Java
+  ``` java
   Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList())
 
   结果: singletonList("1abc")
