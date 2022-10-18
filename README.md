@@ -25,18 +25,18 @@ personal-java-repository
 |                        | 说明                 | 版本 | 网址                                                 |
 | ---------------------- | -------------------- | ------ | ---------------------------------------------------- |
 | Spring Cloud           | 微服务框架             |        | [官网](https://spring.io/projects/spring-cloud)              |
-| Spring Cloud Alibaba   | 微服务框架             |        | https://github.com/alibaba/spring-cloud-alibaba      |
-| Spring Boot            | 容器+MVC框架           |        | https://spring.io/projects/spring-boot               |
-| Spring Security Oauth2 | 认证和授权框架          |        | https://spring.io/projects/spring-security-oauth     |
-| MyBatis                | ORM框架               |        | http://www.mybatis.org/mybatis-3/zh/index.html       |
-| MyBatisGenerator       | 数据层代码生成          |        | http://www.mybatis.org/generator/index.html          |
-| PageHelper             | MyBatis物理分页插件     |        | http://git.oschina.net/free/Mybatis_PageHelper       |
+| Spring Cloud Alibaba   | 微服务框架             |        | [官网](https://github.com/alibaba/spring-cloud-alibaba)     |
+| Spring Boot            | 容器+MVC框架           |        | [官网](https://spring.io/projects/spring-boot)              |
+| Spring Security Oauth2 | 认证和授权框架          |        | [官网](https://spring.io/projects/spring-security-oauth)    |
+| MyBatis                | ORM框架               |        | [官网](http://www.mybatis.org/mybatis-3/zh/index.html)      |
+| MyBatisGenerator       | 数据层代码生成          |        | [官网](http://www.mybatis.org/generator/index.html)         |
+| PageHelper             | MyBatis物理分页插件     |        | [官网](http://git.oschina.net/free/Mybatis_PageHelper)      |
 | Swagger                | 文档生产工具            |        |      |
-| Druid                  | 数据库连接池            |        | https://github.com/alibaba/druid                     |
-| JWT                    | JWT登录支持            |        | https://github.com/jwtk/jjwt                         |
-| Lombok                 | 简化对象封装工具        |        | https://github.com/rzwitserloot/lombok               |
-| Seata                  | 全局事务管理框架        |        | https://github.com/seata/seata                       |
-| JDK                    | 全局事务管理框架        | 1.8    | https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html |
+| Druid                  | 数据库连接池            |        | [官网](https://github.com/alibaba/druid)                    |
+| JWT                    | JWT登录支持            |        | [官网](https://github.com/jwtk/jjwt)                       |
+| Lombok                 | 简化对象封装工具        |        | [官网](https://github.com/rzwitserloot/lombok)              |
+| Seata                  | 全局事务管理框架        |        | [官网](https://github.com/seata/seata)                      |
+| JDK                    | 全局事务管理框架        | 1.8    | [官方下载地址](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) |
 
 - `Spring Cloud`和`Spring Boot`之间的依赖关系：[官方文档](https://start.spring.io/actuator/info)
 
