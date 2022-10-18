@@ -61,11 +61,9 @@ personal-java-repository
 | Axios      | 前端HTTP框架          | https://github.com/axios/axios |
 | v-charts   | 基于Echarts的图表框架 | https://v-charts.js.org/       |
 
-## 环境搭建
+### 基础软件/中间件
 
-### 开发工具
-
-| 工具          | 版本号 | 下载                                                         |
+| 软件          | 版本号 | 下载                                                         |
 | ------------- | ------ | ------------------------------------------------------------ |
 | JDK           | 1.8    | https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html |
 | Mysql         | 5.7    | https://www.mysql.com/                                       |
@@ -77,9 +75,17 @@ personal-java-repository
 | RabbitMq      | 3.10.5 | http://www.rabbitmq.com/download.html                        |
 | nginx         | 1.22   | http://nginx.org/en/download.html                            |
 
-### 搭建步骤
+## 开发工具
 
-#### IDEA
+### 在线工具
+
+| 名称        | 说明                  | 官网                           |
+| ---------- | --------------------- | ------------------------------ |
+| bejson     | JSON格式化             | https://www.bejson.com/explore/index_new/             |
+
+## 环境搭建
+
+### IDEA
 
 > 常用设置
 
