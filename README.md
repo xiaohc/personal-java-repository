@@ -6,7 +6,7 @@
 
 ## 组织结构
 
-``` lua
+``` Java
 personal-java-repository
 ├── xhc-parent   -- 统一的Maven父类，统一管理第三方软件版本
 ├── xhc-common   -- 通用代码
@@ -22,33 +22,49 @@ personal-java-repository
 
 ### 后端技术
 
-| 技术                   | 说明                 | 官网                                                 |
-| ---------------------- | -------------------- | ---------------------------------------------------- |
-| Spring Cloud           | 微服务框架           | https://spring.io/projects/spring-cloud              |
-| Spring Cloud Alibaba   | 微服务框架           | https://github.com/alibaba/spring-cloud-alibaba      |
-| Spring Boot            | 容器+MVC框架         | https://spring.io/projects/spring-boot               |
-| Spring Security Oauth2 | 认证和授权框架       | https://spring.io/projects/spring-security-oauth     |
-| MyBatis                | ORM框架              | http://www.mybatis.org/mybatis-3/zh/index.html       |
-| MyBatisGenerator       | 数据层代码生成       | http://www.mybatis.org/generator/index.html          |
-| PageHelper             | MyBatis物理分页插件  | http://git.oschina.net/free/Mybatis_PageHelper       |
-| Knife4j                | 文档生产工具         | https://github.com/xiaoymin/swagger-bootstrap-ui     |
-| Elasticsearch          | 搜索引擎             | https://github.com/elastic/elasticsearch             |
-| RabbitMq               | 消息队列             | https://www.rabbitmq.com/                            |
-| Redis                  | 分布式缓存           | https://redis.io/                                    |
-| MongoDb                | NoSql数据库          | https://www.mongodb.com/                             |
-| Docker                 | 应用容器引擎         | https://www.docker.com/                              |
-| Druid                  | 数据库连接池         | https://github.com/alibaba/druid                     |
-| OSS                    | 对象存储             | https://github.com/aliyun/aliyun-oss-java-sdk        |
-| MinIO                  | 对象存储             | https://github.com/minio/minio                       |
-| JWT                    | JWT登录支持          | https://github.com/jwtk/jjwt                         |
-| LogStash               | 日志收集             | https://github.com/logstash/logstash-logback-encoder |
-| Lombok                 | 简化对象封装工具     | https://github.com/rzwitserloot/lombok               |
-| Seata                  | 全局事务管理框架     | https://github.com/seata/seata                       |
-| Portainer              | 可视化Docker容器管理 | https://github.com/portainer/portainer               |
-| Jenkins                | 自动化部署工具       | https://github.com/jenkinsci/jenkins                 |
-| Kubernetes             | 应用容器管理平台     | https://kubernetes.io/                               |
+| 技术                    | 说明                 | 常用版本 | 官网                                                 |
+| ---------------------- | -------------------- | ------ | ---------------------------------------------------- |
+| Spring Cloud           | 微服务框架             |        | https://spring.io/projects/spring-cloud              |
+| Spring Cloud Alibaba   | 微服务框架             |        | https://github.com/alibaba/spring-cloud-alibaba      |
+| Spring Boot            | 容器+MVC框架           |        | https://spring.io/projects/spring-boot               |
+| Spring Security Oauth2 | 认证和授权框架          |        | https://spring.io/projects/spring-security-oauth     |
+| MyBatis                | ORM框架               |        | http://www.mybatis.org/mybatis-3/zh/index.html       |
+| MyBatisGenerator       | 数据层代码生成          |        | http://www.mybatis.org/generator/index.html          |
+| PageHelper             | MyBatis物理分页插件     |        | http://git.oschina.net/free/Mybatis_PageHelper       |
+| Swagger                | 文档生产工具            |        |      |
+| Druid                  | 数据库连接池            |        | https://github.com/alibaba/druid                     |
+| JWT                    | JWT登录支持            |        | https://github.com/jwtk/jjwt                         |
+| Lombok                 | 简化对象封装工具        |        | https://github.com/rzwitserloot/lombok               |
+| Seata                  | 全局事务管理框架        |        | https://github.com/seata/seata                       |
+| JDK                    | 全局事务管理框架        | 1.8    | https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html |
 
 - `Spring Cloud`和`Spring Boot`之间的依赖关系：[官方文档](https://start.spring.io/actuator/info)
+
+#### 基础软件-数据存储
+
+| 软件                    | 说明                  | 常用版本 | 网址                                                 |
+| ---------------------- | --------------------- | ------ | ---------------------------------------------------- |
+| Redis                  | 分布式缓存             | 7.0     | https://redis.io/                                    |
+| Kafka                  | 消息队列               |      |                             |
+| RabbitMq               | 消息队列               | 3.10.5 | http://www.rabbitmq.com/download.html                        |
+| MongoDb                | NoSql 数据库           |  5.0   | https://www.mongodb.com/                             |
+| Mysql                  | 关系数据库             | 5.7    | https://www.mysql.com/                                       |
+| OSS                    | 对象存储            |       | https://github.com/aliyun/aliyun-oss-java-sdk        |
+| MinIO                  | 对象存储             |      | https://github.com/minio/minio                       |
+
+#### 基础软件
+
+| 软件                    | 说明                  | 常用版本 | 网址                                                 |
+| ---------------------- | --------------------- | ------ | ---------------------------------------------------- |
+| Jenkins                | 自动化部署工具          |        | https://github.com/jenkinsci/jenkins                 |
+| Kubernetes             | 应用容器管理平台         |        | https://kubernetes.io/                               |
+| Docker                 | 应用容器引擎            |        | https://www.docker.com/                              |
+| nginx                  |                       | 1.22   | http://nginx.org/en/download.html                            |
+| Elasticsearch          | 搜索引擎               | 7.17.3| https://github.com/elastic/elasticsearch             |
+| Kibana                 |                    | 7.17.3 | https://www.elastic.co/cn/downloads/kibana                   |
+| Logstash               |                    | 7.17.3 | https://www.elastic.co/cn/downloads/logstash                 |
+| Portainer              | 可视化Docker容器管理  |        | https://github.com/portainer/portainer               |
+| LogStash               | 日志收集             |        | https://github.com/logstash/logstash-logback-encoder |
 
 ### 前端技术
 
@@ -60,20 +76,6 @@ personal-java-repository
 | Element    | 前端UI框架            | https://element.eleme.io/      |
 | Axios      | 前端HTTP框架          | https://github.com/axios/axios |
 | v-charts   | 基于Echarts的图表框架 | https://v-charts.js.org/       |
-
-### 基础软件/中间件
-
-| 软件          | 版本号 | 下载                                                         |
-| ------------- | ------ | ------------------------------------------------------------ |
-| JDK           | 1.8    | https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html |
-| Mysql         | 5.7    | https://www.mysql.com/                                       |
-| Redis         | 7.0    | https://redis.io/download                                    |
-| Elasticsearch | 7.17.3 | https://www.elastic.co/cn/downloads/elasticsearch            |
-| Kibana        | 7.17.3 | https://www.elastic.co/cn/downloads/kibana                   |
-| Logstash      | 7.17.3 | https://www.elastic.co/cn/downloads/logstash                 |
-| MongoDb       | 5.0    | https://www.mongodb.com/download-center                      |
-| RabbitMq      | 3.10.5 | http://www.rabbitmq.com/download.html                        |
-| nginx         | 1.22   | http://nginx.org/en/download.html                            |
 
 ## 开发工具
 
