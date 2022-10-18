@@ -22,7 +22,7 @@ personal-java-repository
 
 ### 后端技术
 
-|                        | 说明                 | 版本 | 网址                                                 |
+| 名称                   | 说明                 | 版本 | 参考                                                 |
 | ---------------------- | -------------------- | ------ | ---------------------------------------------------- |
 | Spring Cloud           | 微服务框架             |        | [官网](https://spring.io/projects/spring-cloud)              |
 | Spring Cloud Alibaba   | 微服务框架             |        | [官网](https://github.com/alibaba/spring-cloud-alibaba)     |
@@ -36,54 +36,54 @@ personal-java-repository
 | JWT                    | JWT登录支持            |        | [官网](https://github.com/jwtk/jjwt)                       |
 | Lombok                 | 简化对象封装工具        |        | [官网](https://github.com/rzwitserloot/lombok)              |
 | Seata                  | 全局事务管理框架        |        | [官网](https://github.com/seata/seata)                      |
-| JDK                    | 全局事务管理框架        | 1.8    | [官方下载地址](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) |
+| JDK                    | Java开发包            | 1.8    | [下载地址](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) |
 
-- `Spring Cloud`和`Spring Boot`之间的依赖关系：[官方文档](https://start.spring.io/actuator/info)
+- `Spring Cloud`和`Spring Boot`之间的依赖关系：[JSON文档](https://start.spring.io/actuator/info)
 
 #### 数据中间件
 
-|                        | 说明                  | 版本 | 网址                                                 |
+| 名称                   | 说明                  | 版本 | 参考                                                 |
 | ---------------------- | --------------------- | ------ | ---------------------------------------------------- |
-| Redis                  | 分布式缓存             | 7.0     | https://redis.io/                                    |
+| Redis                  | 分布式缓存             | 7.0     | [官网](https://redis.io/)                                    |
 | Kafka                  | 消息队列               |      |                             |
-| RabbitMq               | 消息队列               | 3.10.5 | http://www.rabbitmq.com/download.html                        |
-| MongoDb                | NoSql 数据库           |  5.0   | https://www.mongodb.com/                             |
-| Mysql                  | 关系数据库             | 5.7    | https://www.mysql.com/                                       |
-| OSS                    | 对象存储            |       | https://github.com/aliyun/aliyun-oss-java-sdk        |
-| MinIO                  | 对象存储             |      | https://github.com/minio/minio                       |
+| RabbitMq               | 消息队列               | 3.10.5 | [官网](http://www.rabbitmq.com/download.html)                        |
+| MongoDb                | NoSql 数据库           |  5.0   | [官网](https://www.mongodb.com/)                             |
+| Mysql                  | 关系数据库              | 5.7    | [官网](https://www.mysql.com/)                                      |
+| OSS                    | 对象存储                |       | [网址](https://github.com/aliyun/aliyun-oss-java-sdk)        |
+| MinIO                  | 对象存储                |      | [网址](https://github.com/minio/minio)                       |
 
 #### 基础软件
 
-|                        | 说明                  | 版本 | 网址                                                 |
+| 名称                   | 说明                  | 版本 | 参考                                                 |
 | ---------------------- | --------------------- | ------ | ---------------------------------------------------- |
-| Jenkins                | 自动化部署工具          |        | https://github.com/jenkinsci/jenkins                 |
-| Kubernetes             | 应用容器管理平台         |        | https://kubernetes.io/                               |
-| Docker                 | 应用容器引擎            |        | https://www.docker.com/                              |
-| nginx                  |                       | 1.22   | http://nginx.org/en/download.html                            |
-| Elasticsearch          | 搜索引擎               | 7.17.3| https://github.com/elastic/elasticsearch             |
-| Kibana                 |                    | 7.17.3 | https://www.elastic.co/cn/downloads/kibana                   |
-| Logstash               |                    | 7.17.3 | https://www.elastic.co/cn/downloads/logstash                 |
-| Portainer              | 可视化Docker容器管理  |        | https://github.com/portainer/portainer               |
-| LogStash               | 日志收集             |        | https://github.com/logstash/logstash-logback-encoder |
+| Jenkins                | 自动化部署工具          |        | [网址](https://github.com/jenkinsci/jenkins)                 |
+| Kubernetes             | 应用容器管理平台         |        | [官网](https://kubernetes.io/)                                |
+| Docker                 | 应用容器引擎            |        | [官网](https://www.docker.com/)                               |
+| nginx                  |                       | 1.22   | [官网](http://nginx.org/en/download.html)                             |
+| Elasticsearch          | 搜索引擎               | 7.17.3 | [网址](https://github.com/elastic/elasticsearch)              |
+| Kibana                 |                       |  | [官网](ttps://www.elastic.co/cn/downloads/kibana)                    |
+| Logstash               |                       | | [官网](https://www.elastic.co/cn/downloads/logstash)                  |
+| Portainer              | 可视化Docker容器管理     |        | [网址](https://github.com/portainer/portainer)                |
+| LogStash               | 日志收集                |        | [网址](https://github.com/logstash/logstash-logback-encoder)  |
 
 ### 前端技术
 
-| 技术       | 说明                  | 官网                           |
+| 名称       | 说明                   | 参考                           |
 | ---------- | --------------------- | ------------------------------ |
-| Vue        | 前端框架              | https://vuejs.org/             |
-| Vue-router | 路由框架              | https://router.vuejs.org/      |
-| Vuex       | 全局状态管理框架      | https://vuex.vuejs.org/        |
-| Element    | 前端UI框架            | https://element.eleme.io/      |
-| Axios      | 前端HTTP框架          | https://github.com/axios/axios |
-| v-charts   | 基于Echarts的图表框架 | https://v-charts.js.org/       |
+| Vue        | 前端框架                | [官网](https://vuejs.org/)              |
+| Vue-router | 路由框架                | [官网](https://router.vuejs.org/)       |
+| Vuex       | 全局状态管理框架         | [官网](https://vuex.vuejs.org/)         |
+| Element    | 前端UI框架              | [官网](https://element.eleme.io/)       |
+| Axios      | 前端HTTP框架            | [网址](https://github.com/axios/axios)  |
+| v-charts   | 基于Echarts的图表框架    | [官网](https://v-charts.js.org/)        |
 
 ## 开发工具
 
 ### 在线工具
 
-| 名称        | 说明                  | 官网                           |
+| 名称        | 说明                  | 参考                           |
 | ---------- | --------------------- | ------------------------------ |
-| bejson     | JSON格式化             | https://www.bejson.com/explore/index_new/             |
+| bejson     | JSON格式化             | [网址](https://www.bejson.com/explore/index_new/)              |
 
 ## 环境搭建
 
