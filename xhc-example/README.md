@@ -6,22 +6,13 @@
 
 ## 集合操作 
 
-### Stream
+Java8函数式编程实现为主
 
-Java8函数式编程
-
-#### 合并
-
-- `flatMap`
-  ``` Java
-  Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
-  
-  结果: asList(1, 2, 3, 3, 4)
-  ```
+### 单集合操作
 
 #### 分组
 
-- `分组`
+- `groupingBy`
   ``` Java
   Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
 
@@ -46,9 +37,18 @@ Java8函数式编程
   结果: asList("a", "a2", "abc")
   ```
 
+### 多集合操作
+
 #### 并集
 
-- `并集` 
+- `flatMap`
+  ``` Java
+  Stream.of(asList(1, 2, 3), asList(3, 4))
+        .flatMap(Collection::stream)
+        .collect(toList());
+  
+  结果: asList(1, 2, 3, 3, 4)
+  ```
 
 #### 交集
 
