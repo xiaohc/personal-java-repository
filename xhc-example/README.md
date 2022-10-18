@@ -54,26 +54,25 @@ Java8函数式编程
 
 - `交集` 
 
-#### 并集
+#### 新建
 
-- `并集` 
+- `新建` 
 
-#### 集合类基本操作
+#### 添加
 
-> 常用技巧
+- `添加`
 
-- `新建` 设置入口：File -> Settings -> Editor -> Copyright
-- `添加` 设置入口：File -> Settings -> Editor -> Copyright
-- `删减` 设置入口：File -> Settings -> Editor -> Copyright
-- `销毁` 设置入口：File -> Settings -> Editor -> Copyright
+#### 删减
 
-##### 技术理解
+- `删减`
+
+#### 销毁
+
+- `销毁`
+
 
 ### FunctionInterface
 
+#### 技术理解
+
 对齐C++的函数指针？（方法引用）
-
-> 常用技巧
-
-- 详细设置请参考：[官方文档](https://www.jetbrains.com/help/idea/2021.3/configuring-project-and-ide-settings.html)
-- `定义文件头的注释内容` 设置入口：File -> Settings -> Editor -> File and Code Templates -> Includes:File header
