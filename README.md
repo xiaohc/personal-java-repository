@@ -24,7 +24,7 @@ personal-java-repository
 
 |                        | 说明                 | 版本 | 网址                                                 |
 | ---------------------- | -------------------- | ------ | ---------------------------------------------------- |
-| Spring Cloud           | 微服务框架             |        | https://spring.io/projects/spring-cloud              |
+| Spring Cloud           | 微服务框架             |        | [官网](https://spring.io/projects/spring-cloud)              |
 | Spring Cloud Alibaba   | 微服务框架             |        | https://github.com/alibaba/spring-cloud-alibaba      |
 | Spring Boot            | 容器+MVC框架           |        | https://spring.io/projects/spring-boot               |
 | Spring Security Oauth2 | 认证和授权框架          |        | https://spring.io/projects/spring-security-oauth     |
@@ -40,7 +40,7 @@ personal-java-repository
 
 - `Spring Cloud`和`Spring Boot`之间的依赖关系：[官方文档](https://start.spring.io/actuator/info)
 
-#### 基础软件-数据存储
+#### 数据中间件
 
 |                        | 说明                  | 版本 | 网址                                                 |
 | ---------------------- | --------------------- | ------ | ---------------------------------------------------- |
