@@ -6,7 +6,7 @@
 
 ## 组织结构
 
-``` Java
+``` python
 personal-java-repository
 ├── xhc-parent   -- 统一的Maven父类，统一管理第三方软件版本
 ├── xhc-common   -- 通用代码
@@ -22,7 +22,7 @@ personal-java-repository
 
 ### 后端技术
 
-| 技术                    | 说明                 | 常用版本 | 官网                                                 |
+| 技术                    | 说明                 | 版本 | 网址                                                 |
 | ---------------------- | -------------------- | ------ | ---------------------------------------------------- |
 | Spring Cloud           | 微服务框架             |        | https://spring.io/projects/spring-cloud              |
 | Spring Cloud Alibaba   | 微服务框架             |        | https://github.com/alibaba/spring-cloud-alibaba      |
@@ -42,7 +42,7 @@ personal-java-repository
 
 #### 基础软件-数据存储
 
-| 软件                    | 说明                  | 常用版本 | 网址                                                 |
+| 软件                    | 说明                  | 版本 | 网址                                                 |
 | ---------------------- | --------------------- | ------ | ---------------------------------------------------- |
 | Redis                  | 分布式缓存             | 7.0     | https://redis.io/                                    |
 | Kafka                  | 消息队列               |      |                             |
@@ -54,7 +54,7 @@ personal-java-repository
 
 #### 基础软件
 
-| 软件                    | 说明                  | 常用版本 | 网址                                                 |
+| 软件                    | 说明                  | 版本 | 网址                                                 |
 | ---------------------- | --------------------- | ------ | ---------------------------------------------------- |
 | Jenkins                | 自动化部署工具          |        | https://github.com/jenkinsci/jenkins                 |
 | Kubernetes             | 应用容器管理平台         |        | https://kubernetes.io/                               |
