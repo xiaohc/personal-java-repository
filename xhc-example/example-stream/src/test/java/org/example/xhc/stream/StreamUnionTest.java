@@ -23,12 +23,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StreamUnionTest {
 
     @Test
-    void testUnion() {
+    void testUnionAll() {
         val ret =
                 Stream.of(asList(1, 2, 3), asList(3, 4))
                         .flatMap(Collection::stream)
                         .collect(toList());
 
         assertThat(ret).isEqualTo(asList(1, 2, 3, 3, 4));
+    }
+
+    @Test
+    void testUnion() {
+        val ret =
+                Stream.of(asList(1, 2, 3), asList(3, 4))
+                        .flatMap(Collection::stream)
+                        .distinct()
+                        .collect(toList());
+
+        assertThat(ret).isEqualTo(asList(1, 2, 3, 4));
     }
 }

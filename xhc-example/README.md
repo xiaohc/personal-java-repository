@@ -39,7 +39,7 @@ Java8函数式编程实现为主
 
 ### 多集合操作
 
-#### 并集
+#### 合集
 
 - `flatMap`
   ``` Java
@@ -49,7 +49,17 @@ Java8函数式编程实现为主
   
   结果: asList(1, 2, 3, 3, 4)
   ```
+#### 并集
 
+- `flatMap`+``
+  ``` Java
+  Stream.of(asList(1, 2, 3), asList(3, 4))
+        .flatMap(Collection::stream)
+        .distinct()
+        .collect(toList());
+  
+  结果: asList(1, 2, 3, 4)
+  ```
 #### 交集
 
 - `交集` 
