@@ -1,6 +1,7 @@
 # 个人Java库
 
 ## 简介
+
 个人Java库，用于快速搭建项目，内容主要是收集的范例，整理的日常经验。
 
 ## 组织结构
@@ -11,9 +12,10 @@ personal-java-repository
 ├── xhc-common   -- 通用代码
 ├── xhc-example  -- 范例代码
 ├── xhc-demo     -- 演示项目
-│   ├── demo-parent -- Maven父类
-│   ├── demo-provider -- 服务提供者
-└   └── demo-consumer -- 服务消费者
+│   ├── demo-parent    -- DEMO服务的统一Maven父类
+│   ├── demo-base      -- DEMO服务的基础件
+│   ├── demo-provider  -- 服务提供者
+└   └── demo-consumer  -- 服务消费者
 ```
 
 ## 技术选型
@@ -46,6 +48,8 @@ personal-java-repository
 | Jenkins                | 自动化部署工具       | https://github.com/jenkinsci/jenkins                 |
 | Kubernetes             | 应用容器管理平台     | https://kubernetes.io/                               |
 
+- `Spring Cloud`和`Spring Boot`之间的依赖关系：[官方文档](https://start.spring.io/actuator/info)
+
 ### 前端技术
 
 | 技术       | 说明                  | 官网                           |
@@ -56,7 +60,6 @@ personal-java-repository
 | Element    | 前端UI框架            | https://element.eleme.io/      |
 | Axios      | 前端HTTP框架          | https://github.com/axios/axios |
 | v-charts   | 基于Echarts的图表框架 | https://v-charts.js.org/       |
-
 
 ## 环境搭建
 
@@ -89,7 +92,6 @@ personal-java-repository
 - `文件保存时自动整理imports` 设置入口：File -> Settings -> Editor -> General -> Auto Import
 - `Alt+Enter自动添加serialVersionUID` 设置入口：File -> Settings -> Editor -> Inspections -> Find:"serialVersionUID"
 - `实现快捷键增加注释文档` 设置入口：File -> Settings -> Keymap -> Find:"Fix doc comment"
-
 
 > 常用插件
 
