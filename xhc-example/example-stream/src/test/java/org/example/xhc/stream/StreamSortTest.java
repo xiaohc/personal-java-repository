@@ -24,7 +24,10 @@ class StreamSortTest {
 
     @Test
     void testSort() {
-        val ret = Stream.of("a2", "abc", "a").sorted(Comparator.naturalOrder()).collect(toList());
+        val ret =
+                Stream.of("a2", "abc", "a")
+                        .sorted(Comparator.naturalOrder())
+                        .collect(toList());
 
         assertThat(ret).isEqualTo(asList("a", "a2", "abc"));
     }
