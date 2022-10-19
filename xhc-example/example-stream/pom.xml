@@ -15,17 +15,23 @@
         <relativePath/>
     </parent>
 
+    <groupId>org.example.xhc.example</groupId>
     <artifactId>example-stream</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <properties>
+        <example-entity_version>1.0.0-SNAPSHOT</example-entity_version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>org.example.xhc.example</groupId>
+            <artifactId>example-entity</artifactId>
+            <version>${example-entity_version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
         </dependency>
         <!--test-->
         <dependency>
