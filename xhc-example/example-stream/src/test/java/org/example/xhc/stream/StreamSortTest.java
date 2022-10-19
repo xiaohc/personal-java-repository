@@ -40,13 +40,17 @@ class StreamSortTest {
     void testMultiSort() {
         val student = JsonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
         });
-        System.out.println(student);
+        val sortedStudent = JsonUtils.fromResource("json/student_sorted_array.json", new TypeReference<List<Student>>() {
+        });
 
-        val ret =
-                Stream.of("a2", "abc", "a")
-                        .sorted(Comparator.naturalOrder())
-                        .collect(toList());
+        assert student != null;
+        val ret = student.stream()
+                .sorted(Comparator
+                        .comparing(Student::getAge, Comparator.naturalOrder())
+                        .thenComparing(Student::getNo, Comparator.reverseOrder())
+                )
+                .collect(toList());
 
-        assertThat(ret).isEqualTo(asList("a", "a2", "abc"));
+        assertThat(ret).isEqualTo(sortedStudent);
     }
 }
