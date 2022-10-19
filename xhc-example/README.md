@@ -63,7 +63,7 @@ Java8函数式编程实现为主
 
 #### 合集
 
-- `flatMap`
+- `union all`
   ``` Java
   Stream.of(asList(1, 2, 3), asList(3, 4))
         .flatMap(Collection::stream)
@@ -74,7 +74,7 @@ Java8函数式编程实现为主
 
 #### 并集
 
-- `flatMap`+`distinct`
+- `union`
   ``` Java
   Stream.of(asList(1, 2, 3), asList(3, 4))
         .flatMap(Collection::stream)
