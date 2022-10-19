@@ -23,6 +23,8 @@ Java8函数式编程实现为主
 
 #### 查找
 
+##### 定位
+
 - `min、max`
   ``` Java
   Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList())
@@ -31,8 +33,6 @@ Java8函数式编程实现为主
   ```
 
 ##### 过滤
-
-##### 定位
 
 - `filter`
   ``` Java
