@@ -21,6 +21,7 @@
 
     <properties>
         <example-entity_version>1.0.0-SNAPSHOT</example-entity_version>
+        <xhc-common_version>1.0.0-SNAPSHOT</xhc-common_version>
     </properties>
 
     <dependencies>
@@ -28,6 +29,11 @@
             <groupId>org.example.xhc.example</groupId>
             <artifactId>example-entity</artifactId>
             <version>${example-entity_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.example.xhc</groupId>
+            <artifactId>xhc-common</artifactId>
+            <version>${xhc-common_version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

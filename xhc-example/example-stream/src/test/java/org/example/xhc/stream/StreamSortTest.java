@@ -5,6 +5,7 @@
 package org.example.xhc.stream;
 
 import lombok.val;
+import org.example.xhc.common.util.JsonUtils;
 import org.example.xhc.entity.Student;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +36,9 @@ class StreamSortTest {
 
     @Test
     void testMultiSort() {
-        val student = new Student();
+        val student = JsonUtils.fromResource("json/student_array.json", Student.class);
+        System.out.println(student);
+
         val ret =
                 Stream.of("a2", "abc", "a")
                         .sorted(Comparator.naturalOrder())

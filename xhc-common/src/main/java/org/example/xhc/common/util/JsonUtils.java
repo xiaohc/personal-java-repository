@@ -26,7 +26,6 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.io.*;
@@ -47,7 +46,6 @@ import static org.example.xhc.common.constant.SystemConstants.CSV_DEFAULT_COLUMN
  * @author xiaohongchao
  * @since 1.0.0
  */
-@Slf4j
 public final class JsonUtils {
     private static ObjectMapper mapper;
     private static YAMLMapper yamlMapper;
@@ -324,6 +322,44 @@ public final class JsonUtils {
     }
 
     /**
+     * 反序列化Resources目录下的json文件
+     *
+     * @param name 文件名
+     * @param c
+     * @param <V>
+     * @return
+     */
+    @SneakyThrows
+    public static <V> V fromResource(String name, Class<V> c) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
+            if (reader == null) {
+                return null;
+            }
+            return mapper.readValue(reader, c);
+        }
+    }
+
+    /**
+     * 反序列化Resources目录下的json文件
+     *
+     * @param name 文件名
+     * @param type
+     * @param <V>
+     * @return
+     */
+    @SneakyThrows
+    public static <V> V fromResource(String name, TypeReference<V> type) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
+            if (reader == null) {
+                return null;
+            }
+            return mapper.readValue(reader, type);
+        }
+    }
+
+    /**
      * 反序列化Resources目录下的Yaml文件
      *
      * @param name 文件名
@@ -352,7 +388,8 @@ public final class JsonUtils {
      */
     @SneakyThrows
     public static <V> V fromYamlResource(String name, TypeReference<V> type) {
-        try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
@@ -396,7 +433,8 @@ public final class JsonUtils {
      */
     @SneakyThrows
     public static <V> V fromPropResource(String name, Class<V> c) {
-        try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
@@ -414,7 +452,8 @@ public final class JsonUtils {
      */
     @SneakyThrows
     public static <V> V fromPropResource(String name, TypeReference<V> type) {
-        try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
@@ -445,7 +484,8 @@ public final class JsonUtils {
      */
     @SneakyThrows
     public static <V> List<V> fromCsvResource(String name, String separator, Class<V> c) {
-        try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return Collections.emptyList();
             }
@@ -492,7 +532,8 @@ public final class JsonUtils {
      */
     @SneakyThrows
     public static <V> V fromXmlResource(String name, Class<V> c) {
-        try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
@@ -510,7 +551,8 @@ public final class JsonUtils {
      */
     @SneakyThrows
     public static <V> V fromXmlResource(String name, TypeReference<V> type) {
-        try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
