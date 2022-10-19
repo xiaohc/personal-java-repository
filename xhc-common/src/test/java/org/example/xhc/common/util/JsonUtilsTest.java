@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
+ * Copyright (c) 2022 xiaohongchao.All Rights Reserved.
  */
 
 package org.example.xhc.common.util;
@@ -7,14 +7,14 @@ package org.example.xhc.common.util;
 import org.junit.jupiter.api.Test;
 
 /**
- * 测试读文件
+ * 测试工具类
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-class FileUtilsTest {
+class JsonUtilsTest {
 
     @Test
-    void readString() {
+    void from() {
     }
 }
