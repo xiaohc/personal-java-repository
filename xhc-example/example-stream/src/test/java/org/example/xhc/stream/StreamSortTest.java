@@ -4,12 +4,14 @@
 
 package org.example.xhc.stream;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.val;
 import org.example.xhc.common.util.JsonUtils;
 import org.example.xhc.entity.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -36,7 +38,8 @@ class StreamSortTest {
 
     @Test
     void testMultiSort() {
-        val student = JsonUtils.fromResource("json/student_array.json", Student.class);
+        val student = JsonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
+        });
         System.out.println(student);
 
         val ret =
