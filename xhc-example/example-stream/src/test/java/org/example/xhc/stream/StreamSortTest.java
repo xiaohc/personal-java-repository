@@ -40,8 +40,6 @@ class StreamSortTest {
     void testMultiSort() {
         val student = JsonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
         });
-        val sortedStudent = JsonUtils.fromResource("json/student_sorted_array.json", new TypeReference<List<Student>>() {
-        });
 
         assert student != null;
         val ret = student.stream()
@@ -51,6 +49,8 @@ class StreamSortTest {
                 )
                 .collect(toList());
 
+        val sortedStudent = JsonUtils.fromResource("json/student_sorted_array.json", new TypeReference<List<Student>>() {
+        });
         assertThat(ret).isEqualTo(sortedStudent);
     }
 }
