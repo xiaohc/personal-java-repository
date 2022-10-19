@@ -7,7 +7,6 @@ package org.example.xhc.common.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -18,7 +17,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.dataformat.javaprop.JavaPropsMapper;
-import com.fasterxml.jackson.dataformat.javaprop.JavaPropsParser;
 import com.fasterxml.jackson.dataformat.javaprop.JavaPropsSchema;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
@@ -27,6 +25,7 @@ import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 
@@ -124,8 +123,8 @@ public final class JsonUtils {
         yamlMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
         yamlMapper.enable(JsonParser.Feature.ALLOW_YAML_COMMENTS);
         //允许注释
-        propsMapper.enable(JavaPropsParser.Feature.ALLOW_COMMENTS);
-        propsMapper.enable(JavaPropsParser.Feature.ALLOW_YAML_COMMENTS);
+        propsMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
+        propsMapper.enable(JsonParser.Feature.ALLOW_YAML_COMMENTS);
         //去掉头尾空格
         csvMapper.enable(CsvParser.Feature.TRIM_SPACES);
         //忽略空行
@@ -155,8 +154,6 @@ public final class JsonUtils {
 
         //允许在JSON中使用c/c++风格注释
         objectMapper.enable(JsonParser.Feature.ALLOW_COMMENTS);
-        //强制转义非ascii字符
-        objectMapper.disable(JsonGenerator.Feature.ESCAPE_NON_ASCII);
         //允许未知字段
         objectMapper.enable(JsonGenerator.Feature.IGNORE_UNKNOWN);
         //在JSON中允许未引用的字段名
@@ -198,136 +195,141 @@ public final class JsonUtils {
 
     /**
      * JSON反序列化
+     *
+     * @param url
+     * @param c
+     * @param <V>
+     * @return
      */
+    @SneakyThrows
     public static <V> V from(URL url, Class<V> c) {
-        try {
-            return mapper.readValue(url, c);
-        } catch (IOException e) {
-            //log.error("jackson from error, url: {}, type: {}", url.getPath(), c, e);
-            return null;
-        }
+        return mapper.readValue(url, c);
     }
 
     /**
      * JSON反序列化
+     * @param inputStream
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(InputStream inputStream, Class<V> c) {
-        try {
-            return mapper.readValue(inputStream, c);
-        } catch (IOException e) {
-            //log.error("jackson from error, type: {}", c, e);
-            return null;
-        }
+        return mapper.readValue(inputStream, c);
     }
 
     /**
      * JSON反序列化
+     * @param file
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(File file, Class<V> c) {
-        try {
-            return mapper.readValue(file, c);
-        } catch (IOException e) {
-            return null;
-        }
+        return mapper.readValue(file, c);
     }
 
     /**
      * JSON反序列化
+     * @param jsonObj
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(Object jsonObj, Class<V> c) {
-        try {
-            return mapper.readValue(jsonObj.toString(), c);
-        } catch (IOException e) {
-            return null;
-        }
+        return mapper.readValue(jsonObj.toString(), c);
     }
 
     /**
      * JSON反序列化
+     * @param json
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(String json, Class<V> c) {
-        try {
-            return mapper.readValue(json, c);
-        } catch (IOException e) {
-            //log.error("jackson from error, json: {}, type: {}", json, c, e);
-            return null;
-        }
+        return mapper.readValue(json, c);
     }
 
     /**
      * JSON反序列化
+     * @param url
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(URL url, TypeReference<V> type) {
-        try {
-            return mapper.readValue(url, type);
-        } catch (IOException e) {
-            //log.error("jackson from error, url: {}, type: {}", url.getPath(), type, e);
-            return null;
-        }
+        return mapper.readValue(url, type);
     }
 
     /**
      * JSON反序列化
+     * @param inputStream
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(InputStream inputStream, TypeReference<V> type) {
-        try {
-            return mapper.readValue(inputStream, type);
-        } catch (IOException e) {
-            //log.error("jackson from error, type: {}", type, e);
-            return null;
-        }
+        return mapper.readValue(inputStream, type);
     }
 
     /**
      * JSON反序列化
+     * @param file
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(File file, TypeReference<V> type) {
-        try {
-            return mapper.readValue(file, type);
-        } catch (IOException e) {
-            //log.error("jackson from error, file path: {}, type: {}", file.getPath(), type, e);
-            return null;
-        }
+        return mapper.readValue(file, type);
     }
 
     /**
      * JSON反序列化
+     * @param jsonObj
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(Object jsonObj, TypeReference<V> type) {
-        try {
-            return mapper.readValue(jsonObj.toString(), type);
-        } catch (IOException e) {
-            //log.error("jackson from error, json: {}, type: {}", jsonObj.toString(), type, e);
-            return null;
-        }
+        return mapper.readValue(jsonObj.toString(), type);
     }
 
     /**
      * JSON反序列化
+     * @param json
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V from(String json, TypeReference<V> type) {
-        try {
-            return mapper.readValue(json, type);
-        } catch (IOException e) {
-            //log.error("jackson from error, json: {}, type: {}", json, type, e);
-            return null;
-        }
+        return mapper.readValue(json, type);
     }
 
     /**
      * 反序列化Resources目录下的Yaml文件
      *
      * @param name 文件名
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromYamlResource(String name, Class<V> c) {
-        try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
+        try (InputStream inputStream = getResourceStream(name);
+             InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
             return yamlMapper.readValue(reader, c);
-        } catch (IOException e) {
-            //log.error("jackson from yaml Resource error, name: {}, type: {}", name, c, e);
-            return null;
         }
     }
 
@@ -335,16 +337,17 @@ public final class JsonUtils {
      * 反序列化Resources目录下的Yaml文件
      *
      * @param name 文件名
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromYamlResource(String name, TypeReference<V> type) {
         try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
             return yamlMapper.readValue(reader, type);
-        } catch (IOException e) {
-            //log.error("jackson from yaml Resource error, name: {}, type: {}", name, type, e);
-            return null;
         }
     }
 
@@ -352,44 +355,43 @@ public final class JsonUtils {
      * 反序列化Yaml文件
      *
      * @param path 文件路径
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromYamlFile(String path, Class<V> c) {
-        try {
-            return yamlMapper.readValue(new File(path), c);
-        } catch (IOException e) {
-            //log.error("jackson from yaml error, path: {}, type: {}", path, c, e);
-            return null;
-        }
+        return yamlMapper.readValue(new File(path), c);
     }
 
     /**
      * 反序列化Yaml文件
      *
      * @param path 文件路径
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromYamlFile(String path, TypeReference<V> type) {
-        try {
-            return yamlMapper.readValue(new File(path), type);
-        } catch (IOException e) {
-            //log.error("jackson from yaml error, path: {}, type: {}", path, type, e);
-            return null;
-        }
+        return yamlMapper.readValue(new File(path), type);
     }
 
     /**
      * 反序列化Resources目录下的Properties文件
      *
      * @param name 文件名
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromPropResource(String name, Class<V> c) {
         try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
             return propsMapper.readValue(reader, c);
-        } catch (IOException e) {
-            //log.error("jackson from properties Resource error, name: {}, type: {}", name, c, e);
-            return null;
         }
     }
 
@@ -397,16 +399,17 @@ public final class JsonUtils {
      * 反序列化Resources目录下的Properties文件
      *
      * @param name 文件名
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromPropResource(String name, TypeReference<V> type) {
         try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
             return propsMapper.readValue(reader, type);
-        } catch (IOException e) {
-            //log.error("jackson from properties Resource error, name: {}, type: {}", name, type, e);
-            return null;
         }
     }
 
@@ -414,6 +417,9 @@ public final class JsonUtils {
      * 反序列化Resources目录下的Csv文件（受限于CSV的格式，Jackson不支持深层次结构的CSV反序列化，不支持嵌套类）
      *
      * @param name 文件名
+     * @param c
+     * @return
+     * @param <V>
      */
     public static <V> List<V> fromCsvResource(String name, Class<V> c) {
         return fromCsvResource(name, CSV_DEFAULT_COLUMN_SEPARATOR, c);
@@ -424,17 +430,18 @@ public final class JsonUtils {
      *
      * @param name      文件名
      * @param separator cloumn的分隔符
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> List<V> fromCsvResource(String name, String separator, Class<V> c) {
         try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
-                return null;
+                return Collections.emptyList();
             }
             CsvSchema schema = CsvSchema.builder().setColumnSeparator(separator.charAt(0)).setUseHeader(true).build();
             return (List<V>) csvMapper.reader(schema).forType(c).readValues(reader).readAll();
-        } catch (IOException e) {
-            //log.error("jackson from csv Resource error, name: {}, type: {}", name, c, e);
-            return null;
         }
     }
 
@@ -442,6 +449,9 @@ public final class JsonUtils {
      * 反序列化Csv文件（受限于CSV的格式，Jackson不支持深层次结构的CSV反序列化，不支持嵌套类）
      *
      * @param path 文件路径
+     * @param c
+     * @return
+     * @param <V>
      */
     public static <V> List<V> fromCsvFile(String path, Class<V> c) {
         return fromCsvFile(path, CSV_DEFAULT_COLUMN_SEPARATOR, c);
@@ -450,17 +460,16 @@ public final class JsonUtils {
     /**
      * 反序列化Csv文件（受限于CSV的格式，Jackson不支持深层次结构的CSV反序列化，不支持嵌套类）
      *
-     * @param separator cloumn的分隔符
      * @param path      文件路径
+     * @param separator cloumn的分隔符
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> List<V> fromCsvFile(String path, String separator, Class<V> c) {
-        try {
-            CsvSchema schema = CsvSchema.builder().setColumnSeparator(separator.charAt(0)).setUseHeader(true).build();
-            return (List<V>) csvMapper.reader(schema).forType(c).readValues(new File(path)).readAll();
-        } catch (IOException e) {
-            //log.error("jackson from csv error, path: {}, type: {}", path, c, e);
-            return null;
-        }
+        CsvSchema schema = CsvSchema.builder().setColumnSeparator(separator.charAt(0)).setUseHeader(true).build();
+        return (List<V>) csvMapper.reader(schema).forType(c).readValues(new File(path)).readAll();
     }
 
 
@@ -468,16 +477,17 @@ public final class JsonUtils {
      * 反序列化Resources目录下的Xml文件
      *
      * @param name 文件名
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromXmlResource(String name, Class<V> c) {
         try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
             return xmlMapper.readValue(reader, c);
-        } catch (IOException e) {
-            //log.error("jackson from xml Resource error, name: {}, type: {}", name, c, e);
-            return null;
         }
     }
 
@@ -485,16 +495,17 @@ public final class JsonUtils {
      * 反序列化Resources目录下的Xml文件
      *
      * @param name 文件名
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromXmlResource(String name, TypeReference<V> type) {
         try (InputStream inputStream = getResourceStream(name); InputStreamReader reader = getResourceReader(inputStream)) {
             if (reader == null) {
                 return null;
             }
             return xmlMapper.readValue(reader, type);
-        } catch (IOException e) {
-            //log.error("jackson from xml Resource error, name: {}, type: {}", name, type, e);
-            return null;
         }
     }
 
@@ -502,154 +513,159 @@ public final class JsonUtils {
      * 反序列化Xml文件
      *
      * @param path 文件路径
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromXmlFile(String path, Class<V> c) {
-        try {
-            return xmlMapper.readValue(new File(path), c);
-        } catch (IOException e) {
-            //log.error("jackson from xml error, path: {}, type: {}", path, c, e);
-            return null;
-        }
+        return xmlMapper.readValue(new File(path), c);
     }
 
     /**
      * 反序列化Xml文件
      *
      * @param path 文件路径
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromXmlFile(String path, TypeReference<V> type) {
-        try {
-            return xmlMapper.readValue(new File(path), type);
-        } catch (IOException e) {
-            //log.error("jackson from xml error, path: {}, type: {}", path, type, e);
-            return null;
-        }
+        return xmlMapper.readValue(new File(path), type);
     }
 
     /**
      * 反序列化Xml字符串
+     * @param xml
+     * @param c
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromXml(String xml, Class<V> c) {
-        try {
-            return xmlMapper.readValue(xml, c);
-        } catch (IOException e) {
-            //log.error("jackson from xml error, xml: {}, type: {}", xml, c, e);
-            return null;
-        }
+        return xmlMapper.readValue(xml, c);
     }
 
     /**
      * 反序列化Xml字符串
+     * @param xml
+     * @param type
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> V fromXml(String xml, TypeReference<V> type) {
-        try {
-            return xmlMapper.readValue(xml, type);
-        } catch (IOException e) {
-            //log.error("jackson from xml error, xml: {}, type: {}", xml, type, e);
-            return null;
-        }
+        return xmlMapper.readValue(xml, type);
     }
 
     /**
      * 序列化为JSON
+     * @param list
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> String to(List<V> list) {
-        try {
-            return mapper.writeValueAsString(list);
-        } catch (JsonProcessingException e) {
-            //log.error("jackson to error, obj: {}", list, e);
-            return null;
-        }
+        return mapper.writeValueAsString(list);
     }
 
     /**
      * 序列化为JSON
+     * @param v
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> String to(V v) {
-        try {
-            return mapper.writeValueAsString(v);
-        } catch (JsonProcessingException e) {
-            //log.error("jackson to error, obj: {}", v, e);
-            return null;
-        }
+        return mapper.writeValueAsString(v);
     }
 
     /**
      * 序列化为JSON
+     * @param path
+     * @param list
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> void toFile(String path, List<V> list) {
         try (Writer writer = new FileWriter(new File(path), true)) {
             mapper.writer().writeValues(writer).writeAll(list);
             writer.flush();
-        } catch (Exception e) {
-            //log.error("jackson to file error, path: {}, list: {}", path, list, e);
         }
     }
 
     /**
      * 序列化为JSON
+     * @param path
+     * @param v
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> void toFile(String path, V v) {
         try (Writer writer = new FileWriter(new File(path), true)) {
             mapper.writer().writeValues(writer).write(v);
             writer.flush();
-        } catch (Exception e) {
-            //log.error("jackson to file error, path: {}, obj: {}", path, v, e);
         }
     }
 
     /**
      * 序列化为YAML
+     * @param v
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> String toYaml(V v) {
-        try {
-            return yamlMapper.writeValueAsString(v);
-        } catch (JsonProcessingException e) {
-            //log.error("jackson to yaml error, obj: {}", v, e);
-            return null;
-        }
+        return yamlMapper.writeValueAsString(v);
     }
 
     /**
      * 序列化为YAML文件
+     * @param path
+     * @param v
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> void toYamlFile(String path, V v) {
         try (Writer writer = new FileWriter(new File(path), true)) {
             yamlMapper.writeValue(writer, v);
             writer.flush();
-        } catch (Exception e) {
-            //log.error("jackson to yaml file error, path: {}, obj: {}", path, v, e);
         }
     }
 
     /**
      * 序列化为Properties
+     * @param v
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> String toProp(V v) {
-        try {
-            String string = propsMapper.writeValueAsString(v);
-            return new String(string.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-        } catch (JsonProcessingException e) {
-            //log.error("jackson to properties error, obj: {}", v, e);
-            return null;
-        }
+        String string = propsMapper.writeValueAsString(v);
+        return new String(string.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
     }
 
     /**
      * 序列化为Properties文件
+     * @param path
+     * @param v
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> void toPropFile(String path, V v) {
         try (Writer writer = new FileWriter(new File(path), true)) {
             JavaPropsSchema schema = JavaPropsSchema.emptySchema();
             propsMapper.writer(schema).writeValues(writer).write(v);
             writer.flush();
-        } catch (Exception e) {
-            //log.error("jackson to properties file error, path: {}, obj: {}", path, v, e);
         }
     }
 
     /**
      * 序列化为CSV
+     * @param list
+     * @return
+     * @param <V>
      */
     public static <V> String toCsv(List<V> list) {
         return toCsv(CSV_DEFAULT_COLUMN_SEPARATOR, list);
@@ -657,20 +673,23 @@ public final class JsonUtils {
 
     /**
      * 序列化为CSV
+     * @param separator
+     * @param list
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> String toCsv(String separator, List<V> list) {
-        try {
-            Class type = list.get(0).getClass();
-            CsvSchema schema = csvMapper.schemaFor(type).withHeader().withColumnSeparator(separator.charAt(0));
-            return csvMapper.writer(schema).writeValueAsString(list);
-        } catch (JsonProcessingException e) {
-            //log.error("jackson to csv error, obj: {}", list, e);
-            return null;
-        }
+        Class<?> type = list.get(0).getClass();
+        CsvSchema schema = csvMapper.schemaFor(type).withHeader().withColumnSeparator(separator.charAt(0));
+        return csvMapper.writer(schema).writeValueAsString(list);
     }
 
     /**
      * 序列化为CSV
+     * @param v
+     * @return
+     * @param <V>
      */
     public static <V> String toCsv(V v) {
         return toCsv(CSV_DEFAULT_COLUMN_SEPARATOR, v);
@@ -678,19 +697,22 @@ public final class JsonUtils {
 
     /**
      * 序列化为CSV
+     * @param separator
+     * @param v
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> String toCsv(String separator, V v) {
-        try {
-            CsvSchema schema = csvMapper.schemaFor(v.getClass()).withHeader().withColumnSeparator(separator.charAt(0));
-            return csvMapper.writer(schema).writeValueAsString(v);
-        } catch (JsonProcessingException e) {
-            //log.error("jackson to csv error, obj: {}", v, e);
-            return null;
-        }
+        CsvSchema schema = csvMapper.schemaFor(v.getClass()).withHeader().withColumnSeparator(separator.charAt(0));
+        return csvMapper.writer(schema).writeValueAsString(v);
     }
 
     /**
      * 序列化为CSV文件
+     * @param path
+     * @param list
+     * @param <V>
      */
     public static <V> void toCsvFile(String path, List<V> list) {
         toCsvFile(path, CSV_DEFAULT_COLUMN_SEPARATOR, list);
@@ -698,20 +720,27 @@ public final class JsonUtils {
 
     /**
      * 序列化为CSV文件
+     *
+     * @param path
+     * @param separator
+     * @param list
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> void toCsvFile(String path, String separator, List<V> list) {
         try (Writer writer = new FileWriter(new File(path), true)) {
-            Class type = list.get(0).getClass();
+            Class<?> type = list.get(0).getClass();
             CsvSchema schema = csvMapper.schemaFor(type).withHeader().withColumnSeparator(separator.charAt(0));
             csvMapper.writer(schema).writeValues(writer).writeAll(list);
             writer.flush();
-        } catch (Exception e) {
-            //log.error("jackson to csv file error, path: {}, separator: {}, list: {}", path, separator, list, e);
         }
     }
 
     /**
      * 序列化为CSV文件
+     * @param path
+     * @param v
+     * @param <V>
      */
     public static <V> void toCsvFile(String path, V v) {
         toCsvFile(path, CSV_DEFAULT_COLUMN_SEPARATOR, v);
@@ -719,19 +748,25 @@ public final class JsonUtils {
 
     /**
      * 序列化为CSV文件
+     * @param path
+     * @param separator
+     * @param v
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> void toCsvFile(String path, String separator, V v) {
         try (Writer writer = new FileWriter(new File(path), true)) {
             CsvSchema schema = csvMapper.schemaFor(v.getClass()).withHeader().withColumnSeparator(separator.charAt(0));
             csvMapper.writer(schema).writeValues(writer).write(v);
             writer.flush();
-        } catch (Exception e) {
-            //log.error("jackson to csv file error, path: {}, separator: {}, obj: {}", path, separator, v, e);
         }
     }
 
     /**
      * 序列化为XML
+     * @param v
+     * @return
+     * @param <V>
      */
     public static <V> String toXml(V v) {
         return toXml(v, true);
@@ -739,22 +774,25 @@ public final class JsonUtils {
 
     /**
      * 序列化为XML
+     * @param v
+     * @param isIndent
+     * @return
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> String toXml(V v, boolean isIndent) {
-        try {
-            if (isIndent) {
-                return xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(v);
-            } else {
-                return xmlMapper.writeValueAsString(v);
-            }
-        } catch (JsonProcessingException e) {
-            //log.error("jackson to xml error, obj: {}, isIndent, {}", v, isIndent, e);
-            return null;
+        if (isIndent) {
+            return xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(v);
+        } else {
+            return xmlMapper.writeValueAsString(v);
         }
     }
 
     /**
      * 序列化为XML文件
+     * @param path
+     * @param v
+     * @param <V>
      */
     public static <V> void toXmlFile(String path, V v) {
         toXmlFile(path, v, true);
@@ -762,7 +800,12 @@ public final class JsonUtils {
 
     /**
      * 序列化为XML文件
+     * @param path
+     * @param v
+     * @param isIndent
+     * @param <V>
      */
+    @SneakyThrows
     public static <V> void toXmlFile(String path, V v, boolean isIndent) {
         try (Writer writer = new FileWriter(new File(path), true)) {
             if (isIndent) {
@@ -771,29 +814,26 @@ public final class JsonUtils {
                 xmlMapper.writeValue(writer, v);
             }
             writer.flush();
-        } catch (Exception e) {
-            //log.error("jackson to xml file error, path: {}, obj: {}, isIndent: {}", path, v, isIndent, e);
         }
     }
 
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return String
      */
+    @SneakyThrows
     public static String getString(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
             return null;
         }
-        try {
-            JsonNode node = mapper.readTree(json);
-            if (null != node) {
-                return node.get(key).toString();
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            //log.error("jackson get string error, json: {}, pullWaybillKey: {}", json, key, e);
+
+        JsonNode node = mapper.readTree(json);
+        if (null != node) {
+            return node.get(key).toString();
+        } else {
             return null;
         }
     }
@@ -801,21 +841,20 @@ public final class JsonUtils {
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return int
      */
+    @SneakyThrows
     public static Integer getInt(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
             return null;
         }
-        try {
-            JsonNode node = mapper.readTree(json);
-            if (null != node) {
-                return node.get(key).intValue();
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            //log.error("jackson get int error, json: {}, pullWaybillKey: {}", json, key, e);
+
+        JsonNode node = mapper.readTree(json);
+        if (null != node) {
+            return node.get(key).intValue();
+        } else {
             return null;
         }
     }
@@ -823,21 +862,20 @@ public final class JsonUtils {
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return long
      */
+    @SneakyThrows
     public static Long getLong(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
             return null;
         }
-        try {
-            JsonNode node = mapper.readTree(json);
-            if (null != node) {
-                return node.get(key).longValue();
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            //log.error("jackson get long error, json: {}, pullWaybillKey: {}", json, key, e);
+
+        JsonNode node = mapper.readTree(json);
+        if (null != node) {
+            return node.get(key).longValue();
+        } else {
             return null;
         }
     }
@@ -845,21 +883,20 @@ public final class JsonUtils {
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return double
      */
+    @SneakyThrows
     public static Double getDouble(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
             return null;
         }
-        try {
-            JsonNode node = mapper.readTree(json);
-            if (null != node) {
-                return node.get(key).doubleValue();
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            //log.error("jackson get double error, json: {}, pullWaybillKey: {}", json, key, e);
+
+        JsonNode node = mapper.readTree(json);
+        if (null != node) {
+            return node.get(key).doubleValue();
+        } else {
             return null;
         }
     }
@@ -867,21 +904,20 @@ public final class JsonUtils {
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return double
      */
+    @SneakyThrows
     public static BigInteger getBigInteger(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
             return new BigInteger(String.valueOf(0.00));
         }
-        try {
-            JsonNode node = mapper.readTree(json);
-            if (null != node) {
-                return node.get(key).bigIntegerValue();
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            //log.error("jackson get biginteger error, json: {}, pullWaybillKey: {}", json, key, e);
+
+        JsonNode node = mapper.readTree(json);
+        if (null != node) {
+            return node.get(key).bigIntegerValue();
+        } else {
             return null;
         }
     }
@@ -889,21 +925,20 @@ public final class JsonUtils {
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return double
      */
+    @SneakyThrows
     public static BigDecimal getBigDecimal(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
             return null;
         }
-        try {
-            JsonNode node = mapper.readTree(json);
-            if (null != node) {
-                return node.get(key).decimalValue();
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            //log.error("jackson get bigdecimal error, json: {}, pullWaybillKey: {}", json, key, e);
+
+        JsonNode node = mapper.readTree(json);
+        if (null != node) {
+            return node.get(key).decimalValue();
+        } else {
             return null;
         }
     }
@@ -911,21 +946,20 @@ public final class JsonUtils {
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return boolean, 默认为false
      */
+    @SneakyThrows
     public static boolean getBoolean(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
             return false;
         }
-        try {
-            JsonNode node = mapper.readTree(json);
-            if (null != node) {
-                return node.get(key).booleanValue();
-            } else {
-                return false;
-            }
-        } catch (IOException e) {
-            //log.error("jackson get boolean error, json: {}, pullWaybillKey: {}", json, key, e);
+
+        JsonNode node = mapper.readTree(json);
+        if (null != node) {
+            return node.get(key).booleanValue();
+        } else {
             return false;
         }
     }
@@ -933,29 +967,31 @@ public final class JsonUtils {
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return boolean, 默认为false
      */
+    @SneakyThrows
     public static byte[] getByte(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
-            return null;
+            return new byte[0];
         }
-        try {
-            JsonNode node = mapper.readTree(json);
-            if (null != node) {
-                return node.get(key).binaryValue();
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            //log.error("jackson get byte error, json: {}, pullWaybillKey: {}", json, key, e);
-            return null;
+
+        JsonNode node = mapper.readTree(json);
+        if (null != node) {
+            return node.get(key).binaryValue();
+        } else {
+            return new byte[0];
         }
     }
 
     /**
      * 从json串中获取某个字段
      *
+     * @param json
+     * @param key
      * @return boolean, 默认为false
+     * @param <T>
      */
     public static <T> List<T> getList(String json, String key) {
         if (ObjectUtils.isEmpty(json)) {
@@ -970,21 +1006,25 @@ public final class JsonUtils {
     /**
      * 向json中添加属性
      *
+     * @param json
+     * @param key
+     * @param value
      * @return json
+     * @param <T>
      */
+    @SneakyThrows
     public static <T> String add(String json, String key, T value) {
-        try {
-            JsonNode node = mapper.readTree(json);
-            add(node, key, value);
-            return node.toString();
-        } catch (IOException e) {
-            // log.error("jackson add error, json: {}, pullWaybillKey: {}, value: {}", json, key, value, e);
-            return json;
-        }
+        JsonNode node = mapper.readTree(json);
+        add(node, key, value);
+        return node.toString();
     }
 
     /**
      * 向json中添加属性
+     * @param jsonNode
+     * @param key
+     * @param value
+     * @param <T>
      */
     private static <T> void add(JsonNode jsonNode, String key, T value) {
         if (value instanceof String) {
@@ -1015,52 +1055,49 @@ public final class JsonUtils {
     /**
      * 除去json中的某个属性
      *
+     * @param json
+     * @param key
      * @return json
      */
+    @SneakyThrows
     public static String remove(String json, String key) {
-        try {
-            JsonNode node = mapper.readTree(json);
-            ((ObjectNode) node).remove(key);
-            return node.toString();
-        } catch (IOException e) {
-            //log.error("jackson remove error, json: {}, pullWaybillKey: {}", json, key, e);
-            return json;
-        }
+        JsonNode node = mapper.readTree(json);
+        ((ObjectNode) node).remove(key);
+        return node.toString();
     }
 
     /**
      * 修改json中的属性
+     * @param json
+     * @param key
+     * @param value
+     * @return
+     * @param <T>
      */
+    @SneakyThrows
     public static <T> String update(String json, String key, T value) {
-        try {
-            JsonNode node = mapper.readTree(json);
-            ((ObjectNode) node).remove(key);
-            add(node, key, value);
-            return node.toString();
-        } catch (IOException e) {
-            //log.error("jackson update error, json: {}, pullWaybillKey: {}, value: {}", json, key, value, e);
-            return json;
-        }
+        JsonNode node = mapper.readTree(json);
+        ((ObjectNode) node).remove(key);
+        add(node, key, value);
+        return node.toString();
     }
 
     /**
      * 格式化Json(美化)
      *
+     * @param json
      * @return json
      */
+    @SneakyThrows
     public static String format(String json) {
-        try {
-            JsonNode node = mapper.readTree(json);
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
-        } catch (IOException e) {
-            //log.error("jackson format json error, json: {}", json, e);
-            return json;
-        }
+        JsonNode node = mapper.readTree(json);
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
     }
 
     /**
      * 判断字符串是否是json
      *
+     * @param json
      * @return json
      */
     public static boolean isJson(String json) {
