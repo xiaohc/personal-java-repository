@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * @author xiaohongchao
  * @since 1.0.0
  */
-class JsonUtilsTest {
+class JacksonUtilsTest {
 
     @Test
     void from() {

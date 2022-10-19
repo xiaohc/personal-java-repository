@@ -6,7 +6,7 @@ package org.example.xhc.stream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.val;
-import org.example.xhc.common.util.JsonUtils;
+import org.example.xhc.common.util.JacksonUtils;
 import org.example.xhc.entity.Student;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +38,7 @@ class StreamSortTest {
 
     @Test
     void testMultiSort() {
-        val student = JsonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
+        val student = JacksonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
         });
 
         assert student != null;
@@ -49,7 +49,7 @@ class StreamSortTest {
                 )
                 .collect(toList());
 
-        val sortedStudent = JsonUtils.fromResource("json/student_sorted_array.json", new TypeReference<List<Student>>() {
+        val sortedStudent = JacksonUtils.fromResource("json/student_sorted_array.json", new TypeReference<List<Student>>() {
         });
         assertThat(ret).isEqualTo(sortedStudent);
     }

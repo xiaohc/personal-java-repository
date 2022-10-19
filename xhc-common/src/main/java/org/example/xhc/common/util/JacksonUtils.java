@@ -41,12 +41,13 @@ import java.util.List;
 import static org.example.xhc.common.constant.SystemConstants.CSV_DEFAULT_COLUMN_SEPARATOR;
 
 /**
- * Json工具类
+ * Jackson工具类
+ * 可以进行JSON、XML、YAML、CSV、PROP和POJO相互转化
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
-public final class JsonUtils {
+public final class JacksonUtils {
     private static ObjectMapper mapper;
     private static YAMLMapper yamlMapper;
     private static JavaPropsMapper propsMapper;
@@ -79,7 +80,7 @@ public final class JsonUtils {
     /**
      * 私有化工具类构造函数
      */
-    private JsonUtils() {
+    private JacksonUtils() {
     }
 
     private static void initMapper() {
@@ -1184,7 +1185,7 @@ public final class JsonUtils {
     }
 
     private static InputStream getResourceStream(String name) {
-        return JsonUtils.class.getClassLoader().getResourceAsStream(name);
+        return JacksonUtils.class.getClassLoader().getResourceAsStream(name);
     }
 
     private static InputStreamReader getResourceReader(InputStream inputStream) {
