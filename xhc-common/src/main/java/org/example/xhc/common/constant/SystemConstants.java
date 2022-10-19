@@ -19,6 +19,11 @@ public final class SystemConstants {
      */
     public static final String LINE_SEPARATOR;
 
+    /**
+     * CSV默认分隔符
+     */
+    public static final String CSV_DEFAULT_COLUMN_SEPARATOR = ",";
+
     static {
         String lineSeparator = System.lineSeparator();
         LINE_SEPARATOR = lineSeparator == null ? StringUtils.LF : lineSeparator;

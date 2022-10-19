@@ -5,6 +5,7 @@
 package org.example.xhc.stream;
 
 import lombok.val;
+import org.example.xhc.entity.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
@@ -24,6 +25,17 @@ class StreamSortTest {
 
     @Test
     void testSort() {
+        val ret =
+                Stream.of("a2", "abc", "a")
+                        .sorted(Comparator.naturalOrder())
+                        .collect(toList());
+
+        assertThat(ret).isEqualTo(asList("a", "a2", "abc"));
+    }
+
+    @Test
+    void testMultiSort() {
+        val student = new Student();
         val ret =
                 Stream.of("a2", "abc", "a")
                         .sorted(Comparator.naturalOrder())
