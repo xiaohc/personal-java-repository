@@ -71,11 +71,28 @@ Java8函数式编程实现为主
 
 - `filter`
   ``` Java
-  Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
-
-  结果: asList(1, 2, 3, 3, 4)
+  students.stream()
+          .filter(this::isSevenYearOld)
+          .collect(toList());
+  
+  private boolean isSevenYearOld(Student student) {
+    return student != null && student.getAge().equals(7);
+  }
   ```
-
+  ``` Java
+  - no: "20200107"
+    name: "eva"
+    sex: "FEMALE"
+    age: 7
+    birthday: "2013-12-09T05:24:20"
+    classNo: "202001"
+  - no: "20200215"
+    name: "tom"
+    sex: "MALE"
+    age: 7
+    birthday: "2013-01-29T15:05:41"
+    classNo: "202002"
+  ```
 #### 分组
 
 - `groupingBy`
