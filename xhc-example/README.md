@@ -32,7 +32,6 @@ Java8函数式编程实现为主
           )
           .collect(toList())
   ```
-  > p.s.
   > Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
   
   ``` Java
@@ -93,6 +92,8 @@ Java8函数式编程实现为主
 
   结果: singletonList("1abc")
   ```
+
+- `reduce`
 
 ### 多集合操作
 
