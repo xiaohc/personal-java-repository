@@ -38,19 +38,22 @@ class StreamSortTest {
 
     @Test
     void testMultiSort() {
-        val student = JacksonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
+        val students = JacksonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
         });
 
-        assert student != null;
-        val ret = student.stream()
+        assert students != null;
+        val ret = students.stream()
                 .sorted(Comparator
                         .comparing(Student::getAge, Comparator.naturalOrder())
-                        .thenComparing(Student::getNo, Comparator.reverseOrder())
+                        .thenComparing(Student::getBirthday, Comparator.reverseOrder())
                 )
                 .collect(toList());
 
         val sortedStudent = JacksonUtils.fromResource("json/student_sorted_array.json", new TypeReference<List<Student>>() {
         });
         assertThat(ret).isEqualTo(sortedStudent);
+
+        val str = JacksonUtils.toYaml(sortedStudent);
+        System.out.println(str);
     }
 }
