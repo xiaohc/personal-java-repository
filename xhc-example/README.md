@@ -32,7 +32,9 @@ Java8函数式编程实现为主
           )
           .collect(toList())
   ```
-
+  > 技术理解:
+  > Comparator支持嵌套，即comparing、thenComparing中，对排序字段再次指定一个复杂Comparator
+  
   ``` Java
     - no: "20200107"
       name: "Eva"
@@ -53,9 +55,6 @@ Java8函数式编程实现为主
       birthday: "2012-10-19T15:05:41"
       classNo: "201903"
   ```
-
-  >  技术理解
-  Comparator支持嵌套，即comparing、thenComparing中，对排序字段再次指定一个复杂Comparator
 
 #### 查找
 
