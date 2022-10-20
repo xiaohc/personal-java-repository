@@ -29,8 +29,9 @@ Java8函数式编程实现为主
                   .thenComparing(Student::getBirthday, Comparator.reverseOrder())
           )
           .collect(toList())
-
+  ```
   结果: 
+  ``` yaml
     - "no": "20200107"
       name: "Eva"
       sex: "FEMALE"
@@ -49,7 +50,6 @@ Java8函数式编程实现为主
       age: 8
       birthday: "2012-10-19T15:05:41"
       classNo: "201903"
-  
   ```
   
 #### 查找
