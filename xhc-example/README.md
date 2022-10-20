@@ -18,7 +18,11 @@ Java8函数式编程实现为主
         .sorted(Comparator.naturalOrder())
         .collect(toList())
   ```
-  结果: asList("a", "a2", "abc")
+  
+  结果:
+  ``` Java
+  ("a", "a2", "abc")
+  ```
   
 - `multi sorted`
   ``` Java
@@ -29,7 +33,8 @@ Java8函数式编程实现为主
           )
           .collect(toList())
   ```
-  结果:
+  
+  结果
   ``` 
     - "no": "20200107"
       name: "Eva"
