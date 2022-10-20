@@ -35,7 +35,7 @@
           )
           .collect(toList())
   ```
-  > ㊙ Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
+  > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
 
   ``` Java
     - no: "20200107"
