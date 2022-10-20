@@ -35,7 +35,8 @@ Java8函数式编程实现为主
   > Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
   
   ``` Java
-  = - no: "20200107"
+  = 
+    - no: "20200107"
       name: "eva"
       sex: "FEMALE"
       age: 7
