@@ -33,7 +33,7 @@ Java8函数式编程实现为主
           .collect(toList())
   ```
   > Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
-  
+
   ``` Java
     - no: "20200107"
       name: "eva"
@@ -66,7 +66,7 @@ Java8函数式编程实现为主
   ``` Java
   = "1abc"
   ```
-  
+
 #### 过滤
 
 - `filter`
@@ -76,7 +76,8 @@ Java8函数式编程实现为主
           .collect(toList());
   
   private boolean isSevenYearOld(Student student) {
-    return student != null && student.getAge().equals(7);
+    return student != null 
+            && Objects.equals(student.getAge(), 7);
   }
   ```
   ``` Java
@@ -93,6 +94,7 @@ Java8函数式编程实现为主
     birthday: "2013-01-29T15:05:41"
     classNo: "202002"
   ```
+
 #### 分组
 
 - `groupingBy`

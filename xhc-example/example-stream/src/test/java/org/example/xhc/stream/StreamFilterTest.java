@@ -11,6 +11,7 @@ import org.example.xhc.entity.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 
@@ -30,14 +31,15 @@ class StreamFilterTest {
         assert students != null;
         val ret =
                 students.stream()
-                .filter(this::isSevenYearOld)
-                .collect(toList());
+                        .filter(this::isSevenYearOld)
+                        .collect(toList());
 
         val str = JacksonUtils.toYaml(ret);
         System.out.println(str);
     }
 
     private boolean isSevenYearOld(Student student) {
-        return student != null && student.getAge().equals(7);
+        return student != null
+                && Objects.equals(student.getAge(), 7);
     }
 }
