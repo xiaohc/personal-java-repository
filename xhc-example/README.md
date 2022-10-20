@@ -36,7 +36,7 @@ Java8函数式编程实现为主
   
   ``` Java
     - no: "20200107"
-      name: "Eva"
+      name: "eva"
       sex: "FEMALE"
       age: 7
       birthday: "2013-12-09T05:24:20"
