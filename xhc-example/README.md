@@ -30,8 +30,8 @@ Java8函数式编程实现为主
           )
           .collect(toList())
   ```
+  ``` YAML
   结果: 
-  ``` yaml
     - "no": "20200107"
       name: "Eva"
       sex: "FEMALE"
