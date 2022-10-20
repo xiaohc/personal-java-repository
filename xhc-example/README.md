@@ -30,26 +30,27 @@ Java8函数式编程实现为主
           )
           .collect(toList())
 
-  结果: ---
-- "no": "20200107"
-  name: "Eva"
-  sex: "FEMALE"
-  age: 7
-  birthday: "2013-12-09T05:24:20"
-  classNo: "202001"
-- "no": "20200215"
-  name: "tom"
-  sex: "MALE"
-  age: 7
-  birthday: "2013-01-29T15:05:41"
-  classNo: "202002"
-- "no": "20190321"
-  name: "jack"
-  sex: "MALE"
-  age: 8
-  birthday: "2012-10-19T15:05:41"
-  classNo: "201903"
-```
+  结果: 
+    - "no": "20200107"
+      name: "Eva"
+      sex: "FEMALE"
+      age: 7
+      birthday: "2013-12-09T05:24:20"
+      classNo: "202001"
+    - "no": "20200215"
+      name: "tom"
+      sex: "MALE"
+      age: 7
+      birthday: "2013-01-29T15:05:41"
+      classNo: "202002"
+    - "no": "20190321"
+      name: "jack"
+      sex: "MALE"
+      age: 8
+      birthday: "2012-10-19T15:05:41"
+      classNo: "201903"
+  
+  ```
   
 #### 查找
 
