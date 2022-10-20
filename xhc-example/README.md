@@ -61,11 +61,14 @@ Java8函数式编程实现为主
 
 - `min、max`
   ``` Java
-  Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList())
-
-  结果: singletonList("1abc")
+  Stream.of("a", "1abc", "abc1")
+        .min(Comparator.naturalOrder())
+        .get();
   ```
-
+  ``` Java
+  "1abc"
+  ```
+  
 ##### 过滤
 
 - `filter`
