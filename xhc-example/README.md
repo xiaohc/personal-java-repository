@@ -7,11 +7,11 @@
 ## Stream API 集合操作
 
 
-### 👉技术理解
+### 技术理解
 
-> 函数接口(FunctionInterface)对齐C++的函数指针，Lambda 表达式对齐函数体
+> 👉函数接口(FunctionInterface)对齐C++的函数指针，Lambda 表达式对齐函数体
 
-### ❉单集合操作
+### 单集合操作
 
 #### 排序
 
