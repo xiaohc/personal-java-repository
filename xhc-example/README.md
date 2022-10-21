@@ -84,6 +84,7 @@
   }
   ```
   ``` java
+  --- list:
   - no: "20200107"
     name: "eva"
     sex: "FEMALE"
@@ -106,6 +107,7 @@
           .collect(groupingBy(Student::getSex, mapping(Student::getName, joining(",", "[", "]"))));
   ```
   ``` java
+  --- map:
   MALE: "[jack,tom]"
   FEMALE: "[eva]"
   ```
