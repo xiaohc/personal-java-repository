@@ -6,7 +6,6 @@
 
 ## Stream API 集合操作
 
-
 ### 技术理解
 
 > 👉 函数接口(FunctionInterface)对齐C++的函数指针，Lambda 表达式对齐函数体
@@ -74,6 +73,18 @@
   String ➡️ "1abc"
   ```
 
+#### 遍历
+
+- `sum`
+  ``` java
+  Stream.of(1, 2, 3)
+        .mapToInt(Integer::valueOf)
+        .sum();
+  ```
+  ``` java
+  int ➡️ 6
+  ```
+ 
 #### 过滤
 
 - `filter`
@@ -115,15 +126,6 @@
   MALE: "[jack,tom]"
   FEMALE: "[eva]"
   ```
-  
-#### 遍历
-
-- `sum`
-  ``` java
-  Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList())
-
-  结果: singletonList("1abc")
-  ```
 
 - `reduce`
 
@@ -145,7 +147,7 @@
   - 3
   - 4
   ```
-  
+
 #### 并集
 
 - `union`
@@ -162,7 +164,7 @@
   - 3
   - 4
   ```
-  
+
 #### 交集
 
 - `交集`
