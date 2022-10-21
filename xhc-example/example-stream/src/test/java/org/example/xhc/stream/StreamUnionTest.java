@@ -5,6 +5,7 @@
 package org.example.xhc.stream;
 
 import lombok.val;
+import org.example.xhc.common.util.JacksonUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -30,6 +31,9 @@ class StreamUnionTest {
                         .collect(toList());
 
         assertThat(ret).isEqualTo(asList(1, 2, 3, 3, 4));
+
+        val str = JacksonUtils.toYaml(ret);
+        System.out.println(str);
     }
 
     @Test
@@ -41,5 +45,8 @@ class StreamUnionTest {
                         .collect(toList());
 
         assertThat(ret).isEqualTo(asList(1, 2, 3, 4));
+
+        val str = JacksonUtils.toYaml(ret);
+        System.out.println(str);
     }
 }

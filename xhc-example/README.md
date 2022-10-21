@@ -136,10 +136,16 @@
   Stream.of(asList(1, 2, 3), asList(3, 4))
         .flatMap(Collection::stream)
         .collect(toList());
-  
-  结果: asList(1, 2, 3, 3, 4)
   ```
-
+  ``` java
+  List ⤵️
+  - 1
+  - 2
+  - 3
+  - 3
+  - 4
+  ```
+  
 #### 并集
 
 - `union`
@@ -148,10 +154,15 @@
         .flatMap(Collection::stream)
         .distinct()
         .collect(toList());
-  
-  结果: asList(1, 2, 3, 4)
   ```
-
+  ``` java
+  List ⤵️
+  - 1
+  - 2
+  - 3
+  - 4
+  ```
+  
 #### 交集
 
 - `交集`
