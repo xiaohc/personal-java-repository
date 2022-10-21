@@ -16,18 +16,18 @@
 #### 排序
 
 - `sorted`
-  ``` Java
+  ``` java
   Stream.of("a2", "abc", "a")
         .sorted(Comparator.naturalOrder())
         .collect(toList())
   ```
 
-  ``` Java
+  ``` java
   = ("a", "a2", "abc")
   ```
 
 - `multi sorted`
-  ``` Java
+  ``` java
   students.stream()
           .sorted(Comparator
                   .comparing(Student::getAge, Comparator.naturalOrder())
@@ -37,7 +37,7 @@
   ```
   > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
 
-  ``` Java
+  ``` java
     - no: "20200107"
       name: "eva"
       sex: "FEMALE"
@@ -61,19 +61,19 @@
 #### 查找
 
 - `min、max`
-  ``` Java
+  ``` java
   Stream.of("a", "1abc", "abc1")
         .min(Comparator.naturalOrder())
         .get();
   ```
-  ``` Java
+  ``` java
   = "1abc"
   ```
 
 #### 过滤
 
 - `filter`
-  ``` Java
+  ``` java
   students.stream()
           .filter(this::isSevenYearOld)
           .collect(toList());
@@ -83,7 +83,7 @@
             && Objects.equals(student.getAge(), 7);
   }
   ```
-  ``` Java
+  ``` java
   - no: "20200107"
     name: "eva"
     sex: "FEMALE"
@@ -101,16 +101,19 @@
 #### 分组
 
 - `groupingBy`
-  ``` Java
-  Stream.of(asList(1, 2, 3), asList(3, 4)).flatMap(Collection::stream).collect(toList())
-
-  结果: asList(1, 2, 3, 3, 4)
+  ``` java
+  students.stream()
+          .collect(groupingBy(Student::getSex, mapping(Student::getName, joining(",", "[", "]"))));
   ```
-
-#### 循环
+  ``` java
+  MALE: "[jack,tom]"
+  FEMALE: "[eva]"
+  ```
+  
+#### 遍历
 
 - `sum`
-  ``` Java
+  ``` java
   Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList())
 
   结果: singletonList("1abc")
@@ -123,7 +126,7 @@
 #### 合并
 
 - `union all`
-  ``` Java
+  ``` java
   Stream.of(asList(1, 2, 3), asList(3, 4))
         .flatMap(Collection::stream)
         .collect(toList());
@@ -134,7 +137,7 @@
 #### 并集
 
 - `union`
-  ``` Java
+  ``` java
   Stream.of(asList(1, 2, 3), asList(3, 4))
         .flatMap(Collection::stream)
         .distinct()

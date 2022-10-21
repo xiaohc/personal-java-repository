@@ -4,15 +4,15 @@
 
 package org.example.xhc.stream;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.val;
+import org.example.xhc.common.util.JacksonUtils;
+import org.example.xhc.entity.Student;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.stream.Stream;
+import java.util.List;
 
-import static java.lang.Character.isDigit;
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
+import static java.util.stream.Collectors.*;
 
 /**
  * 范例
@@ -24,8 +24,15 @@ class StreamGroupTest {
 
     @Test
     void testGroup() {
-        val ret = Stream.of("a", "1abc", "abc1").filter(value -> isDigit(value.charAt(0))).collect(toList());
+        val students = JacksonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
+        });
 
-        assertThat(ret).isEqualTo(Collections.singletonList("1abc"));
+        assert students != null;
+        val ret =
+                students.stream()
+                        .collect(groupingBy(Student::getSex, mapping(Student::getName, joining(",", "[", "]"))));
+
+        val str = JacksonUtils.toYaml(ret);
+        System.out.println(str);
     }
 }
