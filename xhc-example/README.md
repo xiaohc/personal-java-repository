@@ -23,8 +23,10 @@
   ```
 
   ``` java
-  list ⤵️ 
-  ("a", "a2", "abc")
+  List ⤵️ 
+  - "a"
+  - "a2"
+  - "abc"
   ```
 
 - `multi sorted`

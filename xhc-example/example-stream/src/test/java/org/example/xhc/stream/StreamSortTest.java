@@ -34,6 +34,9 @@ class StreamSortTest {
                         .collect(toList());
 
         assertThat(ret).isEqualTo(asList("a", "a2", "abc"));
+
+        val str = JacksonUtils.toYaml(ret);
+        System.out.println(str);
     }
 
     @Test
