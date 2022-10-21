@@ -69,7 +69,7 @@
         .get();
   ```
   ``` 
-  String ⤵ ➡️ "1abc"
+  string ⤵ ➡️ "1abc"
   ```
 
 #### 过滤
