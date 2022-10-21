@@ -68,9 +68,8 @@
         .min(Comparator.naturalOrder())
         .get();
   ```
-  ``` java
-  String ⤵ 
-  "1abc"
+  ``` 
+  String ⤵ ➡️ "1abc"
   ```
 
 #### 过滤
