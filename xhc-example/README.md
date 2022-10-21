@@ -23,7 +23,8 @@
   ```
 
   ``` java
-  list ➡️ ("a", "a2", "abc")
+  list ⤵️ 
+  ("a", "a2", "abc")
   ```
 
 - `multi sorted`
@@ -68,7 +69,8 @@
         .get();
   ```
   ``` java
-  String ➡️ "1abc"
+  String ⤵ 
+  "1abc"
   ```
 
 #### 过滤
