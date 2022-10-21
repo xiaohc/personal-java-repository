@@ -23,7 +23,7 @@
   ```
 
   ``` java
-  = ("a", "a2", "abc")
+  list ➡️ ("a", "a2", "abc")
   ```
 
 - `multi sorted`
@@ -38,6 +38,7 @@
   > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
 
   ``` java
+    list ⤵️
     - no: "20200107"
       name: "eva"
       sex: "FEMALE"
@@ -67,7 +68,7 @@
         .get();
   ```
   ``` java
-  = "1abc"
+  String ➡️ "1abc"
   ```
 
 #### 过滤
@@ -84,7 +85,7 @@
   }
   ```
   ``` java
-  --- list:
+  list ⤵️
   - no: "20200107"
     name: "eva"
     sex: "FEMALE"
@@ -107,7 +108,7 @@
           .collect(groupingBy(Student::getSex, mapping(Student::getName, joining(",", "[", "]"))));
   ```
   ``` java
-  --- map:
+  map ⤵️
   MALE: "[jack,tom]"
   FEMALE: "[eva]"
   ```
