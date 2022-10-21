@@ -68,7 +68,7 @@
         .min(Comparator.naturalOrder())
         .get();
   ```
-  ``` 
+  ``` java
   String ⤵️ 
   "1abc"
   ```
