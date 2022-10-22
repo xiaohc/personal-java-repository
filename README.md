@@ -135,7 +135,7 @@ personal-java-repository
 
 - `改参，但不修改配置文件进行调试` 方法：使用程序启动参数，e.g. -Dspring.datasource.url=jdbc:mysql ... ...
 
-## ⚒️环境搭建
+## ⛪环境搭建
 
 ## 📐代码范例
 > 整理一些常用操作的编码最优解
