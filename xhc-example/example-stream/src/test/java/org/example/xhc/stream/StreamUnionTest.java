@@ -37,6 +37,18 @@ class StreamUnionTest {
     }
 
     @Test
+    void testUnionTest() {
+        val ret =
+                Stream.concat(Stream.of(1, 2, 3), Stream.of(3, 4))
+                        .collect(toList());
+
+        assertThat(ret).isEqualTo(asList(1, 2, 3, 3, 4));
+
+        val str = JacksonUtils.toYaml(ret);
+        System.out.println(str);
+    }
+
+    @Test
     void testUnion() {
         val ret =
                 Stream.of(asList(1, 2, 3), asList(3, 4))

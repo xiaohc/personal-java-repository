@@ -140,6 +140,10 @@
         .collect(toList());
   ```
   ``` java
+  Stream.concat(Stream.of(1, 2, 3), Stream.of(3, 4))
+        .collect(toList());
+  ```  
+  ``` java
   List ⤵️
   - 1
   - 2
