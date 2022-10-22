@@ -49,4 +49,15 @@ class StreamUnionTest {
         val str = JacksonUtils.toYaml(ret);
         System.out.println(str);
     }
+
+    @Test
+    void testIntersection() {
+        val ret =
+                Stream.of(1, 2, 3)
+                        .filter(v -> asList(3, 4).contains(v))
+                        .collect(toList());
+
+        val str = JacksonUtils.toYaml(ret);
+        System.out.println(str);
+    }
 }

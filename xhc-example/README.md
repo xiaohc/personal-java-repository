@@ -18,7 +18,7 @@
   ``` java
   Stream.of("a2", "abc", "a")
         .sorted(Comparator.naturalOrder())
-        .collect(toList())
+        .collect(toList());
   ```
 
   ``` java
@@ -35,7 +35,7 @@
                   .comparing(Student::getAge, Comparator.naturalOrder())
                   .thenComparing(Student::getBirthday, Comparator.reverseOrder())
           )
-          .collect(toList())
+          .collect(toList());
   ```
   > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
 
@@ -168,4 +168,12 @@
 #### 交集
 
 - `交集`
-
+  ``` java
+  Stream.of(1, 2, 3)
+          .filter(v -> asList(3, 4).contains(v))
+          .collect(toList());
+  ```
+  ``` java
+  List ⤵️
+  - 3
+  ```
