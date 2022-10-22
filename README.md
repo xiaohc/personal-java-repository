@@ -4,7 +4,7 @@
 
 个人Java库，用于以后快速搭建项目，内容主要是收集的范例，整理的日常经验。
 
-## 🔖组织结构
+## 📒组织结构
 
 ``` shell
 personal-java-repository
