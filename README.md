@@ -141,4 +141,4 @@ personal-java-repository
 
 点击下面链接，进入代码范例仓库:
 
-- [代码范例项目](https://gitee.com/x-hc/personal-java-repository/tree/master/xhc-example)
+- [Stream API 集合操作](https://gitee.com/x-hc/personal-java-repository/tree/master/xhc-example/example-stream)
