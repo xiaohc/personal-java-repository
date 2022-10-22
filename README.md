@@ -4,7 +4,7 @@
 
 个人Java库，用于以后快速搭建项目，内容主要是收集的范例，整理的日常经验。
 
-## 组织结构
+## 🪜组织结构
 
 ``` shell
 personal-java-repository
@@ -66,7 +66,7 @@ personal-java-repository
 | Portainer              | 可视化Docker容器管理     |        | [网址](https://github.com/portainer/portainer)                |
 | LogStash               | 日志收集                |        | [网址](https://github.com/logstash/logstash-logback-encoder)  |
 
-### 前端技术
+### 🖥️前端技术
 
 | 名称       | 说明                   | 参考                           |
 | ---------- | --------------------- | ------------------------------ |
@@ -77,7 +77,7 @@ personal-java-repository
 | Axios      | 前端HTTP框架            | [网址](https://github.com/axios/axios)  |
 | v-charts   | 基于Echarts的图表框架    | [官网](https://v-charts.js.org/)        |
 
-## 开发工具
+## 🛠️开发工具
 
 ### 在线工具
 
