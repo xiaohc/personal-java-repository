@@ -137,4 +137,8 @@ personal-java-repository
 
 ## 环境搭建
 
-## [代码范例](https://gitee.com/x-hc/personal-java-repository/tree/master/xhc-example)
+## 代码范例
+
+点击下面链接，进入代码范例仓库:
+
+- [代码范例项目](https://gitee.com/x-hc/personal-java-repository/tree/master/xhc-example)
