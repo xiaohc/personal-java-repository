@@ -5,7 +5,6 @@
 package org.example.xhc.demo.base.helper;
 
 import org.example.xhc.demo.base.exception.BusinessException;
-import org.example.xhc.demo.base.validation.Expect;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -36,12 +35,19 @@ class IfTest {
 
     @Test
     void isNull() {
+        Executable validate = () -> If.isNull(null)
+                .thenThrow(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
+
+        BusinessException exception = assertThrows(BusinessException.class, validate);
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+                LINE_SEPARATOR + ">>> The error code is 9999" +
+                LINE_SEPARATOR + ">>> 测试业务检查工具类: Validate");
     }
 
     @Test
     void notNull() {
-        Executable validate = () -> Expect.notNull(null)
-                .throwIfFailed(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
+        Executable validate = () -> If.notNull(new Object())
+                .thenThrow(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
@@ -51,9 +57,23 @@ class IfTest {
 
     @Test
     void isBlank() {
+        Executable validate = () -> If.isBlank(" ")
+                .thenThrow(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
+
+        BusinessException exception = assertThrows(BusinessException.class, validate);
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+                LINE_SEPARATOR + ">>> The error code is 9999" +
+                LINE_SEPARATOR + ">>> 测试业务检查工具类: Validate");
     }
 
     @Test
     void isNotBlank() {
+        Executable validate = () -> If.isNotBlank("a ")
+                .thenThrow(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
+
+        BusinessException exception = assertThrows(BusinessException.class, validate);
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+                LINE_SEPARATOR + ">>> The error code is 9999" +
+                LINE_SEPARATOR + ">>> 测试业务检查工具类: Validate");
     }
 }

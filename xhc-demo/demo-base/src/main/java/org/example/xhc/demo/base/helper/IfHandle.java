@@ -13,7 +13,7 @@ import org.example.xhc.demo.base.reply.ErrorContext;
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface IIfHandle {
+public interface IfHandle {
     /**
      * 抛出免检异常或不执行任何操作
      * <p>

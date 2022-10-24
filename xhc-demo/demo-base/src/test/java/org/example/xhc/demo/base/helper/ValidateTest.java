@@ -1,4 +1,8 @@
-package org.example.xhc.demo.base.validation;
+/*
+ * Copyright (c) 2022 xiaohongchao.All Rights Reserved.
+ */
+
+package org.example.xhc.demo.base.helper;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +18,6 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 import static org.example.xhc.demo.base.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
-import static org.example.xhc.demo.base.validation.Expect.passValidation;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -29,7 +32,7 @@ class ValidateTest {
     void checkErrors() {
         Executable validate = () -> {
             RequestDTO request = RequestDTO.builder().build();
-            passValidation(request).throwIfFailed(INTERNAL_SERVER_ERROR.as("test"));
+            If.haveError(request).thenThrow(INTERNAL_SERVER_ERROR.as("test"));
         };
 
         BusinessException exception = assertThrows(BusinessException.class, validate);

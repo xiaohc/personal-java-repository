@@ -56,7 +56,7 @@ public final class If {
      * @param <T>    实体类类型
      * @return 校验处理
      */
-    public static <T> IIfHandle haveError(T t, Class<?>... groups) {
+    public static <T> IfHandle haveError(T t, Class<?>... groups) {
         Set<ConstraintViolation<T>> validatedSet = VALIDATOR.validate(t, groups);
 
         return error -> {
@@ -95,7 +95,7 @@ public final class If {
      * @return 一个函数接口实现
      * @throws RuntimeException 如果表达式为true,抛出免检异常
      */
-    public static IIfHandle isTrue(final boolean expression) {
+    public static IfHandle isTrue(final boolean expression) {
         return error -> {
             if (expression) {
                 throw ensureToException(error, "expression").toException();
@@ -110,7 +110,7 @@ public final class If {
      * @return 一个函数接口实现
      * @throws RuntimeException 如果对象为null，抛出免检异常
      */
-    public static IIfHandle isNull(final Object object) {
+    public static IfHandle isNull(final Object object) {
         return error -> {
             if (object == null) {
                 throw ensureToException(error, "null object").toException();
@@ -125,7 +125,7 @@ public final class If {
      * @return 一个函数接口实现
      * @throws RuntimeException 如果对象不为null，抛出免检异常
      */
-    public static IIfHandle notNull(final Object object) {
+    public static IfHandle notNull(final Object object) {
         return error -> {
             if (object != null) {
                 throw ensureToException(error, object).toException();
@@ -140,7 +140,7 @@ public final class If {
      * @return 一个函数接口实现
      * @throws RuntimeException 如果文本为空，抛出免检异常
      */
-    public static IIfHandle isBlank(final String text) {
+    public static IfHandle isBlank(final String text) {
         return error -> {
             if (StringUtils.isBlank(text)) {
                 throw ensureToException(error, "blank text").toException();
@@ -155,7 +155,7 @@ public final class If {
      * @return 一个函数接口实现
      * @throws RuntimeException 如果文本不为空，抛出免检异常
      */
-    public static IIfHandle isNotBlank(final String text) {
+    public static IfHandle isNotBlank(final String text) {
         return error -> {
             if (StringUtils.isNotBlank(text)) {
                 throw ensureToException(error, text).toException();
@@ -170,7 +170,7 @@ public final class If {
      * @return 一个函数接口实现
      * @throws RuntimeException 如果数组为空，抛出免检异常
      */
-    public static IIfHandle isEmpty(final Object object) {
+    public static IfHandle isEmpty(final Object object) {
         return error -> {
             if (ObjectUtils.isEmpty(object)) {
                 throw ensureToException(error, "empty").toException();
@@ -185,7 +185,7 @@ public final class If {
      * @return 一个函数接口实现
      * @throws RuntimeException 如果数组不为空，抛出免检异常
      */
-    public static IIfHandle notEmpty(final Object object) {
+    public static IfHandle notEmpty(final Object object) {
         return error -> {
             if (!ObjectUtils.isEmpty(object)) {
                 throw ensureToException(error, object).toException();
