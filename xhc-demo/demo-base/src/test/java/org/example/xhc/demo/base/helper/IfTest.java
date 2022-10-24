@@ -15,7 +15,7 @@ import static org.example.xhc.demo.base.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * TODO
+ * 工具类单元测试
  *
  * @author xiaohongchao
  * @since 1.0.0

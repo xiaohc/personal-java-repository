@@ -19,13 +19,13 @@
 > 如果某函数的返回，有一个固定的处理流程，可以考虑返回一个函数接口类型。
   ``` java
     @FunctionalInterface
-    public interface IExpectHandle {
-        void throwIfFailed(ErrorContext error);
+    public interface IIfHandle {
+        void thenThrow(ErrorContext error);
     }
   ```
 
   ``` java
-    public static IExpectHandle notNull(final Object object) {
+    public static IIfHandle isNull(final Object object) {
         return error -> {
             if (object == null) {
                 throw new BusinessException(error);
@@ -35,7 +35,8 @@
   ```
 
   ``` java
-    Expect.notNull(txnRequestDTO).throwIfFailed(TXN_REQUEST_ERROR.as("事务请求内容不能为空，事务号是: {}", txnNo));
+    If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
+    If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR.as("事务请求内容不能为空，事务号是: {}", txnNo));
   ```
 
 ### 单集合
