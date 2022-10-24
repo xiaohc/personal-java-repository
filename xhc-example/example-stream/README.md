@@ -23,6 +23,16 @@
   ```
 
   ``` java
+    public static IExpectHandle notNull(final Object object) {
+        return error -> {
+            if (object == null) {
+                throw error.toException();
+            }
+        };
+    }
+  ```
+
+  ``` java
   Expect.notNull(businessObject).throwIfFailed(INTERNAL_SERVER_ERROR.as("业务对象不能为空，事务号是: {}", txnNo));
   ```
 
