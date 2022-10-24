@@ -36,7 +36,6 @@
 
   ``` java
     If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
-    If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR.as("事务请求内容不能为空，事务号是: {}", txnNo));
   ```
 
 ### 单集合
