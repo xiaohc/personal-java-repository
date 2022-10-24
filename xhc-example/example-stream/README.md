@@ -19,13 +19,13 @@
 > 如果某函数的返回，有一个固定的处理流程，可以考虑返回一个函数接口类型。
   ``` java
     @FunctionalInterface
-    public interface IIfHandle {
+    public interface IfHandle {
         void thenThrow(ErrorContext error);
     }
   ```
 
   ``` java
-    public static IIfHandle isNull(final Object object) {
+    public static IfHandle isNull(final Object object) {
         return error -> {
             if (object == null) {
                 throw new BusinessException(error);
