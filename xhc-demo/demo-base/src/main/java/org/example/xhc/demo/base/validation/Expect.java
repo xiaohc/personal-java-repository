@@ -6,6 +6,7 @@ package org.example.xhc.demo.base.validation;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.example.xhc.demo.base.reply.ErrorContext;
 import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
@@ -20,6 +21,7 @@ import static java.util.stream.Collectors.*;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 import static org.example.xhc.common.util.SetUtils.isNotOnlyNullElement;
+import static org.example.xhc.demo.base.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
 
 /**
  * 业务验证工具类
@@ -59,7 +61,7 @@ public final class Expect {
 
         return error -> {
             if (isNotEmpty(validatedSet) && isNotOnlyNullElement(validatedSet)) {
-                throw error.reason(generateErrorDetails(validatedSet)).toException();
+                throw ensureToException(error, "JSR-303 bean validation").reason(generateErrorDetails(validatedSet)).toException();
             }
         };
     }
@@ -96,7 +98,7 @@ public final class Expect {
     public static IExpectHandle isTrue(final boolean expression) {
         return error -> {
             if (!expression) {
-                throw error.toException();
+                throw ensureToException(error, "expression").toException();
             }
         };
     }
@@ -111,7 +113,7 @@ public final class Expect {
     public static IExpectHandle isNull(final Object object) {
         return error -> {
             if (object != null) {
-                throw error.toException();
+                throw ensureToException(error, object).toException();
             }
         };
     }
@@ -126,7 +128,7 @@ public final class Expect {
     public static IExpectHandle notNull(final Object object) {
         return error -> {
             if (object == null) {
-                throw error.toException();
+                throw ensureToException(error, "null object").toException();
             }
         };
     }
@@ -141,7 +143,7 @@ public final class Expect {
     public static IExpectHandle isBlank(final String text) {
         return error -> {
             if (!StringUtils.isBlank(text)) {
-                throw error.toException();
+                throw ensureToException(error, text).toException();
             }
         };
     }
@@ -156,7 +158,7 @@ public final class Expect {
     public static IExpectHandle isNotBlank(final String text) {
         return error -> {
             if (!StringUtils.isNotBlank(text)) {
-                throw error.toException();
+                throw ensureToException(error, "blank text").toException();
             }
         };
     }
@@ -171,8 +173,20 @@ public final class Expect {
     public static IExpectHandle notEmpty(final Object object) {
         return error -> {
             if (ObjectUtils.isEmpty(object)) {
-                throw error.toException();
+                throw ensureToException(error, object).toException();
             }
         };
+    }
+
+    /**
+     * 确保能转化为异常
+     *
+     * @param error  错误内容
+     * @param object 对象信息
+     * @return 业务异常
+     */
+    private static ErrorContext ensureToException(ErrorContext error, Object object) {
+        return Objects.nonNull(error) ? error
+                : INTERNAL_SERVER_ERROR.as("It is necessary to clarify the business error after the business check fails, The check target is {}", object);
     }
 }
