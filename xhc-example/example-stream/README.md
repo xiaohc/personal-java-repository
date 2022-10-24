@@ -11,7 +11,7 @@
 > 👉  Lambda 表达式是一个匿名方法，对齐C++函数体  
 > 👉  FunctionInterface 用于定义 Lambda表达式的类型，其实体对象对齐C++的函数指针  
   ``` java
-  BinaryOperator<Integer> add = (x, y) → x + y;
+  BinaryOperator<Integer> add = (x, y) -> x + y;
   ```
 
 ### 单集合
