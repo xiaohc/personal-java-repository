@@ -28,7 +28,7 @@
     public static IExpectHandle notNull(final Object object) {
         return error -> {
             if (object == null) {
-                throw error.toException();
+                throw new BusinessException(error);
             }
         };
     }
