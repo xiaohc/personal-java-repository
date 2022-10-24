@@ -14,12 +14,14 @@
 > 👉  <kbd>Lambda Expression</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
 > 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象 ` add ` 对齐C++的函数指针  
 
-  应用1：如果某函数的返回，有一个固定的处理流程，可以考虑返回一个函数接口类型，如下：
+  应用1：代码简化语法糖，可简化代码，并明细提升代码可读性。如下：  
+
+> 如果某函数的返回，有一个固定的处理流程，可以考虑返回一个函数接口类型。
   ``` java
-  @FunctionalInterface
-  public interface IExpectHandle {
-      void throwIfFailed(ErrorContext error);
-  }
+    @FunctionalInterface
+    public interface IExpectHandle {
+        void throwIfFailed(ErrorContext error);
+    }
   ```
 
   ``` java
@@ -33,7 +35,7 @@
   ```
 
   ``` java
-  Expect.notNull(businessObject).throwIfFailed(INTERNAL_SERVER_ERROR.as("业务对象不能为空，事务号是: {}", txnNo));
+    Expect.notNull(businessObject).throwIfFailed(INTERNAL_SERVER_ERROR.as("业务对象不能为空，事务号是: {}", txnNo));
   ```
 
 ### 单集合
