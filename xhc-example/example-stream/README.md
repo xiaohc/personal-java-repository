@@ -8,8 +8,8 @@
 
 ### 技术理解
 
->  👉 Lambda 表达式是一个匿名方法，对齐C++函数体  
->  👉 FunctionInterface 用于定义 Lambda表达式的类型，其实体对象对齐C++的函数指针  
+> 👉  Lambda 表达式是一个匿名方法，对齐C++函数体  
+> 👉  FunctionInterface 用于定义 Lambda表达式的类型，其实体对象对齐C++的函数指针  
 
 ### 单集合
 
