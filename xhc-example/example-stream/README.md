@@ -11,8 +11,8 @@
   ``` java
   BinaryOperator<Integer> add = (x, y) -> x + y;
   ```
-> 👉  <kbd>Lambda</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
-> 👉  <kbd>FunctionInterface</kbd> 用于定义 Lambda表达式的类型，其实体对象对齐C++的函数指针  
+> 👉  <kbd>Lambda Expression</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
+> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象对齐C++的函数指针  
 
 ### 单集合
 
