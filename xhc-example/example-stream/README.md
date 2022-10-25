@@ -6,6 +6,19 @@
 
 ## Stream API 集合操作
 
+### 常用场景
+
+> 查找唱片集中，歌曲长度大于60，所有歌曲名（唯一、排序）
+
+  ``` java
+  albums.stream()
+        .flatMap(album -> album.getTracks())
+        .filter(track -> track.getLength() > 60)
+        .sorted(Track::getName, Comparator.naturalOrder())
+        .map(track -> track.getName())
+        .collect(toSet());
+  ```
+
 ### 技术理解
 
   ``` java
