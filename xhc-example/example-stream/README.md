@@ -4,20 +4,7 @@
 
 整理一些常用操作的编码最优解
 
-## Stream API 集合操作
-
-### 常用场景
-
-> 查找唱片集中，歌曲长度大于60，所有歌曲名（唯一、排序）
-
-  ``` java
-  albums.stream()
-        .flatMap(album -> album.getTracks())
-        .filter(track -> track.getLength() > 60)
-        .sorted(Track::getName, Comparator.naturalOrder())
-        .map(track -> track.getName())
-        .collect(toSet());
-  ```
+## Java8函数式编程
 
 ### 技术理解
 
@@ -49,6 +36,21 @@
 
   ``` java
     If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
+  ```
+
+## Stream API 集合操作
+
+### 常用场景
+
+> 查找唱片集中，歌曲长度大于60，所有歌曲名（唯一、排序）
+
+  ``` java
+  albums.stream()
+        .flatMap(album -> album.getTracks())
+        .filter(track -> track.getLength() > 60)
+        .sorted(Track::getName, Comparator.naturalOrder())
+        .map(track -> track.getName())
+        .collect(toSet());
   ```
 
 ### 单集合
