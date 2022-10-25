@@ -38,7 +38,7 @@
     If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
   ```
 
-## Stream API 集合操作
+## Stream API
 
 ### 常用场景
 
@@ -53,7 +53,7 @@
         .collect(toSet());
   ```
 
-### 单集合
+### 单集合操作
 
 #### 排序
 
@@ -172,7 +172,7 @@
 
 - `reduce`
 
-### 多集合
+### 多集合操作
 
 #### 合并
 
