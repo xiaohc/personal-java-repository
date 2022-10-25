@@ -63,7 +63,7 @@
 > 2. 处理数据
 > - sorted 排序处理
 > - map 映射处理
-> - reduce 压缩处理 = min、max
+> - reduce 压缩处理 ≒ min、max
 > 3. 收集数据
 > - collect
 
