@@ -1,8 +1,8 @@
-# Stream代码范例
+# Stream总结
 
 ## 简介
 
-整理一些常用操作的编码最优解
+整理一些个人理解，及常用操作的编码最优解
 
 ## Java8函数式编程
 
@@ -110,7 +110,12 @@
 
 #### `Stream.flatMap()`
 
-- ` Stream.flatMap(Function<T,stream> mapper) `
+- ` flatMap(Function mapper) ` 
+- ` flatMap(Function<T, Stream> mapper) `
+- ` flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`
+
+- ` e.g. mapper = (t) -> Stream.of(t) `
+  
   ``` java
   Stream.of(asList(1, 2, 3), asList(3, 4))
         .flatMap(Collection::stream)
