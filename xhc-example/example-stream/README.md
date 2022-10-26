@@ -110,13 +110,16 @@
 
 #### `Stream.flatMap()`
 
-> ` flatMap(Function mapper) `  
-> ` flatMap(Function<T, Stream> mapper) `  
-> ` flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`  
+用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流  
 
-e.g.
- ` mapper = (t) -> Stream.of(t) `  
-  
+> ` Stream.flatMap(Function mapper) `  
+> ` Stream.flatMap(Function<T, Stream> mapper) `  
+> ` Stream. flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`  
+
+e.g.  
+> ` mapper = (t) -> Stream.of(t) `  
+> ` mapper = (t) -> t.getList() `
+
   ``` java
   Stream.of(asList(1, 2, 3), asList(3, 4))
         .flatMap(Collection::stream)
