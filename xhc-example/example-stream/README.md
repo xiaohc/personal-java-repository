@@ -63,7 +63,7 @@
 > 1. 确定数据流
 > - Collection.stream()
 > - Stream.of(T... values) ≒ Arrays.stream(values)
-> - Stream.flatMap(Function mapper)
+> - Stream.flatMap(Function<T,stream> mapper)
 > 2. 处理数据
 > - filter 过滤数据
 > - sorted 排序处理
@@ -72,7 +72,25 @@
 > 3. 收集数据
 > - collect
 
-### 单集合操作
+### 确定数据流
+
+#### Collection.stream()
+
+- `Collection.stream()`
+  ``` java
+  Stream.of("a2", "abc", "a")
+        .sorted(Comparator.naturalOrder())
+        .collect(toList());
+  ```
+
+  ``` java
+  List ⤵️ 
+  - "a"
+  - "a2"
+  - "abc"
+  ```
+  
+### 确定数据流
 
 #### 排序
 
@@ -89,7 +107,7 @@
   - "a2"
   - "abc"
   ```
-
+  
 - `multi sorted`
   ``` java
   students.stream()
