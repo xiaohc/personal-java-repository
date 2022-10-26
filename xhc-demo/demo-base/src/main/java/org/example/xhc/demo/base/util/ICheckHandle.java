@@ -1,22 +1,21 @@
 /*
- * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
+ * Copyright (c) 2022 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.demo.base.helper;
+package org.example.xhc.demo.base.util;
 
 import org.example.xhc.demo.base.reply.ErrorContext;
-import org.example.xhc.demo.base.util.ICheckHandle;
 
 import java.util.Objects;
 
 /**
- * if语法糖的类型定义
+ * 定义如何处理期望
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
 @FunctionalInterface
-public interface IfHandle {
+public interface ICheckHandle {
     /**
      * 抛出免检异常或不执行任何操作
      * <p>
@@ -33,16 +32,14 @@ public interface IfHandle {
     void thenThrow(ErrorContext error);
 
     /**
-     * 串联多个If语法糖
-     *
-     * @param other 其他If语法糖
-     * @return If语法糖
+     * @param checkHandle
+     * @return
      */
-    default ICheckHandle or(ICheckHandle other) {
-        Objects.requireNonNull(other);
-        return (context) -> {
-            thenThrow(context);
-            other.thenThrow(context);
+    default ICheckHandle or(ICheckHandle checkHandle) {
+        Objects.requireNonNull(checkHandle);
+        return (t) -> {
+            thenThrow(t);
+            checkHandle.thenThrow(t);
         };
     }
 }
