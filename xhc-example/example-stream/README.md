@@ -1,4 +1,4 @@
-# 代码范例
+# Stream代码范例
 
 ## 简介
 
@@ -70,23 +70,26 @@
 > 2. 处理
 > 3. 收集
 
-#### API说明
+####  1. 产生API
 
-> 1. 产生
 > - `Collection.stream()`：将对应集合转化成一个数据流
 > - `Arrays.stream(T... values)`: 用参数生成一个数据流
 > - `Stream.of(T... values)`: 用参数生成一个数据流
 > - `Stream.generate(Supplier s)`: 使用元素生成器生成一个无序的数据流(Long.MAX_VALUE，可使用limit限制数量)
 > - `Stream.concat(Stream a, Stream b)`: 连接二个数据流为一个数据流
 > - `Stream.flatMap(Function<T,stream> mapper)`: 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
-> 2. 处理
+ 
+####  2. 处理API
+
 > - filter 过滤数据
 > - sorted 排序处理
 > - map 映射处理
-> 3. 收集
+
+####  3. 收集API
+
 > - collect
 > - reduce 压缩处理 ≒ min、max
-> 
+ 
 ### 代码示例
 
 #### `Stream.of()`
