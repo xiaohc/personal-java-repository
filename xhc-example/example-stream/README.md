@@ -38,6 +38,7 @@
 
   ``` java
     If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
+    If.isNull(txnRequestDTO).or(isNull(txnRequestDTO.getTxnNo())).thenThrow(TXN_REQUEST_ERROR);
   ```
 
 ## Stream API
