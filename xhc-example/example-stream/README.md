@@ -80,6 +80,8 @@
 > - collect
 > - reduce 压缩处理 ≒ min、max
 
+#### 代码示例
+
 ##### `Stream.of()`
 
 - ` Stream.of(T... values) ≒ Arrays.stream(values) `
