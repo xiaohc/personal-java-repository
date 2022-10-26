@@ -113,9 +113,9 @@
 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流  
 
 args:  
-> ` Stream.flatMap(Function mapper) `  
-> ` Stream.flatMap(Function<T, Stream> mapper) `  
-> ` Stream. flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`  
+> ` Stream    flatMap(Function mapper) `  
+> ` Stream<R> flatMap(Function<T, Stream> mapper) `  
+> ` Stream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`  
 
 e.g.  
 > ` mapper = (t) -> Stream.of(t) `  
