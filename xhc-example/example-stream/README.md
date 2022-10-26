@@ -112,9 +112,8 @@
 
 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流  
 
-args:  
-> ` Stream.flatMap(Function<T, Stream> mapper) `  
-
+params:
+> ` mapper - Function<T, Stream> `  
 e.g.  
 > ` mapper = (t) -> Stream.of(t) `  
 > ` mapper = (t) -> t.getList() `
