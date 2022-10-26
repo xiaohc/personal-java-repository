@@ -80,9 +80,9 @@
 > - collect
 > - reduce 压缩处理 ≒ min、max
 
-#### 代码示例
+### 代码示例
 
-##### `Stream.of()`
+#### `Stream.of()`
 
 - ` Stream.of(T... values) ≒ Arrays.stream(values) `
   ``` java
@@ -97,6 +97,8 @@
   - "a2"
   - "abc"
   ```
+
+#### `Stream.flatMap()`
 
 - ` Stream.flatMap(Function<T,stream> mapper) `
   ``` java
