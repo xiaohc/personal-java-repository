@@ -34,14 +34,14 @@ public interface IfHandle {
     /**
      * 串联多个If语法糖
      *
-     * @param other 其他If语法糖
+     * @param after 其他If语法糖
      * @return If语法糖
      */
-    default IfHandle or(IfHandle other) {
-        Objects.requireNonNull(other);
+    default IfHandle or(IfHandle after) {
+        Objects.requireNonNull(after);
         return (context) -> {
             thenThrow(context);
-            other.thenThrow(context);
+            after.thenThrow(context);
         };
     }
 }
