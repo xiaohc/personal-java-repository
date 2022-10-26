@@ -74,7 +74,7 @@
 
 ### 确定数据流
 
-#### Collection.stream()
+#### .stream()
 
 - `Collection.stream()`
   ``` java
@@ -89,7 +89,34 @@
   - "a2"
   - "abc"
   ```
-  
+- `Collection.stream()`
+  > Stream.of(T... values) ≒ Arrays.stream(values)
+  ``` java
+  Stream.of("a2", "abc", "a")
+        .sorted(Comparator.naturalOrder())
+        .collect(toList());
+  ```
+
+``` java
+List ⤵️ 
+- "a"
+- "a2"
+- "abc"
+```
+- `Collection.stream()`
+  ``` java
+  Stream.of("a2", "abc", "a")
+        .sorted(Comparator.naturalOrder())
+        .collect(toList());
+  ```
+
+  ``` java
+  List ⤵️ 
+  - "a"
+  - "a2"
+  - "abc"
+  ```
+
 ### 确定数据流
 
 #### 排序
