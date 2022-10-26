@@ -110,11 +110,12 @@
 
 #### `Stream.flatMap()`
 
-> ` flatMap(Function mapper) ` 
-> ` flatMap(Function<T, Stream> mapper) `
-> ` flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`
+> ` flatMap(Function mapper) `  
+> ` flatMap(Function<T, Stream> mapper) `  
+> ` flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`  
 
- ` e.g. mapper = (t) -> Stream.of(t) `
+e.g.
+ ` mapper = (t) -> Stream.of(t) `  
   
   ``` java
   Stream.of(asList(1, 2, 3), asList(3, 4))
