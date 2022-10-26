@@ -59,22 +59,24 @@
         .collect(toSet());
   ```
 
-> 操作步骤总结如下：
-> 1. 确定数据流
+### 使用经验
+
+#### 通用流程
+
+> 数据流式操作步骤总结如下三步：
+> 1. 产生
 > - Collection.stream()
 > - Stream.of(T... values) ≒ Arrays.stream(values)
 > - Stream.flatMap(Function<T,stream> mapper)
-> 2. 处理数据
+> 2. 处理
 > - filter 过滤数据
 > - sorted 排序处理
 > - map 映射处理
-> - reduce 压缩处理 ≒ min、max
-> 3. 收集数据
+> 3. 收集
 > - collect
+> - reduce 压缩处理 ≒ min、max
 
-### 确定数据流
-
-#### .stream()
+#### 产生数据流
 
 - `Collection.stream()`
   ``` java
