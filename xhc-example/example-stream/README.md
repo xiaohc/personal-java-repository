@@ -77,7 +77,7 @@
 > - `Stream.of(T... values)`: 用参数生成一个数据流
 > - `Stream.generate(Supplier s)`: 使用元素生成器生成一个无序的数据流(Long.MAX_VALUE，可使用limit限制数量)
 > - `Stream.concat(Stream a, Stream b)`: 连接二个数据流为一个数据流
-> - `Stream.flatMap(Function<T,stream> mapper)`: 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
+> - `Stream.flatMap(Function mapper)`: 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
  
 ####  2. 处理API
 
@@ -110,11 +110,11 @@
 
 #### `Stream.flatMap()`
 
-- ` flatMap(Function mapper) ` 
-- ` flatMap(Function<T, Stream> mapper) `
-- ` flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`
+> ` flatMap(Function mapper) ` 
+> ` flatMap(Function<T, Stream> mapper) `
+> ` flatMap(Function<? super T, ? extends Stream<? extends R>> mapper)`
 
-- ` e.g. mapper = (t) -> Stream.of(t) `
+ ` e.g. mapper = (t) -> Stream.of(t) `
   
   ``` java
   Stream.of(asList(1, 2, 3), asList(3, 4))
