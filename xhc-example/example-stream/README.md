@@ -68,7 +68,8 @@
 > 1. 产生
 > - `Collection.stream()`
 > - `Arrays.stream()`
-> - `Stream.of()`
+> - `Stream.of()`: 用参数生成一个数据流  
+> Stream.of(T... values) ≒ Arrays.stream(values)  
 > - `Stream.generate()`: 生成一个无限连续的无序流
 > - `Stream.concat()`: 连接二个数据流
 > - `Stream.flatMap()`
