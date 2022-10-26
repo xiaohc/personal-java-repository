@@ -11,9 +11,9 @@ import org.junit.jupiter.api.function.Executable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
+import static org.example.xhc.demo.base.helper.If.isNull;
+import static org.example.xhc.demo.base.helper.If.isTrue;
 import static org.example.xhc.demo.base.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
-import static org.example.xhc.demo.base.util.Check.isNull;
-import static org.example.xhc.demo.base.util.Check.isTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -27,8 +27,7 @@ class IfHandleTest {
     @Test
     void testOr1() {
         Executable validate = () ->
-                If.isNull(null)
-                        .or(isTrue(false))
+                isNull(null).or(isTrue(false))
                         .thenThrow(INTERNAL_SERVER_ERROR.as("测试语法糖函数: {}", "isTrue"));
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
@@ -43,8 +42,7 @@ class IfHandleTest {
         Executable validate = () ->
         {
             val businessException = new BusinessException(null);
-            If.isNull(businessException)
-                    .or(isNull(businessException.getErrorContext()))
+            isNull(businessException).or(isNull(businessException.getErrorContext()))
                     .thenThrow(INTERNAL_SERVER_ERROR.as("测试语法糖函数: {}", "isTrue"));
         };
 

@@ -5,7 +5,6 @@
 package org.example.xhc.demo.base.helper;
 
 import org.example.xhc.demo.base.reply.ErrorContext;
-import org.example.xhc.demo.base.util.ICheckHandle;
 
 import java.util.Objects;
 
@@ -38,7 +37,7 @@ public interface IfHandle {
      * @param other 其他If语法糖
      * @return If语法糖
      */
-    default ICheckHandle or(ICheckHandle other) {
+    default IfHandle or(IfHandle other) {
         Objects.requireNonNull(other);
         return (context) -> {
             thenThrow(context);
