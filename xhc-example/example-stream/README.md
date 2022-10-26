@@ -69,7 +69,8 @@
 > - `Collection.stream()`
 > - `Arrays.stream()`
 > - `Stream.of()`
-> - `Stream.generate()`: 用于生成一个无限连续的无序流
+> - `Stream.generate()`: 生成一个无限连续的无序流
+> - `Stream.concat()`: 连接二个数据流
 > - `Stream.flatMap()`
 > 2. 处理
 > - filter 过滤数据
@@ -79,7 +80,7 @@
 > - collect
 > - reduce 压缩处理 ≒ min、max
 
-##### 1.产生数据流
+##### `Stream.of()`
 
 - ` Stream.of(T... values) ≒ Arrays.stream(values) `
   ``` java
