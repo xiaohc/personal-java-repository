@@ -40,6 +40,7 @@
     If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
     If.isNull(txnRequestDTO).or(isNull(txnRequestDTO.getTxnNo())).thenThrow(TXN_REQUEST_ERROR);
   ```
+
   ``` java
     If.haveError(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);  // JSR-303 bean validation
   ```
@@ -65,9 +66,11 @@
 
 > 数据流式操作步骤总结如下三步：
 > 1. 产生
-> - Collection.stream()
-> - Stream.of(T... values) ≒ Arrays.stream(values)
-> - Stream.flatMap(Function<T,stream> mapper)
+> - `Collection.stream()`
+> - `Arrays.stream()`
+> - `Stream.of()`
+> - `Stream.generate()`: 用于生成一个无限连续的无序流
+> - `Stream.flatMap()`
 > 2. 处理
 > - filter 过滤数据
 > - sorted 排序处理
@@ -76,21 +79,7 @@
 > - collect
 > - reduce 压缩处理 ≒ min、max
 
-#### 产生数据流
-
-- `Collection.stream()`
-  ``` java
-  Stream.of("a2", "abc", "a")
-        .sorted(Comparator.naturalOrder())
-        .collect(toList());
-  ```
-
-  ``` java
-  List ⤵️ 
-  - "a"
-  - "a2"
-  - "abc"
-  ```
+##### 1.产生数据流
 
 - ` Stream.of(T... values) ≒ Arrays.stream(values) `
   ``` java
@@ -105,7 +94,7 @@
   - "a2"
   - "abc"
   ```
-  
+
 - ` Stream.flatMap(Function<T,stream> mapper) `
   ``` java
   Stream.of(asList(1, 2, 3), asList(3, 4))
@@ -142,7 +131,7 @@
   - "a2"
   - "abc"
   ```
-  
+
 - `multi sorted`
   ``` java
   students.stream()
