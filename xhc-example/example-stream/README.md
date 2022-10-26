@@ -66,13 +66,12 @@
 
 > 数据流式操作步骤总结如下三步：
 > 1. 产生
-> - `Collection.stream()`
-> - `Arrays.stream()`
-> - `Stream.of()`: 用参数生成一个数据流  
-> Stream.of(T... values) ≒ Arrays.stream(values)  
-> - `Stream.generate()`: 生成一个无限连续的无序流
-> - `Stream.concat()`: 连接二个数据流
-> - `Stream.flatMap()`
+> - `Collection.stream()`：将对应集合转化成一个数据流
+> - `Arrays.stream(T... values)`: 用参数生成一个数据流
+> - `Stream.of(T... values)`: 用参数生成一个数据流
+> - `Stream.generate(Supplier s)`: 使用元素生成器生成一个无序的数据流(Long.MAX_VALUE，可使用limit限制数量)
+> - `Stream.concat(Stream a, Stream b)`: 连接二个数据流为一个数据流
+> - `Stream.flatMap(Function<T,stream> mapper)`: 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
 > 2. 处理
 > - filter 过滤数据
 > - sorted 排序处理
