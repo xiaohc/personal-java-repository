@@ -67,6 +67,12 @@
 > Stream数据流式操作，通用流程总结如下：  
 > 
 > 1. 产生
+> 2. 处理
+> 3. 收集
+
+#### API说明
+
+> 1. 产生
 > - `Collection.stream()`：将对应集合转化成一个数据流
 > - `Arrays.stream(T... values)`: 用参数生成一个数据流
 > - `Stream.of(T... values)`: 用参数生成一个数据流
@@ -80,7 +86,7 @@
 > 3. 收集
 > - collect
 > - reduce 压缩处理 ≒ min、max
-
+> 
 ### 代码示例
 
 #### `Stream.of()`
