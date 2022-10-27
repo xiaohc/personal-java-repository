@@ -156,7 +156,7 @@ simplify:
 e.g.
 > ` comparator = (t1, t2) -> t1.intValue() - t2.intValue() `
 
-##### comparator
+##### <b>comparator</b>
 > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
 
 example:
