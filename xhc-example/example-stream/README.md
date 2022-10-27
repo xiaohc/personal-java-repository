@@ -77,21 +77,26 @@
 > - `Stream.of(T... values)`: 用参数生成一个数据流
 > - `Stream.generate(Supplier s)`: 使用元素生成器生成一个无序的数据流(Long.MAX_VALUE，可使用limit限制数量)
 > - `Stream.concat(Stream a, Stream b)`: 连接二个数据流为一个数据流
-> - `Stream.flatMap(Function mapper)`: 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
 
 #### 2. 中间操作API
 
-##### 有状态的中间操作API
+##### 无状态的
+> - `Stream.peek(Consumer action)`: 从结果流中消耗元素时，执行此步骤
+ 
+##### 有状态的
 > - `Stream.sorted(Comparator comparator)`: 排序处理
 > - `Stream.filter(Predicate predicate)`: 过滤数据
-> - `Stream.limit(long maxSize)`: 过滤数据，按长度进行截断
 > - `Stream.map(Function mapper)`: 映射处理
 > - `Stream.mapToInt(ToIntFunction mapper)`: 映射为基本类型
 > - `Stream.mapToLong(ToLongFunction mapper)`: 映射为基本类型
 > - `Stream.mapToDouble(ToDoubleFunction mapper)`: 映射为基本类型
+> - `Stream.flatMap(Function mapper)`: 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
+> - `Stream.flatMapToInt(Function mapper)`: 映射为基本类型流并合流
+> - `Stream.flatMapToLong(Function mapper)`: 映射为基本类型流并合流
+> - `Stream.flatMapToDouble(Function mapper)`: 映射为基本类型流并合流
 
-##### 无状态的中间操作API
-> - `Stream.peek(Consumer action)`: 从结果流中消耗元素时，执行此步骤
+##### 短路，有状态的
+> - `Stream.limit(long maxSize)`: 过滤数据，按长度进行截断
 
 
 #### 3. 终端操作API
@@ -102,7 +107,7 @@
 > - `Stream.collect(Supplier supplier,BiConsumer accumulator, BiConsumer combiner)`: 可变归约操作
 > - `IntStream.summaryStatistics()`: 汇总所有int流元素的各种摘要数据
 
-##### 短路终端操作API
+##### 短路操作
 
 > 💖 mapToInt() 对比 map()，IntStream流元素为基本类型，相比装箱类型，存储不用装箱，处理不用拆箱，性能、内存上表现更优
 
