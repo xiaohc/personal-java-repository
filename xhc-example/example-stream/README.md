@@ -80,12 +80,10 @@
 
 ##### 2. 中间操作
 
-无状态的
-
+无状态的  
 > - `Stream.peek(Consumer action)`: 从结果流中消耗元素时，执行此步骤
 
-有状态的
-
+有状态的  
 > - `Stream.sorted(Comparator comparator)`: 排序处理
 > - `Stream.filter(Predicate predicate)`: 过滤数据
 > - `Stream.map(Function mapper)`: 映射处理
@@ -97,10 +95,9 @@
 > - `Stream.flatMapToLong(Function mapper)`: 映射为基本类型流并合流
 > - `Stream.flatMapToDouble(Function mapper)`: 映射为基本类型流并合流
 
-    > 💖 mapToInt() 对比 map()，IntStream流元素为基本类型，相比装箱类型，存储不用装箱，处理不用拆箱，性能、内存上表现更优
+     💖 mapToInt() 对比 map()，IntStream流元素为基本类型，相比装箱类型，存储不用装箱，处理不用拆箱，性能、内存上表现更优
 
-短路，有状态的
-
+短路，有状态的  
 > - `Stream.limit(long maxSize)`: 过滤数据，按长度进行截断
 
 ##### 3. 终结操作
@@ -109,10 +106,15 @@
 > - `Stream.reduce(U identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
 > - `Stream.collect(Collector collector)`: 可变归约操作
 > - `Stream.collect(Supplier supplier,BiConsumer accumulator, BiConsumer combiner)`: 可变归约操作
+> - `Stream.count()`: 返回流元素的总个数
+> - `Stream.max(Comparator comparator)`: 返回流中的最大元素
+> - `Stream.min(Comparator comparator)`: 返回流中的最小元素
 > - `IntStream.summaryStatistics()`: 汇总所有int流元素的各种摘要数据
 
 短路操作
 > - `Stream.findAny()`: 返回流中任意一个元素
+> - `Stream.findFirst()`: 返回流中任意一个元素
+
 
 ### 代码示例
 
