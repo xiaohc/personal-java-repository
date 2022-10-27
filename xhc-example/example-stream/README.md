@@ -70,7 +70,7 @@
 > 2. 处理
 > 3. 收集
 
-####  1. 产生API
+####  1. 流产生API
 
 > - `Collection.stream()`：将对应集合转化成一个数据流
 > - `Arrays.stream(T... values)`: 用参数生成一个数据流
@@ -81,14 +81,14 @@
  
 ####  2. 处理API
 
-> - filter 过滤数据
-> - sorted 排序处理
-> - map 映射处理
+> - `Stream.filter()`: 过滤数据
+> - `Stream.sorted()`: 排序处理
+> - `Stream.map()`: 映射处理
 
 ####  3. 收集API
 
-> - collect
-> - reduce 压缩处理 ≒ min、max
+> - `Stream.collect()`:
+> - `Stream.reduce()`: 压缩处理 ≒ min、max
  
 ### 代码示例
 
