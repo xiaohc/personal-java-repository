@@ -38,11 +38,11 @@
 
   ``` java
     If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
-    If.isNull(txnRequestDTO).or(isNull(txnRequestDTO.getTxnNo())).thenThrow(TXN_REQUEST_ERROR);
+    If.haveError(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);  // JSR-303 bean validation
   ```
 
   ``` java
-    If.haveError(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);  // JSR-303 bean validation
+    If.isNull(txnRequestDTO).or(haveError(txnRequestDTO)).thenThrow(TXN_REQUEST_ERROR);
   ```
 
 ## Stream API
