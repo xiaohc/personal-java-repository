@@ -64,13 +64,13 @@
 
 #### 通用三步曲
 
-> Stream数据流式操作，通用流程总结如下：  
-> 
+> Stream数据流式操作，通用流程总结如下：
+>
 > 1. 产生：将集合类对象，转化为流对象
 > 2. 处理：对流的元素执行处理操作（惰性方法为主）
 > 3. 收集：按收集策略执行终端操作
 
-####  1. 流产生API
+#### 1. 流产生API
 
 > - `Collection.stream()`：将对应集合转化成一个数据流
 > - `Arrays.stream(T... values)`: 用参数生成一个数据流
@@ -78,18 +78,18 @@
 > - `Stream.generate(Supplier s)`: 使用元素生成器生成一个无序的数据流(Long.MAX_VALUE，可使用limit限制数量)
 > - `Stream.concat(Stream a, Stream b)`: 连接二个数据流为一个数据流
 > - `Stream.flatMap(Function mapper)`: 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
- 
-####  2. 处理API
 
-> - `Stream.filter()`: 过滤数据
+#### 2. 处理API
+
 > - `Stream.sorted()`: 排序处理
+> - `Stream.filter()`: 过滤数据
 > - `Stream.map()`: 映射处理
 
-####  3. 收集API
+#### 3. 收集API
 
 > - `Stream.reduce()`: 压缩处理 ≒ min、max、count
 > - `Stream.collect()`: 可变归约操作
- 
+
 ### 代码示例
 
 #### ✍️ `Stream.of()`
@@ -99,7 +99,8 @@
 simplify:  
 ` Stream.of(T... values) ≒ Arrays.stream(values) `
 
-example:  
+example:
+
   ``` java
   Stream.of("a2", "abc", "a")
         .sorted(Comparator.naturalOrder())
@@ -115,16 +116,17 @@ example:
 
 #### ✍️ `flatMap`
 
-用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流  
+用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
 
 simplify:  
-` flatMap(Function<T, Stream> mapper) ` 
+` flatMap(Function<T, Stream> mapper) `
 
-e.g.  
+e.g.
 > ` mapper = (t) -> Stream.of(t) `  
 > ` mapper = (t) -> t.getList() `
 
-example:  
+example:
+
   ``` java
   Stream.of(asList(1, 2, 3), asList(3, 4))
         .flatMap(Collection::stream)
@@ -142,15 +144,16 @@ example:
 
 #### ✍️ `sorted`
 
-排序
+对流元素进行排序
 
 simplify:  
 ` sorted(Comparator<T> comparator) `
 
 e.g.
-> ` comparator = (t1, t2) -> t1.intValue() - t2.intValue() `  
+> ` comparator = (t1, t2) -> t1.intValue() - t2.intValue() `
 
 example:
+
   ``` java
   students.stream()
           .sorted(Comparator
@@ -159,58 +162,8 @@ example:
           )
           .collect(toList());
   ```
-  > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
 
-  ``` java
-    List ⤵️
-    - no: "20200107"
-      name: "eva"
-      sex: "FEMALE"
-      age: 7
-      birthday: "2013-12-09T05:24:20"
-      classNo: "202001"
-    - no: "20200215"
-      name: "tom"
-      sex: "MALE"
-      age: 7
-      birthday: "2013-01-29T15:05:41"
-      classNo: "202002"
-    - no: "20190321"
-      name: "jack"
-      sex: "MALE"
-      age: 8
-      birthday: "2012-10-19T15:05:41"
-      classNo: "201903"
-  ```
-  
-### 确定数据流
-
-#### 排序
-
-- `sorted`
-  ``` java
-  Stream.of("a2", "abc", "a")
-        .sorted(Comparator.naturalOrder())
-        .collect(toList());
-  ```
-
-  ``` java
-  List ⤵️ 
-  - "a"
-  - "a2"
-  - "abc"
-  ```
-
-- `multi sorted`
-  ``` java
-  students.stream()
-          .sorted(Comparator
-                  .comparing(Student::getAge, Comparator.naturalOrder())
-                  .thenComparing(Student::getBirthday, Comparator.reverseOrder())
-          )
-          .collect(toList());
-  ```
-  > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
+> 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
 
   ``` java
     List ⤵️
@@ -234,33 +187,19 @@ example:
       classNo: "201903"
   ```
 
-#### 查找
+#### ✍️ `filter`
 
-- `min、max`
-  ``` java
-  Stream.of("a", "1abc", "abc1")
-        .min(Comparator.naturalOrder())
-        .get();
-  ```
-  ``` java
-  String ➡️ "1abc"
-  ```
+过滤数据，返回满足 predicate 条件的数据
 
-#### 遍历
+simplify:  
+` filter(Predicate<T> predicate) `
 
-- `sum`
-  ``` java
-  Stream.of(1, 2, 3)
-        .mapToInt(Integer::valueOf)
-        .sum();
-  ```
-  ``` java
-  int ➡️ 6
-  ```
+e.g.
+> ` predicate = (t) -> t != null `
+> ` predicate = (t) -> t > 7 `
 
-#### 过滤
+example:
 
-- `filter`
   ``` java
   students.stream()
           .filter(this::isSevenYearOld)
@@ -271,6 +210,7 @@ example:
             && Objects.equals(student.getAge(), 7);
   }
   ```
+
   ``` java
   List ⤵️
   - no: "20200107"
