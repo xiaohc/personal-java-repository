@@ -94,7 +94,12 @@
 
 #### `Stream.of()`
 
-- ` Stream.of(T... values) ≒ Arrays.stream(values) `
+用参数生成一个数据流
+
+simplify:  
+` Stream.of(T... values) ≒ Arrays.stream(values) `
+
+example:  
   ``` java
   Stream.of("a2", "abc", "a")
         .sorted(Comparator.naturalOrder())
@@ -125,10 +130,7 @@ example:
         .flatMap(Collection::stream)
         .collect(toList());
   ```
-  ``` java
-  Stream.concat(Stream.of(1, 2, 3), Stream.of(3, 4))
-        .collect(toList());
-  ```  
+
   ``` java
   List ⤵️
   - 1
