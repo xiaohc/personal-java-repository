@@ -113,12 +113,12 @@ example:
   - "abc"
   ```
 
-#### ✍️ `Stream.flatMap()`
+#### ✍️ `flatMap`
 
 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流  
 
 simplify:  
-` flatMap(Function<T, Stream> mapper) :  Stream ` 
+` flatMap(Function<T, Stream> mapper) ` 
 
 e.g.  
 > ` mapper = (t) -> Stream.of(t) `  
@@ -140,6 +140,49 @@ example:
   - 4
   ```
 
+#### ✍️ `sorted`
+
+排序
+
+simplify:  
+` sorted(Comparator<T> comparator) `
+
+e.g.
+> ` comparator = (t1, t2) -> t1.intValue() - t2.intValue() `  
+
+example:
+  ``` java
+  students.stream()
+          .sorted(Comparator
+                  .comparing(Student::getAge, Comparator.naturalOrder())
+                  .thenComparing(Student::getBirthday, Comparator.reverseOrder())
+          )
+          .collect(toList());
+  ```
+  > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
+
+  ``` java
+    List ⤵️
+    - no: "20200107"
+      name: "eva"
+      sex: "FEMALE"
+      age: 7
+      birthday: "2013-12-09T05:24:20"
+      classNo: "202001"
+    - no: "20200215"
+      name: "tom"
+      sex: "MALE"
+      age: 7
+      birthday: "2013-01-29T15:05:41"
+      classNo: "202002"
+    - no: "20190321"
+      name: "jack"
+      sex: "MALE"
+      age: 8
+      birthday: "2012-10-19T15:05:41"
+      classNo: "201903"
+  ```
+  
 ### 确定数据流
 
 #### 排序
