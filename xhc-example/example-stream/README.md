@@ -119,10 +119,10 @@ example:
 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
 
 simplify:  
-` flatMap(Function<T, Stream> mapper) `  
-> ` flatMapToInt(Function<T, IntStream> mapper) `  
-> ` flatMapToLong(Function<T, LongStream> mapper) `  
-> ` flatMapToDouble(Function<T, DoubleStream> mapper) `  
+<b> flatMap(Function<T, Stream> mapper) </b>  
+<i> flatMapToInt(Function<T, IntStream> mapper) </i>  
+ flatMapToLong(Function<T, LongStream> mapper)   
+ flatMapToDouble(Function<T, DoubleStream> mapper)   
 
 e.g.
 > ` mapper = (t) -> Stream.of(t) `  
