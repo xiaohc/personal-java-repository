@@ -68,9 +68,9 @@
 >
 > 1. 产生：将集合类对象，转化为流对象
 > 2. 处理：对流的元素执行处理操作（惰性方法为主）
-> 3. 收集：按收集策略执行终端操作
+> 3. 收集：按收集策略执行终结操作
 
-#### 1. 流产生API
+#### 1. 初始操作API
 
 > - `Collection.stream()`：将对应集合转化成一个数据流
 > - `Arrays.stream(T... values)`: 用参数生成一个数据流
@@ -99,7 +99,7 @@
 > - `Stream.limit(long maxSize)`: 过滤数据，按长度进行截断
 
 
-#### 3. 终端操作API
+#### 3. 终结操作API
 
 > - `Stream.reduce(BinaryOperator accumulator)`: 压缩处理，对流上的元素执行归约，并返回归约后的值
 > - `Stream.reduce(U identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
