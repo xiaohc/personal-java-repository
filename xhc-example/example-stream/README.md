@@ -120,6 +120,9 @@ example:
 
 simplify:  
 ` flatMap(Function<T, Stream> mapper) `
+` flatMapToInt(Function<T, IntStream> mapper) `
+` flatMapToLong(Function<T, LongStream> mapper) `
+` flatMapToDouble(Function<T, DoubleStream> mapper) `
 
 e.g.
 > ` mapper = (t) -> Stream.of(t) `  
@@ -147,6 +150,7 @@ example:
 对流元素进行排序
 
 simplify:  
+` sorted() `
 ` sorted(Comparator<T> comparator) `
 
 e.g.
