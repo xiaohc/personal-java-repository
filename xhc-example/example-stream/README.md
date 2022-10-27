@@ -70,7 +70,7 @@
 > 2. 中间操作：处理流 - 对流的元素执行处理操作（惰性方法为主）
 > 3. 终结操作：产生处理结果 - 按收集策略执行终止流并输出结果的操作
 
-#### 1. 初始操作
+##### 1. 初始操作
 
 > - `Collection.stream()`：将对应集合转化成一个数据流
 > - `Arrays.stream(T... values)`: 用参数生成一个数据流
@@ -78,13 +78,13 @@
 > - `Stream.generate(Supplier s)`: 使用元素生成器生成一个无序的数据流(Long.MAX_VALUE，可使用limit限制数量)
 > - `Stream.concat(Stream a, Stream b)`: 连接二个数据流为一个数据流
 
-#### 2. 中间操作
+##### 2. 中间操作
 
-##### 无状态的
+无状态的
 
 > - `Stream.peek(Consumer action)`: 从结果流中消耗元素时，执行此步骤
 
-##### 有状态的
+有状态的
 
 > - `Stream.sorted(Comparator comparator)`: 排序处理
 > - `Stream.filter(Predicate predicate)`: 过滤数据
@@ -97,11 +97,13 @@
 > - `Stream.flatMapToLong(Function mapper)`: 映射为基本类型流并合流
 > - `Stream.flatMapToDouble(Function mapper)`: 映射为基本类型流并合流
 
-##### 短路，有状态的
+    > 💖 mapToInt() 对比 map()，IntStream流元素为基本类型，相比装箱类型，存储不用装箱，处理不用拆箱，性能、内存上表现更优
+
+短路，有状态的
 
 > - `Stream.limit(long maxSize)`: 过滤数据，按长度进行截断
 
-#### 3. 终结操作
+##### 3. 终结操作
 
 > - `Stream.reduce(BinaryOperator accumulator)`: 压缩处理，对流上的元素执行归约，并返回归约后的值
 > - `Stream.reduce(U identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
@@ -109,9 +111,8 @@
 > - `Stream.collect(Supplier supplier,BiConsumer accumulator, BiConsumer combiner)`: 可变归约操作
 > - `IntStream.summaryStatistics()`: 汇总所有int流元素的各种摘要数据
 
-##### 短路操作
-
-> 💖 mapToInt() 对比 map()，IntStream流元素为基本类型，相比装箱类型，存储不用装箱，处理不用拆箱，性能、内存上表现更优
+短路操作
+> - `Stream.findAny()`: 返回流中任意一个元素
 
 ### 代码示例
 
