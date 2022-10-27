@@ -96,8 +96,8 @@
 
 用参数生成一个数据流
 
-simplify:  
-` Stream.of(T... values) ≒ Arrays.stream(values) `
+simplify:
+> Stream.of(T... values) ≒ Arrays.stream(values)
 
 example:
 
@@ -118,11 +118,11 @@ example:
 
 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
 
-simplify:  
+simplify:
 > <b>flatMap(Function<T, Stream> mapper)</b>  
 > flatMapToInt(Function<T, IntStream> mapper)>  
 > flatMapToLong(Function<T, LongStream> mapper)   
-> flatMapToDouble(Function<T, DoubleStream> mapper)   
+> flatMapToDouble(Function<T, DoubleStream> mapper)
 
 e.g.
 > ` mapper = (t) -> Stream.of(t) `  
@@ -145,13 +145,13 @@ example:
   - 4
   ```
 
-#### ✍️ `sorted`
+#### ✍️ `sorted + comparator`
 
 对流元素进行排序
 
-simplify:  
-` sorted(Comparator<T> comparator) `  
-> ` sorted() `
+simplify:
+> sorted()  
+> <b>sorted(Comparator<T> comparator)</b>
 
 e.g.
 > ` comparator = (t1, t2) -> t1.intValue() - t2.intValue() `
@@ -195,8 +195,8 @@ example:
 
 过滤数据，返回满足 predicate 条件的数据
 
-simplify:  
-` filter(Predicate<T> predicate) `
+simplify:
+> filter(Predicate<T> predicate)
 
 e.g.
 > ` predicate = (t) -> t != null `
@@ -231,70 +231,27 @@ example:
     classNo: "202002"
   ```
 
-#### 分组
+#### ✍️ `collect`
 
-- `groupingBy`
+过滤数据，返回满足 predicate 条件的数据
+
+simplify:
+> collect(Collector<T, A, R> collector)  
+> collect(Supplier<R> supplier, BiConsumer<R, T> accumulator, BiConsumer<R, R> combiner)
+
+e.g.
+> ` predicate = (t) -> t != null `
+> ` predicate = (t) -> t > 7 `
+
+example:
+
   ``` java
   students.stream()
           .collect(groupingBy(Student::getSex, mapping(Student::getName, joining(",", "[", "]"))));
   ```
+
   ``` java
   Map ⤵️
   MALE: "[jack,tom]"
   FEMALE: "[eva]"
-  ```
-
-- `reduce`
-
-### 多集合操作
-
-#### 合并
-
-- `union all`
-  ``` java
-  Stream.of(asList(1, 2, 3), asList(3, 4))
-        .flatMap(Collection::stream)
-        .collect(toList());
-  ```
-  ``` java
-  Stream.concat(Stream.of(1, 2, 3), Stream.of(3, 4))
-        .collect(toList());
-  ```  
-  ``` java
-  List ⤵️
-  - 1
-  - 2
-  - 3
-  - 3
-  - 4
-  ```
-
-#### 并集
-
-- `union`
-  ``` java
-  Stream.of(asList(1, 2, 3), asList(3, 4))
-        .flatMap(Collection::stream)
-        .distinct()
-        .collect(toList());
-  ```
-  ``` java
-  List ⤵️
-  - 1
-  - 2
-  - 3
-  - 4
-  ```
-
-#### 交集
-
-- `交集`
-  ``` java
-  Stream.of(1, 2, 3)
-          .filter(v -> asList(3, 4).contains(v))
-          .collect(toList());
-  ```
-  ``` java
-  List ⤵️
-  - 3
   ```
