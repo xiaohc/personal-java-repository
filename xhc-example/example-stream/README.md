@@ -79,16 +79,32 @@
 > - `Stream.concat(Stream a, Stream b)`: 连接二个数据流为一个数据流
 > - `Stream.flatMap(Function mapper)`: 用原数据流中每一个元素为参，来生成数据流，最终将其合并为一个数据流
 
-#### 2. 处理API
+#### 2. 中间操作API
 
-> - `Stream.sorted()`: 排序处理
-> - `Stream.filter()`: 过滤数据
-> - `Stream.map()`: 映射处理
+##### 有状态的中间操作API
+> - `Stream.sorted(Comparator comparator)`: 排序处理
+> - `Stream.filter(Predicate predicate)`: 过滤数据
+> - `Stream.limit(long maxSize)`: 过滤数据，按长度进行截断
+> - `Stream.map(Function mapper)`: 映射处理
+> - `Stream.mapToInt(ToIntFunction mapper)`: 映射为基本类型
+> - `Stream.mapToLong(ToLongFunction mapper)`: 映射为基本类型
+> - `Stream.mapToDouble(ToDoubleFunction mapper)`: 映射为基本类型
 
-#### 3. 收集API
+##### 无状态的中间操作API
+> - `Stream.peek(Consumer action)`: 从结果流中消耗元素时，执行此步骤
 
-> - `Stream.reduce()`: 压缩处理 ≒ min、max、count
-> - `Stream.collect()`: 可变归约操作
+
+#### 3. 终端操作API
+
+> - `Stream.reduce(BinaryOperator accumulator)`: 压缩处理，对流上的元素执行归约，并返回归约后的值
+> - `Stream.reduce(U identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
+> - `Stream.collect(Collector collector)`: 可变归约操作
+> - `Stream.collect(Supplier supplier,BiConsumer accumulator, BiConsumer combiner)`: 可变归约操作
+> - `IntStream.summaryStatistics()`: 汇总所有int流元素的各种摘要数据
+
+##### 短路终端操作API
+
+> 💖 mapToInt() 对比 map()，IntStream流元素为基本类型，相比装箱类型，存储不用装箱，处理不用拆箱，性能、内存上表现更优
 
 ### 代码示例
 
