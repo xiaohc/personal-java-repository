@@ -26,9 +26,9 @@ personal-java-repository
 | ---------------------- | -------------------- | ------ | ---------------------------------------------------- |
 | Spring Boot            | 容器+MVC框架           | 2.6.12 | [官网](https://spring.io/projects/spring-boot)              |
 | Spring Cloud           | 微服务框架             | 2021.0.4 | [官网](https://spring.io/projects/spring-cloud)              |
-| Spring Cloud Alibaba   | 微服务框架             |   ——   | [官网](https://github.com/alibaba/spring-cloud-alibaba)     |
-| Spring Security Oauth2 | 认证和授权框架          |————| [官网](https://spring.io/projects/spring-security-oauth)    |
-| MyBatis                | ORM框架               |        | [官网](http://www.mybatis.org/mybatis-3/zh/index.html)      |
+| Spring Cloud Alibaba   | 微服务框架             | 2021.0.4.0 | [官网](https://github.com/alibaba/spring-cloud-alibaba)     |
+| Spring Security Oauth2 | 认证和授权框架          |        | [官网](https://spring.io/projects/spring-security-oauth)    |
+| MyBatis                | ORM框架               | 3.5.2  | [官网](http://www.mybatis.org/mybatis-3/zh/index.html)      |
 | MyBatisGenerator       | 数据层代码生成          |        | [官网](http://www.mybatis.org/generator/index.html)         |
 | PageHelper             | MyBatis物理分页插件     |        | [官网](http://git.oschina.net/free/Mybatis_PageHelper)      |
 | Swagger                | 文档生产工具            | 3.0.0 |      |
