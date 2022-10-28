@@ -158,11 +158,11 @@ simplify:
 > <b>flatMap(Function<T, Stream> mapper)</b>  
 > flatMapToInt(Function<T, IntStream> mapper)>  
 > flatMapToLong(Function<T, LongStream> mapper)   
-> flatMapToDouble(Function<T, DoubleStream> mapper)
+> flatMapToDouble(Function<T, DoubleStream> mapper)  
 
 e.g.
 > ` mapper = (t) -> Stream.of(t) `  
-> ` mapper = (t) -> t.getList() `
+> ` mapper = (t) -> t.getList() `  
 
 example:
 
@@ -190,7 +190,7 @@ simplify:
 > <b>sorted(Comparator<T> comparator)</b>
 
 e.g.
-> ` comparator = (t1, t2) -> Integer.valueOf(t1) - Integer.valueOf(t2) `
+> ` comparator = (t1, t2) -> Integer.valueOf(t1) - Integer.valueOf(t2) `  
 
 ##### <b>comparator</b>
 
@@ -237,8 +237,8 @@ simplify:
 > filter(Predicate<T> predicate)
 
 e.g.
-> ` predicate = (t) -> t != null `
-> ` predicate = (t) -> t > 7 `
+> ` predicate = (t) -> t != null `  
+> ` predicate = (t) -> t > 7 `  
 
 example:
 
@@ -278,8 +278,8 @@ simplify:
 > collect(Supplier<R> supplier, BiConsumer<R, T> accumulator, BiConsumer<R, R> combiner)
 
 e.g.
-> ` predicate = (t) -> t != null `
-> ` predicate = (t) -> t > 7 `
+> ` predicate = (t) -> t != null `  
+> ` predicate = (t) -> t > 7 `  
 
 example:
 
