@@ -130,14 +130,15 @@
 
 ##### 函数接口
 
-| 接口                   | 参数          | 返回类型       | 说明                                                 |
-| --------------------- | ------------ | ------------- | ---------------------------------------------------- |
-| Predicate<T>          | T            | boolean       |                                                      |
-| Consumer<T>           | T            | void          |    输出一个值                                        |
-| Function<T,R>         | T            | R             |  获得Artist 对象的名字                                                 |
-| Supplier<T>           | None         | T             |   工厂方法                                                 |
-| UnaryOperator<T>      | T            | T             |   逻辑非（ !）                                              |
-| BinaryOperator<T>     | (T, T)       | T             |   求两个数的乘积（ *）                                          |
+| 接口                   | 函数原型                | 说明                            | 示例                                                 |
+| --------------------- | ---------------------- | ------------------------------ | ---------------------------------------------------- |
+| Predicate<T>          | boolean test(T t);     | 断言，给定参数返回true或false       |                                                      |
+| Supplier<T>           | T get();               | 提供者，无参执行操作，直接产生结果    |   工厂方法                                                 |
+| Consumer<T>           | void accept(T t);      | 消费者，给定1个参数执行操作，不产生结果 |    输出一个值                                        |
+| Function<T,R>         | R apply(T t);          | 功能函数，接受1个参数，并产生结果    |  获得Artist 对象的名字                                                 |
+| BiFunction<T, U, R>   | R apply(T t, U u);     | 功能函数，接受2个参数，并产生结果    |  获得Artist 对象的名字                                                 |
+| UnaryOperator<T>      | T apply(T t);          | 一元运算符，参数与结果类型相同的函数  |   逻辑非（ !）                                              |
+| BinaryOperator<T>     | T apply(T t1, T t2);   | 二元运算符，参数与结果类型相同的函数  |   求两个数的乘积（ *）                                          |
 
 ### 代码示例
 
@@ -171,11 +172,11 @@ simplify:
 > <b>flatMap(Function<T, Stream> mapper)</b>  
 > flatMapToInt(Function<T, IntStream> mapper)>  
 > flatMapToLong(Function<T, LongStream> mapper)   
-> flatMapToDouble(Function<T, DoubleStream> mapper)  
+> flatMapToDouble(Function<T, DoubleStream> mapper)
 
 e.g.
 > ` mapper = (t) -> Stream.of(t) `  
-> ` mapper = (t) -> t.getList() `  
+> ` mapper = (t) -> t.getList() `
 
 example:
 
@@ -203,7 +204,7 @@ simplify:
 > <b>sorted(Comparator<T> comparator)</b>
 
 e.g.
-> ` comparator = (t1, t2) -> Integer.valueOf(t1) - Integer.valueOf(t2) `  
+> ` comparator = (t1, t2) -> Integer.valueOf(t1) - Integer.valueOf(t2) `
 
 ##### <b>comparator</b>
 
@@ -251,7 +252,7 @@ simplify:
 
 e.g.
 > ` predicate = (t) -> t != null `  
-> ` predicate = (t) -> t > 7 `  
+> ` predicate = (t) -> t > 7 `
 
 example:
 
@@ -292,7 +293,7 @@ simplify:
 
 e.g.
 > ` predicate = (t) -> t != null `  
-> ` predicate = (t) -> t > 7 `  
+> ` predicate = (t) -> t > 7 `
 
 example:
 
