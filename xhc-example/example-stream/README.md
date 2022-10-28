@@ -132,12 +132,12 @@
 
 | 接口                   | 函数原型                | 说明                            | 示例                                                 |
 | --------------------- | ---------------------- | ------------------------------ | ---------------------------------------------------- |
-| Predicate\<T>          | boolean test(T t);     | 断言，给定参数返回true或false       | 判断对象是否为空 e.g. ` Objects::nonNull `                  |
+| Predicate\<T>          | boolean test(T t);     | 断言，给定参数返回true或false       | 判断对象是否为空，` Objects::nonNull `                  |
 | Supplier\<T>           | T get();               | 提供者，无参执行操作，直接产生结果    |  工厂方法                                                 |
 | Consumer\<T>           | void accept(T t);      | 消费者，给定1个参数执行操作，不产生结果 | 打印日志                                        |
 | BiConsumer<T, U>       | void accept(T t, U u); | 消费者，给定2个参数执行操作，不产生结果 | 打印日志                                        |
-| Function<T,R>          | R apply(T t);          | 功能函数，接受1个参数，并产生结果    | 获得对象的名字 e.g. ` Student::getAge `                           |
-| BiFunction<T, U, R>    | R apply(T t, U u);     | 功能函数，接受2个参数，并产生结果    | 获得Artist 对象的名字                                                 |
+| Function<T,R>          | R apply(T t);          | 功能函数，接受1个参数，并产生结果    | 获得对象的名字，` Student::getAge `                           |
+| BiFunction<T, U, R>    | R apply(T t, U u);     | 功能函数，接受2个参数，并产生结果    |                                                 |
 | UnaryOperator\<T>      | T apply(T t);          | 一元运算符，参数与结果类型相同的函数  | 逻辑非（ !）                                              |
 | BinaryOperator\<T>     | T apply(T t1, T t2);   | 二元运算符，参数与结果类型相同的函数  | 求两个数的乘积（ *）                                          |
 
