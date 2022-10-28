@@ -77,15 +77,19 @@
 > - `Stream.of(T... values)`: 用参数生成一个数据流
 > - `Stream.generate(Supplier s)`: 使用元素生成器生成一个无序的数据流(Long.MAX_VALUE，可使用limit限制数量)
 > - `Stream.concat(Stream a, Stream b)`: 连接二个数据流为一个数据流
+> - `Stream.iterate(T seed, UnaryOperator f) `: 利用种子和生成新元素函数，生成一个流
+> - `Stream.empty()`: 返回一个空的顺序流
 
 ##### 2. 中间操作
 
-无状态的  
+无状态的
 > - `Stream.peek(Consumer action)`: 从结果流中消耗元素时，执行此步骤
 
-有状态的  
+有状态的
 > - `Stream.sorted(Comparator comparator)`: 排序处理
 > - `Stream.filter(Predicate predicate)`: 过滤数据
+> - `Stream.skip(long maxSize)`: 过滤数据，丢弃流的前n元素后，返回剩余元素
+> - `Stream.distinct()`: 对流中元素去重
 > - `Stream.map(Function mapper)`: 映射处理
 > - `Stream.mapToInt(ToIntFunction mapper)`: 映射为基本类型
 > - `Stream.mapToLong(ToLongFunction mapper)`: 映射为基本类型
@@ -97,24 +101,30 @@
 
      💖 mapToInt() 对比 map()，IntStream流元素为基本类型，相比装箱类型，存储不用装箱，处理不用拆箱，性能、内存上表现更优
 
-短路，有状态的  
+短路，有状态的
 > - `Stream.limit(long maxSize)`: 过滤数据，按长度进行截断
 
 ##### 3. 终结操作
 
 > - `Stream.reduce(BinaryOperator accumulator)`: 压缩处理，对流上的元素执行归约，并返回归约后的值
-> - `Stream.reduce(U identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
+> - `Stream.reduce(T identity,BinaryOperator accumulator)`: 压缩处理 ≒ min、max、count
+> - `Stream.reduce(T identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
 > - `Stream.collect(Collector collector)`: 可变归约操作
 > - `Stream.collect(Supplier supplier,BiConsumer accumulator, BiConsumer combiner)`: 可变归约操作
 > - `Stream.count()`: 返回流元素的总个数
 > - `Stream.max(Comparator comparator)`: 返回流中的最大元素
 > - `Stream.min(Comparator comparator)`: 返回流中的最小元素
+> - `Stream.forEach(Consumer action)`: 对每个元素执行action操作
+> - `Stream.forEachOrdered(Consumer action)`: 对每个元素执行action操作
+> - `Stream.toArray(*)`: 返回一个全部流元素的数组
 > - `IntStream.summaryStatistics()`: 汇总所有int流元素的各种摘要数据
 
 短路操作
 > - `Stream.findAny()`: 返回流中任意一个元素
-> - `Stream.findFirst()`: 返回流中任意一个元素
-
+> - `Stream.findFirst()`: 返回流中第一个元素
+> - `Stream.anyMatch(Predicate predicate)`: 返回是否匹配，流中存在任意一个元素，匹配predicate条件
+> - `Stream.allMatch(Predicate predicate)`: 返回是否匹配，流中所有元素，均匹配predicate条件
+> - `Stream.noneMatch(Predicate predicate)`: 返回是否都不匹配，流中所有元素，均不匹配predicate条件
 
 ### 代码示例
 
