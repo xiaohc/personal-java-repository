@@ -62,9 +62,9 @@
 
 ### 使用经验
 
-#### 通用三步曲
+#### 操作接口
 
-> Stream数据流式操作，通用流程总结如下：
+> Stream数据流式操作，通用三步流程总结如下：
 >
 > 1. 初始操作：产生流 - 将集合类对象，转化为流对象
 > 2. 中间操作：处理流 - 对流的元素执行处理操作（惰性方法为主）
@@ -125,6 +125,19 @@
 > - `Stream.anyMatch(Predicate predicate)`: 返回是否匹配，流中存在任意一个元素，匹配predicate条件
 > - `Stream.allMatch(Predicate predicate)`: 返回是否匹配，流中所有元素，均匹配predicate条件
 > - `Stream.noneMatch(Predicate predicate)`: 返回是否都不匹配，流中所有元素，均不匹配predicate条件
+
+#### 典型参数
+
+##### 函数接口
+
+| 接口                   | 参数          | 返回类型       | 说明                                                 |
+| --------------------- | ------------ | ------------- | ---------------------------------------------------- |
+| Predicate<T>          | T            | boolean       |                                                      |
+| Consumer<T>           | T            | void          |    输出一个值                                        |
+| Function<T,R>         | T            | R             |  获得Artist 对象的名字                                                 |
+| Supplier<T>           | None         | T             |   工厂方法                                                 |
+| UnaryOperator<T>      | T            | T             |   逻辑非（ !）                                              |
+| BinaryOperator<T>     | (T, T)       | T             |   求两个数的乘积（ *）                                          |
 
 ### 代码示例
 
