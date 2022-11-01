@@ -13,13 +13,13 @@
   ```
 
 > 👉  <kbd>Lambda Expression</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
-> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象 ` add ` 对齐C++的函数指针，其取值还可以是方法引用
+> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象 ` add ` 为一个具体的Lambda表达式
 
   ``` java
   BinaryOperator<Integer> add = ClassName::methodName;
   ```
 
-> 👉  <kbd>方法引用</kbd> ` ClassName::methodName `，等价Lambda表达式的一种语法结构
+> 👉  <kbd>方法引用</kbd> ` ClassName::methodName `，等价Lambda表达式的一种语法结构，对齐C++的函数指针
 
 应用1：流式处理语法糖，可提升代码可读性。如下：
 
