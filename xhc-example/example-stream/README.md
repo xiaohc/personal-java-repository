@@ -13,7 +13,7 @@
   ```
 
 > 👉  <kbd>Lambda Expression</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
-> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象 ` add ` 为一个具体的Lambda表达式
+> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象即为一个具体的Lambda表达式
 
   ``` java
   BinaryOperator<Integer> add = ClassName::methodName;
