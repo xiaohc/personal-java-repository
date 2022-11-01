@@ -132,7 +132,7 @@
 
 | 接口                   | 函数原型                | 说明                                |
 | --------------------- | ---------------------- | -----------------------------------|
-| Predicate\<T>          | boolean test(T t);     | 判断方法，断言，给定参数返回true或false，如：判断对象是否为空，` Objects::nonNull `           |
+| Predicate\<T>          | boolean test(T t);     | 判断方法，断言，给定参数返回true或false，如：判断对象是否为空          |
 | Supplier\<T>           | T get();               | 生产方法，无参执行操作，直接产生结果，如：工厂方法               |
 | Consumer\<T>           | void accept(T t);      | 消费方法，给定1个参数执行操作，不产生结果，如：打印日志                |
 | BiConsumer<T, U>       | void accept(T t, U u); | 消费方法，给定2个参数执行操作，不产生结果       |
