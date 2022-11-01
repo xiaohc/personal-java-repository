@@ -112,6 +112,10 @@
 
 ##### 3. 终结操作
 
+     💖 collector - 收集器
+        accumulator - 累加器，combiner - 组合器，supplier - 提供商， action - 消费者
+        dentity – 累加函数的标识值
+
 > - `Stream.reduce(BinaryOperator accumulator)`: 压缩处理，对流上的元素执行归约，并返回归约后的值
 > - `Stream.reduce(T identity,BinaryOperator accumulator)`: 压缩处理 ≒ min、max、count
 > - `Stream.reduce(T identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
