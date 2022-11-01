@@ -19,7 +19,7 @@
   BinaryOperator<Integer> add = ClassName::methodName;
   ```
 
-> 👉  <kbd>方法引用</kbd> ` ClassName::methodName `，一种引用方法的轻量级语法
+> 👉  <kbd>方法引用</kbd> ` ClassName::methodName `，等价Lambda表达式的一种语法结构
 
 应用1：流式处理语法糖，可提升代码可读性。如下：
 
