@@ -112,10 +112,6 @@
 
 ##### 3. 终结操作
 
-     💖 collector - 收集器
-        accumulator - 累加器，combiner - 组合器，supplier - 提供商， action - 消费者
-        dentity – 累加函数的标识值
-
 > - `Stream.reduce(BinaryOperator accumulator)`: 压缩处理，对流上的元素执行归约，并返回归约后的值
 > - `Stream.reduce(T identity,BinaryOperator accumulator)`: 压缩处理 ≒ min、max、count
 > - `Stream.reduce(T identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
@@ -128,6 +124,14 @@
 > - `Stream.forEachOrdered(Consumer action)`: 对每个元素执行action操作
 > - `Stream.toArray(*)`: 返回一个全部流元素的数组
 > - `IntStream.summaryStatistics()`: 汇总所有int流元素的各种摘要数据
+
+     💖 params:
+        collector - 收集器
+        supplier - 提供商
+        accumulator - 累加器
+        combiner - 组合器
+        dentity – 累加函数的初始值
+        action - 消费者
 
 短路操作
 > - `Stream.findAny()`: 返回流中任意一个元素
