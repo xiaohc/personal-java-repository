@@ -14,7 +14,7 @@
 
 > 👉  <kbd>Lambda Expression</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
 > 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象 ` add ` 对齐C++的函数指针，其取值还可以是方法引用  
-> 👉  方法引用c类似：`add = ClassName::methodName`，一种引用方法的轻量级语法，
+> 👉  <kbd>方法引用</kbd> `add = ClassName::methodName`，一种引用方法的轻量级语法，
 
 应用1：流式处理语法糖，可提升代码可读性。如下：
 
