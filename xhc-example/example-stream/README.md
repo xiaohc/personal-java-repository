@@ -13,13 +13,13 @@
   ```
 
 > 👉  <kbd>Lambda Expression</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
-> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象 ` add ` 对齐C++的函数指针，其取值还可以是方法引用  
+> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象 ` add ` 对齐C++的函数指针，其取值还可以是方法引用
 
   ``` java
   BinaryOperator<Integer> add = ClassName::methodName;
   ```
 
-> 👉  <kbd>方法引用</kbd> ` ClassName::methodName `，一种引用方法的轻量级语法  
+> 👉  <kbd>方法引用</kbd> ` ClassName::methodName `，一种引用方法的轻量级语法
 
 应用1：流式处理语法糖，可提升代码可读性。如下：
 
@@ -115,7 +115,7 @@
 > - `Stream.reduce(BinaryOperator accumulator)`: 压缩处理，对流上的元素执行归约，并返回归约后的值
 > - `Stream.reduce(T identity,BinaryOperator accumulator)`: 压缩处理 ≒ min、max、count
 > - `Stream.reduce(T identity,BiFunction accumulator, BinaryOperator combiner)`: 压缩处理 ≒ min、max、count
-> - `Stream.collect(Collector collector)`: 可变归约操作
+> - `Stream.collect(Collector collector)`: 使用收集器，进行可变归约操作，收集器是 reduce 方法的模拟
 > - `Stream.collect(Supplier supplier,BiConsumer accumulator, BiConsumer combiner)`: 可变归约操作
 > - `Stream.count()`: 返回流元素的总个数
 > - `Stream.max(Comparator comparator)`: 返回流中的最大元素
