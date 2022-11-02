@@ -327,7 +327,7 @@ example:
 
     `groupingBy(Student::getSex, mapping(Student::getName, toList()))`  
 
-> 💖 groupingBy为主收集器，mapping为下游收集器
+> 💖 groupingBy为主收集器，mapping为下游收集器  
 > 💖 同理：Collector也支持嵌套
 
 example:
