@@ -306,10 +306,6 @@ simplify:
 > collect(Collector<T, A, R> collector)  
 > collect(Supplier<R> supplier, BiConsumer<R, T> accumulator, BiConsumer<R, R> combiner)
 
-e.g.
-> ` predicate = (t) -> t != null `  
-> ` predicate = (t) -> t > 7 `
-
 example:
 
   ``` java
