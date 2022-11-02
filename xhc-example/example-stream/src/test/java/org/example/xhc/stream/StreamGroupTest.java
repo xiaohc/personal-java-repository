@@ -35,4 +35,33 @@ class StreamGroupTest {
         val str = JacksonUtils.toYaml(ret);
         System.out.println(str);
     }
+
+    @Test
+    void testCollector() {
+        val students = JacksonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
+        });
+
+        assert students != null;
+        val ret =
+                students.stream()
+                        .collect(groupingBy(Student::getSex, mapping(Student::getName, toList())));
+
+        val str = JacksonUtils.toYaml(ret);
+        System.out.println(str);
+    }
+
+    @Test
+    void testCollector2() {
+        val students = JacksonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
+        });
+
+        assert students != null;
+        val ret =
+                students.stream()
+                        .collect(groupingBy(Student::getSex,
+                                groupingBy(Student::getAge, mapping(Student::getName, toList()))));
+
+        val str = JacksonUtils.toYaml(ret);
+        System.out.println(str);
+    }
 }

@@ -221,7 +221,7 @@ simplify:
 e.g.
 > ` comparator = (t1, t2) -> Integer.valueOf(t1) - Integer.valueOf(t2) `
 
-##### <b>comparator</b>
+##### <b>组合排序</b>
 
 > 💖 Comparator支持嵌套，即comparing、thenComparing中，如果选定字段为POJO类型时，可为其指定一个组合Comparator
 
@@ -323,14 +323,33 @@ example:
   FEMALE: "[eva]"
   ```
 
-##### ✍️ 组合收集器
+##### 组合收集器
 
     `groupingBy(Student::getSex, mapping(Student::getName, toList()))`  
 
-##### ✍️ 重构收集器
+> 💖 groupingBy为主收集器，mapping为下游收集器
+> 💖 同理：Collector也支持嵌套
 
-    `groupingBy(Student::getSex, mapping(Student::getName, toList()))`  
+example:
 
-##### ✍️ 定制收集器
+  ``` java
+students.stream()
+        .collect(groupingBy(Student::getSex,
+                groupingBy(Student::getAge, mapping(Student::getName, toList()))));
+  ```
+
+  ``` java
+    MALE:
+      7:
+      - "tom"
+      8:
+      - "jack"
+    FEMALE:
+      7:
+      - "eva"
+  ```
+
+
+##### 定制收集器
 
     `groupingBy(Student::getSex, mapping(Student::getName, toList()))`  
