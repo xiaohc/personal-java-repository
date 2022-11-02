@@ -319,6 +319,17 @@ example:
   FEMALE: "[eva]"
   ```
 
+##### 收集器
+
+> - `Collectors.toCollection(Supplier collectionFactory)`：将流元素转存到指定集合，collectionFactory为集合创建工厂方法
+> - `Collectors.toList()`：将流元素转存为一个 List  
+> - `Collectors.toSet()`：将流元素转存为一个 Set  
+> - `Collectors.joining()`：将流元素连接成一个 String
+> - `Collectors.joining(CharSequence delimiter)`：将流元素连接成一个 String，其由指定的分隔符 delimiter 分隔
+> - `Collectors.joining(CharSequence delimiter, CharSequence prefix, CharSequence suffix)`：将流元素连接成一个 String，其由指定的分隔符分隔，具有指定的前缀和后缀
+> - `Collectors.mapping(Function mapper, Collector downstream)`：功能等价于Stream.map(mapper).collect(downstream)
+> - `Collectors.collectingAndThen(Collector downstream, Function finisher)`：收集器完成最终转化后，再执行finisher功能收尾，功能等价于downstream.finisher().andThen(finisher)
+
 ##### 组合收集器
 
     `groupingBy(Student::getSex, mapping(Student::getName, toList()))`  
