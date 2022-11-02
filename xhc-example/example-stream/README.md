@@ -150,10 +150,10 @@
 | Supplier\<T>           | T get();               | 生产方法，无参执行操作，直接产生结果，如：工厂方法               |
 | Consumer\<T>           | void accept(T t);      | 消费方法，给定1个参数执行操作，不产生结果，如：打印日志                |
 | BiConsumer<T, U>       | void accept(T t, U u); | 消费方法，给定2个参数执行操作，不产生结果       |
-| Function<T,R>          | R apply(T t);          | 转换方法，接受1个参数，并产生结果，如：获得对象的名字，` Student::getAge `      |
+| Function<T,R>          | R apply(T t);          | 映射方法，接受1个参数，并产生结果，如：获得对象的名字，` Student::getAge `      |
 | BiFunction<T, U, R>    | R apply(T t, U u);     | 转换方法，接受2个参数，并产生结果                                        |
-| UnaryOperator\<T>      | T apply(T t);          | 转换方法，一元运算符，参数与结果类型相同的函数，如：逻辑非（ !）                      |
-| BinaryOperator\<T>     | T apply(T t1, T t2);   | 转换方法，二元运算符，参数与结果类型相同的函数，如： 求两个数的乘积（ *）               |
+| UnaryOperator\<T>      | T apply(T t);          | 转化方法，参数与结果类型相同的函数，如一元运算符： 逻辑非（ !）                      |
+| BinaryOperator\<T>     | T apply(T t1, T t2);   | 转换方法，参数与结果类型相同的函数，如二元运算符： 求两个数的乘积（ *）               |
 
 ### 代码示例
 
@@ -322,3 +322,15 @@ example:
   MALE: "[jack,tom]"
   FEMALE: "[eva]"
   ```
+
+##### ✍️ 组合收集器
+
+    `groupingBy(Student::getSex, mapping(Student::getName, toList()))`  
+
+##### ✍️ 重构收集器
+
+    `groupingBy(Student::getSex, mapping(Student::getName, toList()))`  
+
+##### ✍️ 定制收集器
+
+    `groupingBy(Student::getSex, mapping(Student::getName, toList()))`  
