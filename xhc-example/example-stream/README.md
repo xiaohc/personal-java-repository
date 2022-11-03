@@ -351,15 +351,20 @@ example:
 > - `Collectors.partitioningBy(Predicate predicate)`：返回一个收集器，可根据Predicate对输入元素进行分区，并将它们组织成一个Map<Boolean, List<T>>
 > - `Collectors.partitioningBy(Predicate predicate, Collector downstream)`：同上，其分组元素由downstream归约为值，最终在Map<Boolean, D>
 
-> - `Collectors.summingInt(ToIntFunction mapper)`：返回一个收集器，可收集应用于输入元素的int值函数的总和
-> - `Collectors.summingLong(ToLongFunction mapper)`：返回一个收集器，可收集应用于输入元素的long值函数的总和
-> - `Collectors.summingDouble(ToDoubleFunction mapper)`：返回一个收集器，可收集应用于输入元素的double值函数的总和
-> - `Collectors.averagingInt(ToIntFunction mapper)`：返回一个收集器，可收集应用于输入元素的int值函数的算术平均值
-> - `Collectors.averagingLong(ToLongFunction mapper)`：返回一个收集器，可收集应用于输入元素的long值函数的算术平均值
-> - `Collectors.averagingDouble(ToDoubleFunction mapper)`：返回一个收集器，可收集应用于输入元素的double值函数的算术平均值
-> - `Collectors.summarizingInt(ToIntFunction mapper)`：返回一个收集器，可收集应用于输入元素的int值函数的汇总统计信息
-> - `Collectors.summarizingInt(ToLongFunction mapper)`：返回一个收集器，可收集应用于输入元素的long值函数的汇总统计信息
-> - `Collectors.summarizingInt(ToDoubleFunction mapper)`：返回一个收集器，可收集应用于输入元素的double值函数的汇总统计信息
+返回一个求和收集器
+> - `Collectors.summingInt(ToIntFunction mapper)`：对输入元素，应用 int 值函数
+> - `Collectors.summingLong(ToLongFunction mapper)`：对输入元素，应用 long 值函数
+> - `Collectors.summingDouble(ToDoubleFunction mapper)`：对输入元素，应用 double 值函数
+
+返回一个求算术平均值的收集器
+> - `Collectors.averagingInt(ToIntFunction mapper)`：对输入元素，应用 int 值函数
+> - `Collectors.averagingLong(ToLongFunction mapper)`：对输入元素，应用 long 值函数
+> - `Collectors.averagingDouble(ToDoubleFunction mapper)`：对输入元素，应用 double 值函数
+
+返回一个求汇总统计信息的收集器
+> - `Collectors.summarizingInt(ToIntFunction mapper)`：对输入元素，应用 int 值函数
+> - `Collectors.summarizingLong(ToLongFunction mapper)`：对输入元素，应用 long 值函数
+> - `Collectors.summarizingDouble(ToDoubleFunction mapper)`：对输入元素，应用 double 值函数
 
 ##### 组合收集器
 
