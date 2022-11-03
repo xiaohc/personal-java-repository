@@ -343,12 +343,12 @@ example:
 > - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction)`：返回的Map是ConcurrentHashMap
 > - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction, Supplier mapSupplier)`：返回的Map是在mapSupplier中创建的ConcurrentMap子类
  
-分组收集器
-> - `Collectors.groupingBy(Function classifier)`：返回一个收集器，其根据分类函数对元素进行分组，并在Map中返回结果，效果类似：groupingBy(classifier, toList())
+分组收集器 ： 其根据分类函数对元素进行分组，并在Map中返回结果
+> - `Collectors.groupingBy(Function classifier)`：效果类似：groupingBy(classifier, toList())
 > - `Collectors.groupingBy(Function classifier, Collector downstream)`：其分组元素由downstream归约为值
 > - `Collectors.groupingBy(Function classifier, Supplier mapFactory, Collector downstream)`：返回的Map是在mapFactory中创建的
 > - `Collectors.groupingByConcurrent(Function classifier)`：返回的Map是ConcurrentHashMap
-> - `Collectors.groupingByConcurrent(Function classifier, Collector downstream)`：
+> - `Collectors.groupingByConcurrent(Function classifier, Collector downstream)`： 返回的Map是ConcurrentHashMap
 > - `Collectors.groupingByConcurrent(Function classifier, Supplier mapFactory, Collector downstream)`：返回的Map是在mapFactory中创建的ConcurrentMap子类
 
 分块收集器 ： 整理元素流为 Map<Boolean, D>
