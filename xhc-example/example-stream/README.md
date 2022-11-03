@@ -342,6 +342,10 @@ example:
 > - `Collectors.reducing(T identity, Function mapper, BinaryOperator op)`：返回一个收集器，功能等价于Stream.map(mapper).reduce(identity, op).collect(downstream)
 > - `Collectors.groupingBy(Function classifier)`：返回一个收集器，其根据分类函数对元素进行分组，并在Map中返回结果，效果类似：groupingBy(classifier, toList())
 > - `Collectors.groupingBy(Function classifier, Collector downstream)`：返回一个收集器，其根据分类函数对元素进行分组，其分组元素由downstream归约为值，最终在Map中返回结果
+> - `Collectors.groupingBy(Function classifier, Supplier mapFactory, Collector downstream)`：返回一个收集器，其根据分类函数对元素进行分组，其分组元素由downstream归约为值，最终在mapFactory创建的Map中返回结果
+> - `Collectors.groupingByConcurrent(Function classifier)`：返回一个收集器，其根据分类函数对元素进行分组，并在Map（ConcurrentHashMap）中返回结果，效果类似：groupingBy(classifier, toList())
+> - `Collectors.groupingByConcurrent(Function classifier, Collector downstream)`：返回一个收集器，其根据分类函数对元素进行分组，其分组元素由downstream归约为值，最终在Map（ConcurrentHashMap）中返回结果
+> - `Collectors.groupingByConcurrent(Function classifier, Supplier mapFactory, Collector downstream)`：返回一个收集器，其根据分类函数对元素进行分组，其分组元素由downstream归约为值，最终在mapFactory创建的Map中返回结果
 
 ##### 组合收集器
 
