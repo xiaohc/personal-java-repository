@@ -340,28 +340,30 @@ example:
 > - `Collectors.maxBy(Comparator comparator)`：返回一个收集器，可收集流中的最大元素
 > - `Collectors.reducing(T identity, BinaryOperator op)`：返回一个收集器，功能等价于Stream.reduce(identity, op).collect(downstream)
 > - `Collectors.reducing(T identity, Function mapper, BinaryOperator op)`：返回一个收集器，功能等价于Stream.map(mapper).reduce(identity, op).collect(downstream)
-> 
+
+分组收集器
 > - `Collectors.groupingBy(Function classifier)`：返回一个收集器，其根据分类函数对元素进行分组，并在Map中返回结果，效果类似：groupingBy(classifier, toList())
 > - `Collectors.groupingBy(Function classifier, Collector downstream)`：同上，其分组元素由downstream归约为值
 > - `Collectors.groupingBy(Function classifier, Supplier mapFactory, Collector downstream)`：同上，返回的Map是在mapFactory中创建的
 > - `Collectors.groupingByConcurrent(Function classifier)`：同上，返回的Map是ConcurrentHashMap
 > - `Collectors.groupingByConcurrent(Function classifier, Collector downstream)`：同上，返回的Map是ConcurrentHashMap
 > - `Collectors.groupingByConcurrent(Function classifier, Supplier mapFactory, Collector downstream)`：同上，返回的Map是ConcurrentMap子类
-> 
-> - `Collectors.partitioningBy(Predicate predicate)`：返回一个收集器，可根据Predicate对输入元素进行分区，并将它们组织成一个Map<Boolean, List<T>>
-> - `Collectors.partitioningBy(Predicate predicate, Collector downstream)`：同上，其分组元素由downstream归约为值，最终在Map<Boolean, D>
 
-返回一个求和收集器
+分块收集器 ： 整理元素流为 Map<Boolean, D>
+> - `Collectors.partitioningBy(Predicate predicate)`：根据Predicate对输入元素进行分区，D默认为List
+> - `Collectors.partitioningBy(Predicate predicate, Collector downstream)`：同上，其分组元素由downstream归约为值
+
+求和收集器
 > - `Collectors.summingInt(ToIntFunction mapper)`：对输入元素，应用 int 值函数
 > - `Collectors.summingLong(ToLongFunction mapper)`：对输入元素，应用 long 值函数
 > - `Collectors.summingDouble(ToDoubleFunction mapper)`：对输入元素，应用 double 值函数
 
-返回一个求算术平均值的收集器
+求算术平均值的收集器
 > - `Collectors.averagingInt(ToIntFunction mapper)`：对输入元素，应用 int 值函数
 > - `Collectors.averagingLong(ToLongFunction mapper)`：对输入元素，应用 long 值函数
 > - `Collectors.averagingDouble(ToDoubleFunction mapper)`：对输入元素，应用 double 值函数
 
-返回一个求汇总统计信息的收集器
+求汇总统计信息的收集器
 > - `Collectors.summarizingInt(ToIntFunction mapper)`：对输入元素，应用 int 值函数
 > - `Collectors.summarizingLong(ToLongFunction mapper)`：对输入元素，应用 long 值函数
 > - `Collectors.summarizingDouble(ToDoubleFunction mapper)`：对输入元素，应用 double 值函数
