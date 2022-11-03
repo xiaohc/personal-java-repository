@@ -327,12 +327,6 @@ example:
 > - `Collectors.joining()`：返回一个收集器，可将流元素连接成一个 String
 > - `Collectors.joining(CharSequence delimiter)`：同上，其由指定的分隔符 delimiter 分隔
 > - `Collectors.joining(CharSequence delimiter, CharSequence prefix, CharSequence suffix)`：同上，具有指定的前缀和后缀
-> - `Collectors.toMap(Function keyMapper, Function valueMapper)`：同上，返回的Map是ConcurrentHashMap
-> - `Collectors.toMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction)`：同上，返回的Map是ConcurrentHashMap
-> - `Collectors.toMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction, Supplier mapSupplier)`：同上，返回的Map是ConcurrentMap子类
-> - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper)`：返回一个收集器，将元素累积到一个Map中，其键和值是将提供的映射函数应用于输入元素的结果
-> - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction)`：同上，mergeFunction为合并函数，用于解决与同一键关联的值之间的冲突
-> - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction, Supplier mapSupplier)`：同上，返回的Map是在mapSupplier中创建的
 > - `Collectors.mapping(Function mapper, Collector downstream)`：返回一个收集器，功能等价于Stream.map(mapper).collect(downstream)
 > - `Collectors.collectingAndThen(Collector downstream, Function finisher)`：返回一个收集器，再downstream收集器完成最终转化后，再执行finisher功能收尾，功能等价于downstream.finisher().andThen(finisher)
 > - `Collectors.count()`：返回一个收集器，可对输入元素计数
@@ -341,13 +335,21 @@ example:
 > - `Collectors.reducing(T identity, BinaryOperator op)`：返回一个收集器，功能等价于Stream.reduce(identity, op).collect(downstream)
 > - `Collectors.reducing(T identity, Function mapper, BinaryOperator op)`：返回一个收集器，功能等价于Stream.map(mapper).reduce(identity, op).collect(downstream)
 
+映射关系收集器 ： 将流元素累积到一个Map中，其键和值是将提供的映射函数应用于输入元素的结果
+> - `Collectors.toMap(Function keyMapper, Function valueMapper)`
+> - `Collectors.toMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction)`：mergeFunction为合并函数，用于解决与同一键关联的值之间的冲突
+> - `Collectors.toMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction, Supplier mapSupplier)`：返回的Map是在mapSupplier中创建的
+> - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper)`：返回的Map是ConcurrentHashMap
+> - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction)`：返回的Map是ConcurrentHashMap
+> - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction, Supplier mapSupplier)`：返回的Map是在mapSupplier中创建的ConcurrentMap子类
+ 
 分组收集器
 > - `Collectors.groupingBy(Function classifier)`：返回一个收集器，其根据分类函数对元素进行分组，并在Map中返回结果，效果类似：groupingBy(classifier, toList())
-> - `Collectors.groupingBy(Function classifier, Collector downstream)`：同上，其分组元素由downstream归约为值
-> - `Collectors.groupingBy(Function classifier, Supplier mapFactory, Collector downstream)`：同上，返回的Map是在mapFactory中创建的
-> - `Collectors.groupingByConcurrent(Function classifier)`：同上，返回的Map是ConcurrentHashMap
-> - `Collectors.groupingByConcurrent(Function classifier, Collector downstream)`：同上，返回的Map是ConcurrentHashMap
-> - `Collectors.groupingByConcurrent(Function classifier, Supplier mapFactory, Collector downstream)`：同上，返回的Map是ConcurrentMap子类
+> - `Collectors.groupingBy(Function classifier, Collector downstream)`：其分组元素由downstream归约为值
+> - `Collectors.groupingBy(Function classifier, Supplier mapFactory, Collector downstream)`：返回的Map是在mapFactory中创建的
+> - `Collectors.groupingByConcurrent(Function classifier)`：返回的Map是ConcurrentHashMap
+> - `Collectors.groupingByConcurrent(Function classifier, Collector downstream)`：
+> - `Collectors.groupingByConcurrent(Function classifier, Supplier mapFactory, Collector downstream)`：返回的Map是在mapFactory中创建的ConcurrentMap子类
 
 分块收集器 ： 整理元素流为 Map<Boolean, D>
 > - `Collectors.partitioningBy(Predicate predicate)`：根据Predicate对输入元素进行分区，D默认为List
