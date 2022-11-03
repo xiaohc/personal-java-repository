@@ -338,22 +338,28 @@ example:
 > - `Collectors.count()`：返回一个收集器，可对输入元素计数
 > - `Collectors.minBy(Comparator comparator)`：返回一个收集器，可收集流中的最小元素
 > - `Collectors.maxBy(Comparator comparator)`：返回一个收集器，可收集流中的最大元素
-> - `Collectors.summingInt(ToIntFunction mapper)`：返回一个收集器，可收集应用于输入元素的int值函数的总和
-> - `Collectors.summingLong(ToLongFunction mapper)`：返回一个收集器，可收集应用于输入元素的long值函数的总和
-> - `Collectors.summingDouble(ToDoubleFunction mapper)`：返回一个收集器，可收集应用于输入元素的double值函数的总和
-> - `Collectors.averagingInt(ToIntFunction mapper)`：返回一个收集器，可收集应用于输入元素的int值函数的算术平均值
-> - `Collectors.averagingLong(ToLongFunction mapper)`：返回一个收集器，可收集应用于输入元素的long值函数的算术平均值
-> - `Collectors.averagingDouble(ToDoubleFunction mapper)`：返回一个收集器，可收集应用于输入元素的double值函数的算术平均值
 > - `Collectors.reducing(T identity, BinaryOperator op)`：返回一个收集器，功能等价于Stream.reduce(identity, op).collect(downstream)
 > - `Collectors.reducing(T identity, Function mapper, BinaryOperator op)`：返回一个收集器，功能等价于Stream.map(mapper).reduce(identity, op).collect(downstream)
+> 
 > - `Collectors.groupingBy(Function classifier)`：返回一个收集器，其根据分类函数对元素进行分组，并在Map中返回结果，效果类似：groupingBy(classifier, toList())
 > - `Collectors.groupingBy(Function classifier, Collector downstream)`：同上，其分组元素由downstream归约为值
 > - `Collectors.groupingBy(Function classifier, Supplier mapFactory, Collector downstream)`：同上，返回的Map是在mapFactory中创建的
 > - `Collectors.groupingByConcurrent(Function classifier)`：同上，返回的Map是ConcurrentHashMap
 > - `Collectors.groupingByConcurrent(Function classifier, Collector downstream)`：同上，返回的Map是ConcurrentHashMap
 > - `Collectors.groupingByConcurrent(Function classifier, Supplier mapFactory, Collector downstream)`：同上，返回的Map是ConcurrentMap子类
+> 
 > - `Collectors.partitioningBy(Predicate predicate)`：返回一个收集器，可根据Predicate对输入元素进行分区，并将它们组织成一个Map<Boolean, List<T>>
 > - `Collectors.partitioningBy(Predicate predicate, Collector downstream)`：同上，其分组元素由downstream归约为值，最终在Map<Boolean, D>
+
+> - `Collectors.summingInt(ToIntFunction mapper)`：返回一个收集器，可收集应用于输入元素的int值函数的总和
+> - `Collectors.summingLong(ToLongFunction mapper)`：返回一个收集器，可收集应用于输入元素的long值函数的总和
+> - `Collectors.summingDouble(ToDoubleFunction mapper)`：返回一个收集器，可收集应用于输入元素的double值函数的总和
+> - `Collectors.averagingInt(ToIntFunction mapper)`：返回一个收集器，可收集应用于输入元素的int值函数的算术平均值
+> - `Collectors.averagingLong(ToLongFunction mapper)`：返回一个收集器，可收集应用于输入元素的long值函数的算术平均值
+> - `Collectors.averagingDouble(ToDoubleFunction mapper)`：返回一个收集器，可收集应用于输入元素的double值函数的算术平均值
+> - `Collectors.summarizingInt(ToIntFunction mapper)`：返回一个收集器，可收集应用于输入元素的int值函数的汇总统计信息
+> - `Collectors.summarizingInt(ToLongFunction mapper)`：返回一个收集器，可收集应用于输入元素的long值函数的汇总统计信息
+> - `Collectors.summarizingInt(ToDoubleFunction mapper)`：返回一个收集器，可收集应用于输入元素的double值函数的汇总统计信息
 
 ##### 组合收集器
 
