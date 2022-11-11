@@ -17,6 +17,7 @@ import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 
 /**
  * 错误上下文
+ * 保存错误的信息
  *
  * @author xiaohongchao
  * @since 1.0.0
