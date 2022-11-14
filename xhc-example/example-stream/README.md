@@ -8,11 +8,15 @@
 
 ### 技术理解
 
+> 函数式编程就是用函数来编程， 返回结果， 没有任何副作用。
+> 函数可以复合为新函数。
+> 函数可以递归调用它自己，但是递归的深度受限于梭的大小。
+
   ``` java
   BinaryOperator<Integer> add = (x, y) -> x + y;
   ```
 
-> 👉  <kbd>Lambda Expression</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
+> 👉  <kbd>Lambda</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
 > 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象即为一个具体的Lambda表达式
 
   ``` java
@@ -20,6 +24,7 @@
   ```
 
 > 👉  <kbd>方法引用</kbd> ` ClassName::methodName `，等价Lambda表达式，引用方法的一种语法表示，对齐C++的函数指针
+> <kbd>Lambda</kbd> 和 <kbd>方法引用</kbd> 可以用于需要函数式接口的地方。
 
 应用1：流式处理语法糖，可提升代码可读性。如下：
 
