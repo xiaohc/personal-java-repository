@@ -12,6 +12,28 @@
 > 函数可以复合为新函数。  
 > 函数可以递归调用它自己，但是递归的深度受限于栈的大小。  
 
+### 函数复合+多态
+  多态高阶函数  
+  ``` java
+    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose() {
+        return tuFunc -> uvFunc -> t -> tuFunc.apply(uvFunc.apply(t));
+    }
+
+    public static <T, U, V> Function<Function<T, U>, Function<Function<U, V>, Function<T, V>>> higherAndThen() {
+        return f -> g -> x -> g.apply(f.apply(x));
+    }
+
+    @Test
+    void testFunctionCompose() {
+        Function<Double, Integer> f = a -> (int) (a * 3);
+        Function<Long, Double> g = a -> a + 2.0;
+        assertEquals(Integer.valueOf(9), f.apply((g.apply(1L))));
+        assertEquals(Integer.valueOf(9), FunctionTest.<Long, Double, Integer>higherCompose().apply(f).apply(g). apply(1L));
+    }
+  ```
+
+### lambda表达式
+
   ``` java
   BinaryOperator<Integer> add = (x, y) -> x + y;
   ```
