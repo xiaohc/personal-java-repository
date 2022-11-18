@@ -20,7 +20,7 @@
     }
 
     public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose2() {
-        return f -> g -> x -> f.apply(g.apply(x));
+        return f -> g -> t -> f.apply(g.apply(t));
     }
     
     @Test
