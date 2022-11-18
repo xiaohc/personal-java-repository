@@ -16,19 +16,25 @@
   多态高阶函数  
   ``` java
     public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose() {
+        return f -> g -> t -> f.apply(g.apply(t));
+    }
+
+    /* 赋予 lambda参数 一个有意义的名字 */
+    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose2() {
         return tuFunc -> uvFunc -> t -> tuFunc.apply(uvFunc.apply(t));
     }
 
-    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose2() {
-        return f -> g -> t -> f.apply(g.apply(t));
+    /* 更直观的 lambda参数 类型信息 */
+    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose3() {
+        return (Function<U, V> f) -> (Function<T, U> g) -> (T t) -> f.apply(g.apply(t));
     }
-    
+
     @Test
     void testFunctionCompose() {
-        Function<Double, Integer> f = a -> (int) (a * 3);
-        Function<Long, Double> g = a -> a + 2.0;
+        Function<Double, Integer> f = t -> (int) (t * 3);
+        Function<Long, Double> g = t -> t + 2.0;
         assertEquals(Integer.valueOf(9), f.apply((g.apply(1L))));
-        assertEquals(Integer.valueOf(9), FunctionTest.<Long, Double, Integer>higherCompose().apply(f).apply(g). apply(1L));
+        assertEquals(Integer.valueOf(9), FunctionTest.<Long, Double, Integer>higherCompose().apply(f).apply(g).apply(1L));
     }
   ```
 
