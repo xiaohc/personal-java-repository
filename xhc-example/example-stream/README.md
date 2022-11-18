@@ -19,10 +19,10 @@
         return tuFunc -> uvFunc -> t -> tuFunc.apply(uvFunc.apply(t));
     }
 
-    public static <T, U, V> Function<Function<T, U>, Function<Function<U, V>, Function<T, V>>> higherAndThen() {
-        return f -> g -> x -> g.apply(f.apply(x));
+    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose2() {
+        return f -> g -> x -> f.apply(g.apply(x));
     }
-
+    
     @Test
     void testFunctionCompose() {
         Function<Double, Integer> f = a -> (int) (a * 3);
