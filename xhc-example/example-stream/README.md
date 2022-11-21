@@ -46,8 +46,8 @@
   BinaryOperator<Integer> add = (x, y) -> x + y;
   ```
 
-> 👉  <kbd>Lambda</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数体  
 > 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象即为一个具体的Lambda表达式
+> 👉  <kbd>Lambda</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数指针指向的函数（把函数当做数据来对待，如作为函数参数，函数返回）
 
   ``` java
   BinaryOperator<Integer> add = ClassName::methodName;
