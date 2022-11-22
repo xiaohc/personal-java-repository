@@ -50,12 +50,12 @@
   ```
 
   ``` java
-    If.isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
-    If.haveError(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);  // JSR-303 bean validation
+    isNull(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);
+    haveError(txnRequestDTO).thenThrow(TXN_REQUEST_ERROR);  // JSR-303 bean validation
   ```
 
   ``` java
-    If.isNull(txnRequestDTO).or(haveError(txnRequestDTO)).thenThrow(TXN_REQUEST_ERROR);
+    isNull(txnRequestDTO).or(haveError(txnRequestDTO)).thenThrow(TXN_REQUEST_ERROR);
   ```
 
 ### 函数复合+多态
