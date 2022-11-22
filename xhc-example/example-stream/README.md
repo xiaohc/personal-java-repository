@@ -12,41 +12,13 @@
 > 函数可以复合为新函数。  
 > 函数可以递归调用它自己，但是递归的深度受限于栈的大小。  
 
-### 函数复合+多态
-  多态高阶函数  
-  ``` java
-    /* 一个多态高阶函数例子 */
-    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose() {
-        return f -> g -> t -> f.apply(g.apply(t));
-    }
-
-    /* 赋予 lambda参数 一个有意义的名字 */
-    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose2() {
-        return tuFunc -> uvFunc -> t -> tuFunc.apply(uvFunc.apply(t));
-    }
-
-    /* 给 lambda参数 补上类型信息 */
-    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose3() {
-        return (Function<U, V> f) -> (Function<T, U> g) -> (T t) -> f.apply(g.apply(t));
-    }
-
-    @Test
-    void testFunctionCompose() {
-        Function<Double, Integer> f = t -> (int) (t * 3);
-        Function<Long, Double> g = t -> t + 2.0;
-
-        assertEquals(Integer.valueOf(9), f.apply((g.apply(1L))));
-        assertEquals(Integer.valueOf(9), FunctionTest.<Long, Double, Integer>higherCompose().apply(f).apply(g).apply(1L));
-    }
-  ```
-
 ### lambda表达式
 
   ``` java
   BinaryOperator<Integer> add = (x, y) -> x + y;
   ```
 
-> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象即为一个具体的Lambda表达式
+> 👉  <kbd>FunctionInterface</kbd> ` BinaryOperator<T> ` 用于定义 Lambda表达式的类型，其实体对象即为一个具体的Lambda表达式  
 > 👉  <kbd>Lambda</kbd> ` (x, y) -> x + y ` 是一个匿名方法，对齐C++函数指针指向的函数（把函数当做数据来对待，如作为参数，返回值）
 
   ``` java
@@ -85,6 +57,37 @@
   ``` java
     If.isNull(txnRequestDTO).or(haveError(txnRequestDTO)).thenThrow(TXN_REQUEST_ERROR);
   ```
+
+### 函数复合+多态
+多态高阶函数
+  ``` java
+    /* 一个多态高阶函数例子 */
+    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose() {
+        return f -> g -> t -> f.apply(g.apply(t));
+    }
+
+    /* 赋予 lambda参数 一个有意义的名字 */
+    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose2() {
+        return tuFunc -> uvFunc -> t -> tuFunc.apply(uvFunc.apply(t));
+    }
+
+    /* 给 lambda参数 补上类型信息 */
+    public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose3() {
+        return (Function<U, V> f) -> (Function<T, U> g) -> (T t) -> f.apply(g.apply(t));
+    }
+
+    @Test
+    void testFunctionCompose() {
+        Function<Double, Integer> f = t -> (int) (t * 3);
+        Function<Long, Double> g = t -> t + 2.0;
+
+        assertEquals(Integer.valueOf(9), f.apply((g.apply(1L))));
+        assertEquals(Integer.valueOf(9), FunctionTest.<Long, Double, Integer>higherCompose().apply(f).apply(g).apply(1L));
+    }
+  ```
+
+### 多参函数柯里化
+
 
 ## Stream API
 
