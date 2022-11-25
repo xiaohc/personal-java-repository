@@ -5,7 +5,7 @@
 package org.example.xhc.demo.base.helper;
 
 import lombok.val;
-import org.example.xhc.demo.base.reply.Result;
+import org.example.xhc.demo.base.util.Result;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Function;

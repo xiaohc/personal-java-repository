@@ -1,12 +1,11 @@
 /*
- * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
+ * Copyright (c) 2022 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.demo.base.helper;
+package org.example.xhc.demo.base.util;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.example.xhc.demo.base.reply.ErrorContext;
 import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
@@ -21,7 +20,7 @@ import static java.util.stream.Collectors.*;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
 import static org.example.xhc.common.util.SetUtils.isNotOnlyNullElement;
-import static org.example.xhc.demo.base.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
+import static org.example.xhc.demo.base.common.ErrorEnum.INTERNAL_SERVER_ERROR;
 
 /**
  * 业务验证工具类

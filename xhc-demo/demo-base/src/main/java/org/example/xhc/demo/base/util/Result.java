@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
+ * Copyright (c) 2022 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.demo.base.reply;
+package org.example.xhc.demo.base.util;
 
 import java.io.Serializable;
 import java.util.concurrent.Callable;
@@ -12,22 +12,43 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * 表示可能会失败的操作结果
- * Result（表示数据或错误）
+ * 服务调用结果
+ * <p>
+ * 表示可能会失败的操作，其操作结果为有数据或错误
+ * <p>
+ * 部分方法使用函数式编程概念
+ * <p>
  * Success 子类型（表示操作成功、有数据）
  * Failure 子类型（表示操作失败、包含错误信息）
  * Empty 子类型（表示没有对应业务数据，即不是操作成功、也不是操作失败）
  *
  * @param <T> 预期正常返回的数据类型
  * @author xiaohongchao
+ * @see java.util.Optional
+ * @see java.util.List
  * @since 1.0.0
  */
 public interface Result<T> extends Serializable {
 
+    /**
+     * 判断对象类型
+     *
+     * @return true -当前对象为 Success 子类型
+     */
     Boolean isSuccess();
 
+    /**
+     * 判断对象类型
+     *
+     * @return true -当前对象为 Failure 子类型
+     */
     Boolean isFailure();
 
+    /**
+     * 判断对象类型
+     *
+     * @return true -当前对象为 Empty 子类型
+     */
     Boolean isEmpty();
 
     T getOrElse(final T defaultValue);

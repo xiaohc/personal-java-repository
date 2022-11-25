@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2022-2025 xiaohongchao.All Rights Reserved.
+ * Copyright (c) 2022 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.demo.base.reply;
+package org.example.xhc.demo.base.util;
 
 import java.io.Serializable;
 

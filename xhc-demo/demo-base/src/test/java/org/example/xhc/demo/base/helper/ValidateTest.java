@@ -7,6 +7,7 @@ package org.example.xhc.demo.base.helper;
 import lombok.Builder;
 import lombok.Data;
 import org.example.xhc.demo.base.exception.BusinessException;
+import org.example.xhc.demo.base.util.If;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
-import static org.example.xhc.demo.base.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
+import static org.example.xhc.demo.base.common.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**

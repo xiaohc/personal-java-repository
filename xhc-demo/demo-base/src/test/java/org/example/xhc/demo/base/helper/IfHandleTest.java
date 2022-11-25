@@ -10,9 +10,9 @@ import org.junit.jupiter.api.function.Executable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
-import static org.example.xhc.demo.base.helper.If.isNull;
-import static org.example.xhc.demo.base.helper.If.isTrue;
-import static org.example.xhc.demo.base.reply.ErrorEnum.INTERNAL_SERVER_ERROR;
+import static org.example.xhc.demo.base.util.If.isNull;
+import static org.example.xhc.demo.base.util.If.isTrue;
+import static org.example.xhc.demo.base.common.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

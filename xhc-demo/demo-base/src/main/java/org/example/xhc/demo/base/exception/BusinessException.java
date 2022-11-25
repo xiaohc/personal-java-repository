@@ -5,7 +5,7 @@
 package org.example.xhc.demo.base.exception;
 
 import lombok.Getter;
-import org.example.xhc.demo.base.reply.ErrorContext;
+import org.example.xhc.demo.base.util.ErrorContext;
 
 /**
  * 标准业务异常，业务服务中的业务相关异常的超类
