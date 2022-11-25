@@ -2,7 +2,7 @@
  * Copyright (c) 2022 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.demo.base.helper;
+package org.example.xhc.demo.base.util;
 
 import org.example.xhc.demo.base.exception.BusinessException;
 import org.example.xhc.demo.base.util.If;

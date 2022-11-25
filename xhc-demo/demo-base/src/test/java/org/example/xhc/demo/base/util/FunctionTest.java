@@ -2,10 +2,9 @@
  * Copyright (c) 2022 xiaohongchao.All Rights Reserved.
  */
 
-package org.example.xhc.demo.base.helper;
+package org.example.xhc.demo.base.util;
 
 import lombok.val;
-import org.example.xhc.demo.base.util.Result;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Function;
