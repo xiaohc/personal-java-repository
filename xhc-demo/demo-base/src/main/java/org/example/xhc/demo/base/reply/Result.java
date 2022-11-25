@@ -174,7 +174,7 @@ public interface Result<T> extends Serializable {
 
         private final T value;
 
-        public Success(T value) {
+        private Success(T value) {
             super();
             this.value = value;
         }
@@ -457,7 +457,7 @@ public interface Result<T> extends Serializable {
 
         private static final long serialVersionUID = 3499319831519197581L;
 
-        public Empty() {
+        private Empty() {
             super();
         }
 
