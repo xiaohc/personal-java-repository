@@ -8,18 +8,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 应答内容
+ * 标准应答码
  *
  * @author xiaohongchao
  * @since 1.0.0
  */
 @Getter
 @AllArgsConstructor
-public enum ResponseEnum implements IResponseContent {
+public enum SuccessEnum implements IResultEnum {
     /**
      * 处理成功
      */
-    SUCCESS(0, "成功"),
+    SUCCESS(0, "success"),
     ;
 
     /**

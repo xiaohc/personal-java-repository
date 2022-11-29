@@ -32,7 +32,7 @@ class IfHandleTest {
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
 
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
                 LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试语法糖函数: isTrue");
     }
@@ -45,7 +45,7 @@ class IfHandleTest {
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
 
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
                 LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试语法糖函数: isTrue");
     }
@@ -58,7 +58,7 @@ class IfHandleTest {
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
 
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
                 LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试语法糖函数: isTrue");
     }

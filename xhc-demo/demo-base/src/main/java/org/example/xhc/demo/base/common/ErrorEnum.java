@@ -15,11 +15,21 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ErrorEnum implements IResponseContent {
+public enum ErrorEnum implements IResultEnum {
     /**
      * 系统内部错误
      */
-    INTERNAL_SERVER_ERROR(9999, "系统内部错误"),
+    INTERNAL_SERVER_ERROR(9999, "System internal error"),
+
+    /**
+     * 无效结果
+     */
+    INVALID_RESULT_ERROR(9000, "Invalid value returned error"),
+
+    /**
+     * 结果不能为空
+     */
+    NULL_RESULT_ERROR(9001, "Null value returned error"),
     ;
 
     /**

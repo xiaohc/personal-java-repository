@@ -29,7 +29,7 @@ class IfTest {
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
 
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
                 LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试语法糖函数: isTrue");
     }
@@ -40,7 +40,7 @@ class IfTest {
                 .thenThrow(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
                 LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试业务检查工具类: Validate");
     }
@@ -51,7 +51,7 @@ class IfTest {
                 .thenThrow(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
                 LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试业务检查工具类: Validate");
     }
@@ -62,7 +62,7 @@ class IfTest {
                 .thenThrow(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
                 LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试业务检查工具类: Validate");
     }
@@ -73,7 +73,7 @@ class IfTest {
                 .thenThrow(INTERNAL_SERVER_ERROR.as("测试业务检查工具类: {}", "Validate"));
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
-        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> 系统内部错误" +
+        assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
                 LINE_SEPARATOR + ">>> The error code is 9999" +
                 LINE_SEPARATOR + ">>> 测试业务检查工具类: Validate");
     }

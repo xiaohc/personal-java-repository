@@ -4,12 +4,18 @@
 
 package org.example.xhc.demo.base.util;
 
+import org.example.xhc.demo.base.common.IResultEnum;
+
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+
+import static org.example.xhc.demo.base.common.ErrorEnum.INTERNAL_SERVER_ERROR;
+import static org.example.xhc.demo.base.common.ErrorEnum.NULL_RESULT_ERROR;
 
 /**
  * 服务调用结果
@@ -51,6 +57,15 @@ public interface Result<T> extends Serializable {
      */
     Boolean isEmpty();
 
+    /**
+     * 获取操作成功值
+     *
+     * @return 成功实例返回成功数据，失败实例返回异常
+     */
+    T successValue();
+
+    ErrorContext failureValue();
+
     T getOrElse(final T defaultValue);
 
     T getOrElse(final Supplier<T> defaultValue);
@@ -58,10 +73,6 @@ public interface Result<T> extends Serializable {
     <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
 
     <V> V foldRight(final V identity, Function<T, Function<V, V>> f);
-
-    T successValue();
-
-    Exception failureValue();
 
     void forEach(Consumer<T> c);
 
@@ -95,73 +106,140 @@ public interface Result<T> extends Serializable {
         return map(x -> this).getOrElse(defaultValue);
     }
 
-    static <T, U> Result<T> failure(Failure<U> failure) {
-        return new Failure<>(failure.exception);
-    }
-
-    static <T> Result<T> failure(String message) {
-        return new Failure<>(message);
-    }
-
-    static <T> Result<T> failure(String message, Exception e) {
-        return new Failure<>(new IllegalStateException(message, e));
-    }
-
-    static <V> Result<V> failure(Exception e) {
-        return new Failure<>(e);
-    }
-
+    /**
+     * 工厂方法：返回操作成功实例
+     *
+     * @param value 成功结果
+     * @param <T>   结果类型
+     * @return 操作成功实例
+     */
     static <T> Result<T> success(T value) {
         return new Success<>(value);
     }
 
+    /**
+     * 工厂方法： 返回操作无效实例
+     *
+     * @param <T> 预期成功结果的类型
+     * @return 操作无效实例
+     */
     static <T> Result<T> empty() {
         return new Empty<>();
     }
 
-    static <T> Result<T> flatten(Result<Result<T>> result) {
-        return result.flatMap(x -> x);
+    /**
+     * 工厂方法：返回操作失败实例
+     *
+     * @param errorContext 操作失败信息
+     * @param <T>          预期成功结果的类型
+     * @return 操作失败实例
+     */
+    static <T> Result<T> failure(ErrorContext errorContext) {
+        return new Failure<>(errorContext);
     }
 
+    /**
+     * 工厂方法：返回操作失败实例
+     * 操作失败实例转化
+     *
+     * @param failure 操作失败实例
+     * @param <T>     预期成功结果的类型
+     * @param <U>     预期成功结果的类型
+     * @return 操作失败实例
+     */
+    static <T, U> Result<T> failure(Failure<U> failure) {
+        Objects.requireNonNull(failure);
+        return new Failure<>(failure.errorContext);
+    }
+
+    /**
+     * 工厂方法：返回操作失败实例
+     *
+     * @param content       应答内容
+     * @param reasonPattern 原因待格式化字符串
+     * @param params        格式化参数（支持最后1个参数为Throwable）
+     * @param <T>           预期成功结果的类型
+     * @return 操作失败实例
+     */
+    static <T> Result<T> failure(IResultEnum content, String reasonPattern, final Object... params) {
+        Objects.requireNonNull(content);
+        return new Failure<>(content.as(reasonPattern, params));
+    }
+
+    /**
+     * 工厂方法
+     *
+     * @param value 返回结果内容
+     * @param <T>   返回结果类型
+     * @return 返回操作结果实例
+     */
+    static <T> Result<T> of(final T value) {
+        return of(value, ErrorContext.of(NULL_RESULT_ERROR));
+    }
+
+    /**
+     * 工厂方法
+     *
+     * @param value        返回结果内容
+     * @param errorContext 如果value为空，返回的错误上下文
+     * @param <T>          返回结果类型
+     * @return 返回操作结果实例
+     */
+    static <T> Result<T> of(final T value, final ErrorContext errorContext) {
+        return of(Objects::nonNull, value, errorContext);
+    }
+
+    /**
+     * 工厂方法
+     *
+     * @param callable 返回结果的任务
+     * @param <T>      返回结果的类型
+     * @return 返回操作结果实例
+     */
     static <T> Result<T> of(final Callable<T> callable) {
-        return of(callable, "Null value");
+        return of(callable, ErrorContext.of(NULL_RESULT_ERROR));
     }
 
-    static <T> Result<T> of(final Callable<T> callable,
-                            final String message) {
+    /**
+     * 工厂方法
+     *
+     * @param callable     返回结果的任务
+     * @param errorContext 如果任务执行出错或执行结果为空，返回的错误上下文
+     * @param <T>          返回结果的类型
+     * @return 返回操作结果实例
+     */
+    static <T> Result<T> of(final Callable<T> callable, final ErrorContext errorContext) {
         try {
             T value = callable.call();
-            return value == null
-                    ? Result.failure(message)
-                    : Result.success(value);
+            return of(value, errorContext);
         } catch (Exception e) {
-            return Result.failure(e.getMessage(), e);
+            return Result.failure(errorContext.cause(e));
         }
     }
 
+    /**
+     * 工厂方法
+     *
+     * @param predicate    判断函数
+     * @param value        返回结果内容
+     * @param errorContext 如果value为空，返回的错误上下文
+     * @param <T>          返回结果类型
+     * @return 返回操作结果实例
+     */
     static <T> Result<T> of(final Predicate<T> predicate,
                             final T value,
-                            final String message) {
+                            final ErrorContext errorContext) {
         try {
             return predicate.test(value)
                     ? Result.success(value)
-                    : Result.failure(String.format(message, value));
+                    : Result.failure(errorContext);
         } catch (Exception e) {
-            String errMessage = String.format("Exception while evaluating predicate: %s", String.format(message, value));
-            return Result.failure(errMessage, e);
+            return Result.failure(errorContext.cause(e));
         }
     }
 
-    static <T> Result<T> of(final T value) {
-        return value != null
-                ? success(value)
-                : Result.failure("Null value");
-    }
-
-    static <T> Result<T> of(final T value, final String message) {
-        return value != null
-                ? Result.success(value)
-                : Result.failure(message);
+    static <T> Result<T> flatten(Result<Result<T>> result) {
+        return result.flatMap(x -> x);
     }
 
     static <A, B> Function<Result<A>, Result<B>> lift(final Function<A, B> f) {
@@ -216,13 +294,13 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public T getOrElse(final T defaultValue) {
-            return successValue();
+        public T successValue() {
+            return this.value;
         }
 
         @Override
-        public T successValue() {
-            return this.value;
+        public T getOrElse(final T defaultValue) {
+            return successValue();
         }
 
         @Override
@@ -348,21 +426,13 @@ public interface Result<T> extends Serializable {
 
         private static final long serialVersionUID = -1426284204330352085L;
 
-        private final RuntimeException exception;
+        private final ErrorContext errorContext;
 
-        private Failure(String message) {
+        private Failure(ErrorContext errorContext) {
             super();
-            this.exception = new IllegalStateException(message);
-        }
-
-        private Failure(RuntimeException e) {
-            super();
-            this.exception = e;
-        }
-
-        private Failure(Exception e) {
-            super();
-            this.exception = new IllegalStateException(e);
+            this.errorContext = errorContext != null
+                    ? errorContext
+                    : INTERNAL_SERVER_ERROR.as("The cause of the error was not indicated");
         }
 
         @Override
@@ -386,23 +456,23 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public RuntimeException failureValue() {
-            return this.exception;
+        public ErrorContext failureValue() {
+            return this.errorContext;
         }
 
         @Override
         public void forEachOrThrow(Consumer<T> c) {
-            throw exception;
+            throw errorContext.toException();
         }
 
         @Override
         public Result<RuntimeException> forEachOrException(Consumer<T> c) {
-            return success(exception);
+            return success(errorContext);
         }
 
         @Override
         public Result<String> forEachOrFail(Consumer<T> c) {
-            return success(exception.getMessage());
+            return success(errorContext.getMessage());
         }
 
         @Override
@@ -427,7 +497,7 @@ public interface Result<T> extends Serializable {
 
         @Override
         public Result<T> mapFailure(String s) {
-            return failure(s, exception);
+            return failure(s, errorContext);
         }
 
         @Override
@@ -447,7 +517,7 @@ public interface Result<T> extends Serializable {
 
         @Override
         public <U> Result<U> flatMap(Function<T, Result<U>> f) {
-            return failure(exception.getMessage(), exception);
+            return failure(errorContext.getMessage(), errorContext);
         }
 
         @Override
@@ -468,7 +538,7 @@ public interface Result<T> extends Serializable {
     }
 
     /**
-     * 代表操作成功
+     * 表示没有对应业务数据，即不是操作成功、也不是操作失败
      *
      * @param <T> 预期正常返回的数据类型
      * @author xiaohongchao
@@ -508,7 +578,7 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public RuntimeException failureValue() {
+        public ErrorContext failureValue() {
             throw new IllegalStateException("Method failureMessage() called on a Empty instance");
         }
 

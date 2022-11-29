@@ -6,12 +6,13 @@ package org.example.xhc.demo.base.util;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import org.example.xhc.demo.base.common.IResponseContent;
-import org.example.xhc.demo.base.exception.BusinessException;
 import org.example.xhc.common.helper.FormattingTuple;
 import org.example.xhc.common.helper.MessageFormatter;
+import org.example.xhc.demo.base.common.IResultEnum;
+import org.example.xhc.demo.base.exception.BusinessException;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.example.xhc.common.constant.SystemConstants.LINE_SEPARATOR;
@@ -43,14 +44,14 @@ public class ErrorContext implements Serializable {
     private String message;
 
     /**
-     * 错误描述
-     */
-    private String description;
-
-    /**
      * 错误原因
      */
     private String reason;
+
+    /**
+     * 错误描述
+     */
+    private String description;
 
     /**
      * 如果是异常引起，记录对应异常
@@ -127,42 +128,42 @@ public class ErrorContext implements Serializable {
     }
 
     /**
+     * 工厂方法：初始化当前线程的错误上下文实例
+     *
+     * @param errorRecord 错误记录
+     * @return ErrorContext对象
+     */
+    public static ErrorContext of(final IResultEnum errorRecord) {
+        Objects.requireNonNull(errorRecord);
+        return ErrorContext.instance().reset(errorRecord);
+    }
+
+    /**
+     * 工厂方法：初始化当前线程的错误上下文实例
+     *
+     * @param errorRecord   错误记录
+     * @param reasonPattern 原因待格式化字符串
+     * @param params        格式化参数（支持最后1个参数为Throwable）
+     * @return ErrorContext对象
+     */
+    public static ErrorContext of(final IResultEnum errorRecord, String reasonPattern, final Object... params) {
+        Objects.requireNonNull(errorRecord);
+        return ErrorContext.instance().reset(errorRecord).reason(reasonPattern, params);
+    }
+
+    /**
      * 重置原ErrorContext内容为指定内容
      *
      * @param errorRecord 错误记录
      * @return ErrorContext对象
      */
-    public ErrorContext reset(final IResponseContent errorRecord) {
+    private ErrorContext reset(final IResultEnum errorRecord) {
         reset();
         Optional.ofNullable(errorRecord)
                 .ifPresent(v -> {
                     this.code = v.getCode();
                     this.message = v.getMessage();
                 });
-        return this;
-    }
-
-    /**
-     * 设置错误描述
-     *
-     * @param description 错误描述
-     * @return ErrorContext对象
-     */
-    public ErrorContext description(final String description) {
-        this.description = description;
-        return this;
-    }
-
-    /**
-     * 设置错误描述
-     *
-     * @param descriptionPattern 原因
-     * @return ErrorContext对象
-     */
-    public ErrorContext description(final String descriptionPattern, final Object... params) {
-        FormattingTuple formattingTuple = MessageFormatter.arrayFormat(descriptionPattern, params);
-        this.description = formattingTuple.getMessage();
-        this.cause = formattingTuple.getThrowable();
         return this;
     }
 
@@ -207,6 +208,29 @@ public class ErrorContext implements Serializable {
     }
 
     /**
+     * 设置错误描述
+     *
+     * @param description 错误描述
+     * @return ErrorContext对象
+     */
+    public ErrorContext description(final String description) {
+        this.description = description;
+        return this;
+    }
+
+    /**
+     * 设置错误描述
+     *
+     * @param descriptionPattern 原因
+     * @return ErrorContext对象
+     */
+    public ErrorContext description(final String descriptionPattern, final Object... params) {
+        FormattingTuple formattingTuple = MessageFormatter.arrayFormat(descriptionPattern, params);
+        this.description = formattingTuple.getMessage();
+        return this;
+    }
+
+    /**
      * 设置引起错误的异常信息
      *
      * @param cause 异常
@@ -222,7 +246,7 @@ public class ErrorContext implements Serializable {
      *
      * @return 业务异常
      */
-    public BusinessException toException() {
+    public RuntimeException toException() {
         return cause == null
                 ? new BusinessException(this)
                 : new BusinessException(this, cause);

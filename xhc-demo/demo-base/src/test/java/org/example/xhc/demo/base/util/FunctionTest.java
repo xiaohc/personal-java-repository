@@ -9,13 +9,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Function;
 
+import static org.example.xhc.demo.base.common.ErrorEnum.INTERNAL_SERVER_ERROR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FunctionTest {
     @Test
     void testCheckErrors() {
 
-        val test = Result.failure("test");
+//        val test = Result.failure("test");
+        val test = Result.failure(INTERNAL_SERVER_ERROR.as(""));
 
 //        final Result.Success<String> success = new Result.Success<>("ok");
     }
