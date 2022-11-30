@@ -37,9 +37,9 @@ public enum ErrorEnum implements IResultEnum {
     RESULT_INVOKE_ERROR(9002, "Result instance calls the wrong method"),
 
     /**
-     * 结果不能为空
+     * Result实例调用Map出错
      */
-    RESULT_NULL_VALUE_ERROR(9002, "Null value returned error"),
+    RESULT_MAP_ERROR(9003, "When calling method map() on Result instance, throw an exception"),
     ;
 
     /**

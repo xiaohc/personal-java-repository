@@ -37,11 +37,6 @@ import static org.example.xhc.demo.base.common.ErrorEnum.*;
 public interface Result<T> extends Serializable {
 
     /**
-     * Common instance for empty()
-     */
-    Result<?> EMPTY = success(null);
-
-    /**
      * 判断操作结果
      *
      * @return true -操作成功
@@ -93,33 +88,87 @@ public interface Result<T> extends Serializable {
      * Result为操作成功时，返回 Result容器存储的数据（value）
      * Result为其他情况时，返回缺省值
      *
-     * @param defaultValue 缺省值函数
+     * @param s 缺省值生成函数
      * @return 容器存储数据（value）
      */
-    T getOrElse(final Supplier<T> defaultValue);
+    T getOrElse(final Supplier<T> s);
 
     /**
      * Result为操作成功时，循环处理 Result容器内数据，
      * Result为其他情况时，不做任何处理，直接处理成功
      *
-     * @param consumer 处理函数
+     * @param action 处理函数
      */
-    void forEach(Consumer<T> consumer);
+    void forEach(Consumer<? super T> action);
 
     /**
      * Result为操作成功时，循环处理 Result容器内数据
      * Result为操作失败时，直接抛出异常
      * Result为其他情况时，不做任何处理，直接处理成功
      *
-     * @param consumer 处理函数
+     * @param action 处理函数
      */
-    void forEachOrThrow(Consumer<T> consumer);
+    void forEachOrThrow(Consumer<? super T> action);
 
-    Result<T> filter(Predicate<T> p);
+    /**
+     * 断言操作
+     *
+     * @param predicate 判断函数
+     * @return 如下：
+     * Result为操作成功时，断言成功时返回自身，如果断言失败，返回 Result.failure操作失败
+     * Result为其他情况时，忽略断言，不做任何处理，返回自身
+     */
+    Result<T> asserting(Predicate<? super T> predicate);
 
-    Result<T> filter(Predicate<T> p, String message);
+    /**
+     * 断言操作
+     *
+     * @param predicate    判断函数
+     * @param errorContext 错误上下文
+     * @return 如下：
+     * Result为操作成功时，断言成功时返回自身，如果断言失败，返回 Result.failure操作失败
+     * Result为其他情况时，忽略断言，不做任何处理，返回自身
+     */
+    Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext);
 
-    <U> Result<U> map(Function<T, U> f);
+    /**
+     * 如果 Result 为 Failure，抛出错误
+     * 如果 Result 为 Empty 或 Success，这个方法什么也不做
+     */
+    void orThrow();
+
+    /**
+     * 如果 Result 为 Failure，抛出错误
+     * 如果 Result 为 Empty 或 Success，这个方法什么也不做
+     *
+     * @param errorContext 错误上下文
+     * @apiNote {@code
+     * Result.of(var).asserting(Object::nonNull).thenThrow(VAR_IS_NULL_ERROR.as(" input data is null "));
+     * }
+     */
+    void orThrow(ErrorContext errorContext);
+
+    /**
+     * Result为操作成功时，将提供的映射函数应用于容器包含值，并将映射值用 Result实例包含返回
+     * Result为操作失败时，返回一个failure实例
+     * Result为其他情况时，返回一个empty实例
+     *
+     * @param <U>    映射目标类型
+     * @param mapper 提供的映射函数
+     * @return 如果映射成功，Result实例值为映射数据，如果失败，Result实例为failure实例
+     */
+    <U> Result<U> map(Function<? super T, U> mapper);
+
+    /**
+     * Result为操作成功时，将提供的映射函数应用于容器包含值，并返回一个Result实例
+     * Result为操作失败时，返回一个failure实例
+     * Result为其他情况时，返回一个empty实例
+     *
+     * @param <U>    映射目标类型
+     * @param mapper 提供的映射函数
+     * @return 如果映射成功，Result实例值为映射数据，如果失败，Result实例为failure实例
+     */
+    <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
 
     Result<T> mapFailure(String s, Exception e);
 
@@ -130,8 +179,6 @@ public interface Result<T> extends Serializable {
     Result<T> mapFailure(Result<T> v);
 
     Result<Nothing> mapEmpty();
-
-    <U> Result<U> flatMap(Function<T, Result<U>> f);
 
     <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
 
@@ -161,7 +208,9 @@ public interface Result<T> extends Serializable {
      * @return 操作无效实例
      */
     static <T> Result<T> empty() {
-        return new Empty<>();
+        @SuppressWarnings("unchecked")
+        Result<T> t = (Result<T>) Empty.INSTANCE;
+        return t;
     }
 
     /**
@@ -211,7 +260,7 @@ public interface Result<T> extends Serializable {
      * @return 返回操作结果实例
      */
     static <T> Result<T> of(final T value) {
-        return of(value, ErrorContext.of(RESULT_NULL_VALUE_ERROR));
+        return of(value, ErrorContext.of(RESULT_CONTENT_ERROR));
     }
 
     /**
@@ -234,7 +283,7 @@ public interface Result<T> extends Serializable {
      * @return 返回操作结果实例
      */
     static <T> Result<T> of(final Callable<T> callable) {
-        return of(callable, ErrorContext.of(RESULT_NULL_VALUE_ERROR));
+        return of(callable, ErrorContext.of(RESULT_CONTENT_ERROR));
     }
 
     /**
@@ -312,6 +361,11 @@ public interface Result<T> extends Serializable {
 
         private static final long serialVersionUID = 4534013032218150349L;
 
+        /**
+         * Common instance for empty()
+         */
+        public static final Result<?> EMPTY = success(null);
+
         private final T value;
 
         private Success(T value) {
@@ -350,42 +404,67 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public T getOrElse(Supplier<T> defaultValue) {
+        public T getOrElse(Supplier<T> s) {
             return successValue();
         }
 
         @Override
-        public void forEach(Consumer<T> consumer) {
-            consumer.accept(this.value);
+        public void forEach(Consumer<? super T> action) {
+            action.accept(this.value);
         }
 
         @Override
-        public void forEachOrThrow(Consumer<T> consumer) {
-            consumer.accept(this.value);
+        public void forEachOrThrow(Consumer<? super T> action) {
+            action.accept(this.value);
         }
 
         @Override
-        public Result<T> filter(Predicate<T> p) {
-            return filter(p, "Unmatched predicate with no error message provided.");
+        public Result<T> asserting(Predicate<? super T> predicate) {
+            return asserting(predicate, ErrorContext.of(RESULT_CONTENT_ERROR));
         }
 
         @Override
-        public Result<T> filter(Predicate<T> p, String message) {
+        public Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext) {
             try {
-                return p.test(successValue())
+                return predicate.test(successValue())
                         ? this
-                        : failure(message);
+                        : failure(errorContext);
+            } catch (BusinessException e) {
+                return Result.failure(e.getErrorContext());
             } catch (Exception e) {
-                return failure(e.getMessage(), e);
+                return Result.failure(errorContext.cause(e));
             }
         }
 
         @Override
-        public <U> Result<U> map(Function<T, U> f) {
+        public void orThrow() {
+            /* Do nothing */
+        }
+
+        @Override
+        public void orThrow(ErrorContext errorContext) {
+            /* Do nothing */
+        }
+
+        @Override
+        public <U> Result<U> map(Function<? super T, U> mapper) {
             try {
-                return success(f.apply(successValue()));
+                return success(mapper.apply(successValue()));
+            } catch (BusinessException e) {
+                return Result.failure(e.getErrorContext());
             } catch (Exception e) {
-                return failure(e.getMessage(), e);
+                return Result.failure(ErrorContext.of(RESULT_MAP_ERROR).cause(e));
+            }
+        }
+
+        @Override
+        public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
+            try {
+                return mapper.apply(successValue());
+            } catch (BusinessException e) {
+                return Result.failure(e.getErrorContext());
+            } catch (Exception e) {
+                return Result.failure(ErrorContext.of(RESULT_MAP_ERROR).cause(e));
             }
         }
 
@@ -412,15 +491,6 @@ public interface Result<T> extends Serializable {
         @Override
         public Result<Nothing> mapEmpty() {
             return failure("Not empty");
-        }
-
-        @Override
-        public <U> Result<U> flatMap(Function<T, Result<U>> f) {
-            try {
-                return f.apply(successValue());
-            } catch (Exception e) {
-                return failure(e.getMessage());
-            }
         }
 
         @Override
@@ -459,9 +529,12 @@ public interface Result<T> extends Serializable {
 
         private Failure(ErrorContext errorContext) {
             super();
-            this.errorContext = errorContext != null
-                    ? errorContext
-                    : RESULT_CONSTRUCTION_ERROR.as("When failure instance is constructed, the instantiation parameter is null");
+
+            if (Objects.isNull(errorContext)) {
+                throw RESULT_CONSTRUCTION_ERROR.as("When failure instance is constructed, the instantiation parameter is null").toException();
+            }
+
+            this.errorContext = errorContext;
         }
 
         @Override
@@ -490,27 +563,38 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public T getOrElse(Supplier<T> defaultValue) {
-            return defaultValue.get();
+        public T getOrElse(Supplier<T> s) {
+            Objects.requireNonNull(s);
+            return s.get();
         }
 
         @Override
-        public void forEachOrThrow(Consumer<T> consumer) {
+        public void forEachOrThrow(Consumer<? super T> action) {
             throw errorContext.toException();
         }
 
         @Override
-        public Result<T> filter(Predicate<T> p) {
+        public Result<T> asserting(Predicate<? super T> predicate) {
             return failure(this);
         }
 
         @Override
-        public Result<T> filter(Predicate<T> p, String message) {
+        public Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext) {
             return failure(this);
         }
 
         @Override
-        public <U> Result<U> map(Function<T, U> f) {
+        public void orThrow() {
+            throw errorContext.toException();
+        }
+
+        @Override
+        public void orThrow(ErrorContext errorContext) {
+            throw errorContext.toException();
+        }
+
+        @Override
+        public <U> Result<U> map(Function<? super T, U> mapper) {
             return failure(this);
         }
 
@@ -540,7 +624,7 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public <U> Result<U> flatMap(Function<T, Result<U>> f) {
+        public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
             return failure(errorContext.getMessage(), errorContext);
         }
 
@@ -567,6 +651,8 @@ public interface Result<T> extends Serializable {
     class Empty<T> implements Result<T> {
 
         private static final long serialVersionUID = 3499319831519197581L;
+
+        private static final Result<?> INSTANCE = new Empty<>();
 
         private Empty() {
             super();
@@ -603,32 +689,43 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public T getOrElse(Supplier<T> defaultValue) {
-            return defaultValue.get();
+        public T getOrElse(Supplier<T> s) {
+            Objects.requireNonNull(s);
+            return s.get();
         }
 
         @Override
-        public void forEach(Consumer<T> consumer) {
+        public void forEach(Consumer<? super T> action) {
             /* Empty. Do nothing. */
         }
 
         @Override
-        public void forEachOrThrow(Consumer<T> consumer) {
+        public void forEachOrThrow(Consumer<? super T> action) {
             /* Do nothing */
         }
 
         @Override
-        public Result<T> filter(Predicate<T> p) {
+        public Result<T> asserting(Predicate<? super T> predicate) {
             return empty();
         }
 
         @Override
-        public Result<T> filter(Predicate<T> p, String message) {
+        public Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext) {
             return empty();
         }
 
         @Override
-        public <U> Result<U> map(Function<T, U> f) {
+        public void orThrow() {
+            /* Do nothing */
+        }
+
+        @Override
+        public void orThrow(ErrorContext errorContext) {
+            /* Do nothing */
+        }
+
+        @Override
+        public <U> Result<U> map(Function<? super T, U> mapper) {
             return empty();
         }
 
@@ -658,7 +755,7 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public <U> Result<U> flatMap(Function<T, Result<U>> f) {
+        public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
             return empty();
         }
 
