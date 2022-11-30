@@ -22,14 +22,24 @@ public enum ErrorEnum implements IResultEnum {
     INTERNAL_SERVER_ERROR(9999, "System internal error"),
 
     /**
-     * 无效结果
+     * Result实例构建错误
      */
-    INVALID_RESULT_ERROR(9000, "Invalid value returned error"),
+    RESULT_CONSTRUCTION_ERROR(9000, "Result instance construction error"),
+
+    /**
+     * Result实例内容错误
+     */
+    RESULT_CONTENT_ERROR(9001, "Result instance content error"),
+
+    /**
+     * Result实例调用错误
+     */
+    RESULT_INVOKE_ERROR(9002, "Result instance calls the wrong method"),
 
     /**
      * 结果不能为空
      */
-    NULL_RESULT_ERROR(9001, "Null value returned error"),
+    RESULT_NULL_VALUE_ERROR(9002, "Null value returned error"),
     ;
 
     /**

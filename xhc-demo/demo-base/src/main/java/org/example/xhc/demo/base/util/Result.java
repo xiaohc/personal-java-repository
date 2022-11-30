@@ -5,6 +5,7 @@
 package org.example.xhc.demo.base.util;
 
 import org.example.xhc.demo.base.common.IResultEnum;
+import org.example.xhc.demo.base.exception.BusinessException;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,19 +15,18 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import static org.example.xhc.demo.base.common.ErrorEnum.INTERNAL_SERVER_ERROR;
-import static org.example.xhc.demo.base.common.ErrorEnum.NULL_RESULT_ERROR;
+import static org.example.xhc.demo.base.common.ErrorEnum.*;
 
 /**
- * 服务调用结果
- * <p>
- * 表示可能会失败的操作，其操作结果为有数据或错误
- * <p>
- * 部分方法使用函数式编程概念
+ * 容器类 : 表示可能会失败的操作，其操作结果为有数据或错误
  * <p>
  * Success 子类型（表示操作成功、有数据）
  * Failure 子类型（表示操作失败、包含错误信息）
- * Empty 子类型（表示没有对应业务数据，即不是操作成功、也不是操作失败）
+ * Empty 子类型（表示操作无效，即不是操作成功、也不是操作失败，也表示没有对应业务数据）
+ * <p>
+ * 容器存储元素：value数据（操作成功）
+ * <p>
+ * 注意：部分方法使用函数式编程概念
  *
  * @param <T> 预期正常返回的数据类型
  * @author xiaohongchao
@@ -37,50 +37,83 @@ import static org.example.xhc.demo.base.common.ErrorEnum.NULL_RESULT_ERROR;
 public interface Result<T> extends Serializable {
 
     /**
-     * 判断对象类型
+     * Common instance for empty()
+     */
+    Result<?> EMPTY = success(null);
+
+    /**
+     * 判断操作结果
      *
-     * @return true -当前对象为 Success 子类型
+     * @return true -操作成功
      */
     Boolean isSuccess();
 
     /**
-     * 判断对象类型
+     * 判断操作结果
      *
-     * @return true -当前对象为 Failure 子类型
+     * @return true - 操作失败
      */
     Boolean isFailure();
 
     /**
-     * 判断对象类型
+     * 判断操作结果
      *
-     * @return true -当前对象为 Empty 子类型
+     * @return true -操作无效，也表示没有对应业务数据
      */
     Boolean isEmpty();
 
     /**
-     * 获取操作成功值
+     * Result为操作成功时，返回 Result容器存储的数据（value）
+     * Result为其他情况时，抛出异常
+     * <p>
+     * 同： T get()
      *
-     * @return 成功实例返回成功数据，失败实例返回异常
+     * @return 容器存储数据（value）
      */
     T successValue();
 
+    /**
+     * Result为操作失败时，返回 返回错误上下文
+     * Result为其他情况时，抛出异常
+     *
+     * @return 错误上下文
+     */
     ErrorContext failureValue();
 
+    /**
+     * Result为操作成功时，返回 Result容器存储的数据（value）
+     * Result为其他情况时，返回缺省值
+     *
+     * @param defaultValue 缺省值
+     * @return 容器存储数据（value）
+     */
     T getOrElse(final T defaultValue);
 
+    /**
+     * Result为操作成功时，返回 Result容器存储的数据（value）
+     * Result为其他情况时，返回缺省值
+     *
+     * @param defaultValue 缺省值函数
+     * @return 容器存储数据（value）
+     */
     T getOrElse(final Supplier<T> defaultValue);
 
-    <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
+    /**
+     * Result为操作成功时，循环处理 Result容器内数据，
+     * Result为其他情况时，不做任何处理，直接处理成功
+     *
+     * @param consumer 处理函数
+     */
+    void forEach(Consumer<T> consumer);
 
-    <V> V foldRight(final V identity, Function<T, Function<V, V>> f);
-
-    void forEach(Consumer<T> c);
-
-    void forEachOrThrow(Consumer<T> c);
-
-    Result<String> forEachOrFail(Consumer<T> e);
-
-    Result<RuntimeException> forEachOrException(Consumer<T> e);
+    /**
+     * Result为操作成功时，循环处理 Result容器内数据
+     * Result为操作失败时，直接抛出异常
+     * Result为其他情况时，不做任何处理，直接处理成功
+     *
+     * @param consumer 处理函数
+     */
+    void forEachOrThrow(Consumer<T> consumer);
 
     Result<T> filter(Predicate<T> p);
 
@@ -99,6 +132,10 @@ public interface Result<T> extends Serializable {
     Result<Nothing> mapEmpty();
 
     <U> Result<U> flatMap(Function<T, Result<U>> f);
+
+    <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
+
+    <V> V foldRight(final V identity, Function<T, Function<V, V>> f);
 
     Boolean exists(Predicate<T> p);
 
@@ -148,7 +185,7 @@ public interface Result<T> extends Serializable {
      * @return 操作失败实例
      */
     static <T, U> Result<T> failure(Failure<U> failure) {
-        Objects.requireNonNull(failure);
+        Objects.requireNonNull(failure, "When calling failure(Failure<U>) method, The input parameter is null");
         return new Failure<>(failure.errorContext);
     }
 
@@ -162,7 +199,7 @@ public interface Result<T> extends Serializable {
      * @return 操作失败实例
      */
     static <T> Result<T> failure(IResultEnum content, String reasonPattern, final Object... params) {
-        Objects.requireNonNull(content);
+        Objects.requireNonNull(content, "When calling failure(IResultEnum, ...) method, The input parameter is null");
         return new Failure<>(content.as(reasonPattern, params));
     }
 
@@ -174,7 +211,7 @@ public interface Result<T> extends Serializable {
      * @return 返回操作结果实例
      */
     static <T> Result<T> of(final T value) {
-        return of(value, ErrorContext.of(NULL_RESULT_ERROR));
+        return of(value, ErrorContext.of(RESULT_NULL_VALUE_ERROR));
     }
 
     /**
@@ -197,7 +234,7 @@ public interface Result<T> extends Serializable {
      * @return 返回操作结果实例
      */
     static <T> Result<T> of(final Callable<T> callable) {
-        return of(callable, ErrorContext.of(NULL_RESULT_ERROR));
+        return of(callable, ErrorContext.of(RESULT_NULL_VALUE_ERROR));
     }
 
     /**
@@ -212,6 +249,8 @@ public interface Result<T> extends Serializable {
         try {
             T value = callable.call();
             return of(value, errorContext);
+        } catch (BusinessException e) {
+            return Result.failure(e.getErrorContext());
         } catch (Exception e) {
             return Result.failure(errorContext.cause(e));
         }
@@ -233,6 +272,8 @@ public interface Result<T> extends Serializable {
             return predicate.test(value)
                     ? Result.success(value)
                     : Result.failure(errorContext);
+        } catch (BusinessException e) {
+            return Result.failure(e.getErrorContext());
         } catch (Exception e) {
             return Result.failure(errorContext.cause(e));
         }
@@ -299,35 +340,28 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
+        public ErrorContext failureValue() {
+            throw RESULT_INVOKE_ERROR.as("Method failureValue() called on a Success instance").toException();
+        }
+
+        @Override
         public T getOrElse(final T defaultValue) {
             return successValue();
         }
 
         @Override
-        public RuntimeException failureValue() {
-            throw new IllegalStateException("Method failureValue() called on a Success instance");
+        public T getOrElse(Supplier<T> defaultValue) {
+            return successValue();
         }
 
         @Override
-        public void forEach(Consumer<T> e) {
-            e.accept(this.value);
+        public void forEach(Consumer<T> consumer) {
+            consumer.accept(this.value);
         }
 
         @Override
-        public void forEachOrThrow(Consumer<T> e) {
-            e.accept(this.value);
-        }
-
-        @Override
-        public Result<String> forEachOrFail(Consumer<T> e) {
-            e.accept(this.value);
-            return empty();
-        }
-
-        @Override
-        public Result<RuntimeException> forEachOrException(Consumer<T> e) {
-            e.accept(this.value);
-            return empty();
+        public void forEachOrThrow(Consumer<T> consumer) {
+            consumer.accept(this.value);
         }
 
         @Override
@@ -400,11 +434,6 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public T getOrElse(Supplier<T> defaultValue) {
-            return successValue();
-        }
-
-        @Override
         public <V> V foldLeft(V identity, Function<V, Function<T, V>> f) {
             return f.apply(identity).apply(successValue());
         }
@@ -432,7 +461,7 @@ public interface Result<T> extends Serializable {
             super();
             this.errorContext = errorContext != null
                     ? errorContext
-                    : INTERNAL_SERVER_ERROR.as("The cause of the error was not indicated");
+                    : RESULT_CONSTRUCTION_ERROR.as("When failure instance is constructed, the instantiation parameter is null");
         }
 
         @Override
@@ -446,13 +475,8 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public T getOrElse(final T defaultValue) {
-            return defaultValue;
-        }
-
-        @Override
         public T successValue() {
-            throw new IllegalStateException("Method successValue() called on a Failure instance");
+            throw RESULT_INVOKE_ERROR.as("Method successValue() called on a Failure instance").toException();
         }
 
         @Override
@@ -461,18 +485,18 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public void forEachOrThrow(Consumer<T> c) {
+        public T getOrElse(final T defaultValue) {
+            return defaultValue;
+        }
+
+        @Override
+        public T getOrElse(Supplier<T> defaultValue) {
+            return defaultValue.get();
+        }
+
+        @Override
+        public void forEachOrThrow(Consumer<T> consumer) {
             throw errorContext.toException();
-        }
-
-        @Override
-        public Result<RuntimeException> forEachOrException(Consumer<T> c) {
-            return success(errorContext);
-        }
-
-        @Override
-        public Result<String> forEachOrFail(Consumer<T> c) {
-            return success(errorContext.getMessage());
         }
 
         @Override
@@ -530,10 +554,6 @@ public interface Result<T> extends Serializable {
             return false;
         }
 
-        @Override
-        public T getOrElse(Supplier<T> defaultValue) {
-            return defaultValue.get();
-        }
 
     }
 
@@ -568,38 +588,33 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
+        public T successValue() {
+            throw RESULT_INVOKE_ERROR.as("Method successValue() called on a Empty instance").toException();
+        }
+
+        @Override
+        public ErrorContext failureValue() {
+            throw RESULT_INVOKE_ERROR.as("Method failureValue() called on a Empty instance").toException();
+        }
+
+        @Override
         public T getOrElse(final T defaultValue) {
             return defaultValue;
         }
 
         @Override
-        public T successValue() {
-            throw new IllegalStateException("Method successValue() called on a Empty instance");
+        public T getOrElse(Supplier<T> defaultValue) {
+            return defaultValue.get();
         }
 
         @Override
-        public ErrorContext failureValue() {
-            throw new IllegalStateException("Method failureMessage() called on a Empty instance");
-        }
-
-        @Override
-        public void forEach(Consumer<T> c) {
+        public void forEach(Consumer<T> consumer) {
             /* Empty. Do nothing. */
         }
 
         @Override
-        public void forEachOrThrow(Consumer<T> c) {
+        public void forEachOrThrow(Consumer<T> consumer) {
             /* Do nothing */
-        }
-
-        @Override
-        public Result<String> forEachOrFail(Consumer<T> c) {
-            return empty();
-        }
-
-        @Override
-        public Result<RuntimeException> forEachOrException(Consumer<T> c) {
-            return empty();
         }
 
         @Override
@@ -655,11 +670,6 @@ public interface Result<T> extends Serializable {
         @Override
         public Boolean exists(Predicate<T> p) {
             return false;
-        }
-
-        @Override
-        public T getOrElse(Supplier<T> defaultValue) {
-            return defaultValue.get();
         }
 
         @Override
