@@ -60,7 +60,7 @@ public final class If {
 
         return error -> {
             if (isNotEmpty(validatedSet) && isNotOnlyNullElement(validatedSet)) {
-                throw ensureToException(error, "JSR-303 bean validation").reason(generateErrorDetails(validatedSet)).toException();
+                throw ensureToException(error, "JSR-303 bean validation").appendReason(generateErrorDetails(validatedSet)).toException();
             }
         };
     }

@@ -34,6 +34,11 @@ public class ErrorContext implements Serializable {
     private static final ThreadLocal<ErrorContext> LOCAL = new ThreadLocal<>();
 
     /**
+     * 新行占位符
+     */
+    private static final String NEW_LINE = LINE_SEPARATOR + ">>> ";
+
+    /**
      * 错误码
      */
     private Integer code;
@@ -202,7 +207,7 @@ public class ErrorContext implements Serializable {
         if (StringUtils.isBlank(this.reason)) {
             this.reason = reason;
         } else {
-            this.reason = this.reason + LINE_SEPARATOR + reason;
+            this.reason = this.reason + NEW_LINE + reason;
         }
         return this;
     }
@@ -258,36 +263,33 @@ public class ErrorContext implements Serializable {
 
         // message
         if (message != null) {
-            ret.append(LINE_SEPARATOR);
-            ret.append(">>> ");
+            ret.append(NEW_LINE);
             ret.append(message);
         }
 
         // code
         if (code != null) {
-            ret.append(LINE_SEPARATOR);
-            ret.append(">>> The error code is ");
+            ret.append(NEW_LINE);
+            ret.append("The error code is ");
             ret.append(code);
         }
 
         // description
         if (description != null) {
-            ret.append(LINE_SEPARATOR);
-            ret.append(">>> ");
+            ret.append(NEW_LINE);
             ret.append(description);
         }
 
         // reason
         if (reason != null) {
-            ret.append(LINE_SEPARATOR);
-            ret.append(">>> ");
+            ret.append(NEW_LINE);
             ret.append(reason);
         }
 
         // cause
         if (cause != null) {
-            ret.append(LINE_SEPARATOR);
-            ret.append(">>> Cause: ");
+            ret.append(NEW_LINE);
+            ret.append("Cause: ");
             ret.append(cause);
         }
 
