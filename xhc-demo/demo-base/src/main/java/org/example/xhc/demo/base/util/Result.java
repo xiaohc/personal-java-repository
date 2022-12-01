@@ -58,8 +58,8 @@ public interface Result<T> extends Serializable {
     Boolean isEmpty();
 
     /**
-     * Result为操作成功时，返回 Result容器存储的数据（value）
-     * Result为其他情况时，抛出异常
+     * 如果 Result 为 Success，返回 Result容器存储的数据（value）
+     * 如果 Result 为 Failure 或 Empty，则抛出异常
      * <p>
      * 同： T get()
      *
@@ -68,16 +68,16 @@ public interface Result<T> extends Serializable {
     T successValue();
 
     /**
-     * Result为操作失败时，返回 返回错误上下文
-     * Result为其他情况时，抛出异常
+     * 如果 Result 为 Failure，返回 返回错误上下文
+     * 如果 Result 为 Success 或 Empty，则抛出异常
      *
      * @return 错误上下文
      */
     ErrorContext failureValue();
 
     /**
-     * Result为操作成功时，返回 Result容器存储的数据（value）
-     * Result为其他情况时，返回缺省值
+     * 如果 Result 为 Success，返回 Result容器存储的数据（value）
+     * 如果 Result 为 Failure 或 Empty，返回缺省值
      *
      * @param defaultValue 缺省值
      * @return 容器存储数据（value）
@@ -85,8 +85,8 @@ public interface Result<T> extends Serializable {
     T getOrElse(final T defaultValue);
 
     /**
-     * Result为操作成功时，返回 Result容器存储的数据（value）
-     * Result为其他情况时，返回缺省值
+     * 如果 Result 为 Success，返回 Result容器存储的数据（value）
+     * 如果 Result 为 Failure 或 Empty，返回缺省值
      *
      * @param s 缺省值生成函数
      * @return 容器存储数据（value）
@@ -94,17 +94,17 @@ public interface Result<T> extends Serializable {
     T getOrElse(final Supplier<T> s);
 
     /**
-     * Result为操作成功时，循环处理 Result容器内数据，
-     * Result为其他情况时，不做任何处理，直接处理成功
+     * 如果 Result 为 Success，循环处理 Result容器内数据，
+     * 如果 Result 为 Failure 或 Empty，这个方法什么也不做
      *
      * @param action 处理函数
      */
     void forEach(Consumer<? super T> action);
 
     /**
-     * Result为操作成功时，循环处理 Result容器内数据
-     * Result为操作失败时，直接抛出异常
-     * Result为其他情况时，不做任何处理，直接处理成功
+     * 如果 Result 为 Success，循环处理 Result容器内数据
+     * 如果 Result 为 Failure，直接抛出异常
+     * 如果 Result 为 Empty，这个方法什么也不做
      *
      * @param action 处理函数
      */
@@ -112,34 +112,34 @@ public interface Result<T> extends Serializable {
 
     /**
      * 断言操作
+     * 如果 Result 为 Success，断言成功时返回自身，如果断言失败，返回 Failure
+     * 如果 Result 为 Failure 或 Empty，忽略断言，返回自身
      *
      * @param predicate 判断函数
-     * @return 如下：
-     * Result为操作成功时，断言成功时返回自身，如果断言失败，返回 Result.failure操作失败
-     * Result为其他情况时，忽略断言，不做任何处理，返回自身
+     * @return 如上
      */
     Result<T> asserting(Predicate<? super T> predicate);
 
     /**
      * 断言操作
+     * 如果 Result 为 Success，断言成功时返回自身，如果断言失败，返回 Failure
+     * 如果 Result 为 Failure 或 Empty，忽略断言，返回自身
      *
      * @param predicate    判断函数
      * @param errorContext 错误上下文
-     * @return 如下：
-     * Result为操作成功时，断言成功时返回自身，如果断言失败，返回 Result.failure操作失败
-     * Result为其他情况时，忽略断言，不做任何处理，返回自身
+     * @return 如上
      */
     Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext);
 
     /**
      * 如果 Result 为 Failure，抛出错误
-     * 如果 Result 为 Empty 或 Success，这个方法什么也不做
+     * 如果 Result 为 Success 或 Empty，这个方法什么也不做
      */
     void orThrow();
 
     /**
      * 如果 Result 为 Failure，抛出错误
-     * 如果 Result 为 Empty 或 Success，这个方法什么也不做
+     * 如果 Result 为 Success 或 Empty，这个方法什么也不做
      *
      * @param errorContext 错误上下文
      * @apiNote {@code
@@ -149,24 +149,24 @@ public interface Result<T> extends Serializable {
     void orThrow(ErrorContext errorContext);
 
     /**
-     * Result为操作成功时，将提供的映射函数应用于容器包含值，并将映射值用 Result实例包含返回
-     * Result为操作失败时，返回一个failure实例
-     * Result为其他情况时，返回一个empty实例
+     * 如果 Result 为 Success，将提供的映射函数应用于容器包含值，并将映射值用 Success 包含返回
+     * 如果 Result 为 Failure，返回一个failure实例
+     * 如果 Result 为 Empty，返回一个empty实例
      *
      * @param <U>    映射目标类型
      * @param mapper 提供的映射函数
-     * @return 如果映射成功，Result实例值为映射数据，如果失败，Result实例为failure实例
+     * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
      */
     <U> Result<U> map(Function<? super T, U> mapper);
 
     /**
-     * Result为操作成功时，将提供的映射函数应用于容器包含值，并返回一个Result实例
-     * Result为操作失败时，返回一个failure实例
-     * Result为其他情况时，返回一个empty实例
+     * 如果 Result 为 Success，将提供的映射函数应用于容器包含值，并返回一个Result实例
+     * 如果 Result 为 Failure，返回一个failure实例
+     * 如果 Result 为 Empty，返回一个empty实例
      *
      * @param <U>    映射目标类型
      * @param mapper 提供的映射函数
-     * @return 如果映射成功，Result实例值为映射数据，如果失败，Result实例为failure实例
+     * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
      */
     <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
 
@@ -191,21 +191,21 @@ public interface Result<T> extends Serializable {
     }
 
     /**
-     * 工厂方法：返回操作成功实例
+     * 工厂方法：返回 Success 实例
      *
      * @param value 成功结果
      * @param <T>   结果类型
-     * @return 操作成功实例
+     * @return Success 实例
      */
     static <T> Result<T> success(T value) {
         return new Success<>(value);
     }
 
     /**
-     * 工厂方法： 返回操作无效实例
+     * 工厂方法： 返回 Empty 实例
      *
      * @param <T> 预期成功结果的类型
-     * @return 操作无效实例
+     * @return 操作 Empty 实例
      */
     static <T> Result<T> empty() {
         @SuppressWarnings("unchecked")
@@ -214,24 +214,24 @@ public interface Result<T> extends Serializable {
     }
 
     /**
-     * 工厂方法：返回操作失败实例
+     * 工厂方法：返回 Failure 实例
      *
      * @param errorContext 操作失败信息
      * @param <T>          预期成功结果的类型
-     * @return 操作失败实例
+     * @return Failure 实例
      */
     static <T> Result<T> failure(ErrorContext errorContext) {
         return new Failure<>(errorContext);
     }
 
     /**
-     * 工厂方法：返回操作失败实例
+     * 工厂方法：返回 Failure 实例
      * 操作失败实例转化
      *
      * @param failure 操作失败实例
      * @param <T>     预期成功结果的类型
      * @param <U>     预期成功结果的类型
-     * @return 操作失败实例
+     * @return Failure 实例
      */
     static <T, U> Result<T> failure(Failure<U> failure) {
         Objects.requireNonNull(failure, "When calling failure(Failure<U>) method, The input parameter is null");
@@ -239,13 +239,13 @@ public interface Result<T> extends Serializable {
     }
 
     /**
-     * 工厂方法：返回操作失败实例
+     * 工厂方法：返回 Failure 实例
      *
      * @param content       应答内容
      * @param reasonPattern 原因待格式化字符串
      * @param params        格式化参数（支持最后1个参数为Throwable）
      * @param <T>           预期成功结果的类型
-     * @return 操作失败实例
+     * @return Failure 实例
      */
     static <T> Result<T> failure(IResultEnum content, String reasonPattern, final Object... params) {
         Objects.requireNonNull(content, "When calling failure(IResultEnum, ...) method, The input parameter is null");
@@ -257,7 +257,7 @@ public interface Result<T> extends Serializable {
      *
      * @param value 返回结果内容
      * @param <T>   返回结果类型
-     * @return 返回操作结果实例
+     * @return 返回 Result 实例
      */
     static <T> Result<T> of(final T value) {
         return of(value, ErrorContext.of(RESULT_CONTENT_ERROR));
@@ -269,7 +269,7 @@ public interface Result<T> extends Serializable {
      * @param value        返回结果内容
      * @param errorContext 如果value为空，返回的错误上下文
      * @param <T>          返回结果类型
-     * @return 返回操作结果实例
+     * @return 返回 Result 实例
      */
     static <T> Result<T> of(final T value, final ErrorContext errorContext) {
         return of(Objects::nonNull, value, errorContext);
@@ -280,7 +280,7 @@ public interface Result<T> extends Serializable {
      *
      * @param callable 返回结果的任务
      * @param <T>      返回结果的类型
-     * @return 返回操作结果实例
+     * @return 返回 Result 实例
      */
     static <T> Result<T> of(final Callable<T> callable) {
         return of(callable, ErrorContext.of(RESULT_CONTENT_ERROR));
@@ -292,7 +292,7 @@ public interface Result<T> extends Serializable {
      * @param callable     返回结果的任务
      * @param errorContext 如果任务执行出错或执行结果为空，返回的错误上下文
      * @param <T>          返回结果的类型
-     * @return 返回操作结果实例
+     * @return 返回 Result 实例
      */
     static <T> Result<T> of(final Callable<T> callable, final ErrorContext errorContext) {
         try {
@@ -312,7 +312,7 @@ public interface Result<T> extends Serializable {
      * @param value        返回结果内容
      * @param errorContext 如果value为空，返回的错误上下文
      * @param <T>          返回结果类型
-     * @return 返回操作结果实例
+     * @return 返回 Result 实例
      */
     static <T> Result<T> of(final Predicate<T> predicate,
                             final T value,
