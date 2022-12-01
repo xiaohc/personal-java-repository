@@ -170,24 +170,14 @@ public interface Result<T> extends Serializable {
      */
     <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
 
-    Result<T> mapFailure(String s, Exception e);
-
-    Result<T> mapFailure(String s);
-
-    Result<T> mapFailure(Exception e);
-
-    Result<T> mapFailure(Result<T> v);
-
-    Result<Nothing> mapEmpty();
-
     <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
 
     <V> V foldRight(final V identity, Function<T, Function<V, V>> f);
 
     Boolean exists(Predicate<T> p);
 
-    default Result<T> orElse(Supplier<Result<T>> defaultValue) {
-        return map(x -> this).getOrElse(defaultValue);
+    default Result<T> orElse(Supplier<Result<T>> s) {
+        return map(x -> this).getOrElse(s);
     }
 
     /**
@@ -469,31 +459,6 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public Result<T> mapFailure(String f, Exception e) {
-            return this;
-        }
-
-        @Override
-        public Result<T> mapFailure(String s) {
-            return this;
-        }
-
-        @Override
-        public Result<T> mapFailure(Exception e) {
-            return this;
-        }
-
-        @Override
-        public Result<T> mapFailure(Result<T> v) {
-            return this;
-        }
-
-        @Override
-        public Result<Nothing> mapEmpty() {
-            return failure("Not empty");
-        }
-
-        @Override
         public String toString() {
             return String.format("Success(%s)", successValue().toString());
         }
@@ -599,33 +564,8 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public Result<T> mapFailure(String s, Exception e) {
-            return failure(s, e);
-        }
-
-        @Override
-        public Result<T> mapFailure(String s) {
-            return failure(s, errorContext);
-        }
-
-        @Override
-        public Result<T> mapFailure(Exception e) {
-            return failure(e.getMessage(), e);
-        }
-
-        @Override
-        public Result<T> mapFailure(Result<T> v) {
-            return v;
-        }
-
-        @Override
-        public Result<Nothing> mapEmpty() {
-            return failure(this);
-        }
-
-        @Override
         public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
-            return failure(errorContext.getMessage(), errorContext);
+            return failure(this);
         }
 
         @Override
@@ -727,31 +667,6 @@ public interface Result<T> extends Serializable {
         @Override
         public <U> Result<U> map(Function<? super T, U> mapper) {
             return empty();
-        }
-
-        @Override
-        public Result<T> mapFailure(String s, Exception e) {
-            return failure(s, e);
-        }
-
-        @Override
-        public Result<T> mapFailure(String s) {
-            return failure(s);
-        }
-
-        @Override
-        public Result<T> mapFailure(Exception e) {
-            return failure(e.getMessage(), e);
-        }
-
-        @Override
-        public Result<T> mapFailure(Result<T> v) {
-            return v;
-        }
-
-        @Override
-        public Result<Nothing> mapEmpty() {
-            return success(Nothing.INSTANCE);
         }
 
         @Override
