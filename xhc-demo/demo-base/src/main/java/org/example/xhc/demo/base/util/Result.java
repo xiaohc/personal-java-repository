@@ -20,8 +20,7 @@ import static org.example.xhc.demo.base.common.ErrorEnum.*;
 /**
  * 容器类 : 表示可能会失败的操作，其操作结果为有数据或错误
  * <p>
- * Result.Success 子类型（表示操作成功，有数据）
- * Result.Empty 子类型（表示“无结果”，即数据缺失，对应可选数据 Option.empty()，即不是操作成功，也不是操作失败）
+ * Result.Success 子类型（表示操作成功）
  * Result.Failure 子类型（表示操作失败，包含错误信息）
  * <p>
  * 容器存储元素：value数据（操作成功）
@@ -51,15 +50,8 @@ public interface Result<T> extends Serializable {
     Boolean isFailure();
 
     /**
-     * 判断操作结果
-     *
-     * @return true -操作无效，也表示没有对应业务数据
-     */
-    Boolean isEmpty();
-
-    /**
      * 如果 Result 为 Success，返回 Result容器存储的数据（value）
-     * 如果 Result 为 Failure 或 Empty，则抛出异常
+     * 如果 Result 为 Failure，则抛出异常
      *
      * @return 容器存储数据（value）
      */
@@ -67,7 +59,7 @@ public interface Result<T> extends Serializable {
 
     /**
      * 如果 Result 为 Failure，返回 返回错误上下文
-     * 如果 Result 为 Success 或 Empty，则抛出异常
+     * 如果 Result 为 Success，则抛出异常
      *
      * @return 错误上下文
      */
@@ -75,7 +67,7 @@ public interface Result<T> extends Serializable {
 
     /**
      * 如果 Result 为 Success，返回 Result容器存储的数据（value）
-     * 如果 Result 为 Failure 或 Empty，则返回空
+     * 如果 Result 为 Failure，则返回空
      *
      * @return 容器存储数据（value）
      */
@@ -83,21 +75,26 @@ public interface Result<T> extends Serializable {
 
     /**
      * 如果 Result 为 Success，返回 Result容器存储的数据（value）
-     * 如果 Result 为 Failure 或 Empty，返回缺省值
+     * 如果 Result 为 Success.EMPTY 或 Failure，返回缺省值
      *
      * @param defaultValue 缺省值
      * @return 容器存储数据（value）
      */
-    T getOrElse(final T defaultValue);
+    default T getOrElse(final T defaultValue) {
+        return get() != null ? get() : defaultValue;
+    }
 
     /**
      * 如果 Result 为 Success，返回 Result容器存储的数据（value）
-     * 如果 Result 为 Failure 或 Empty，返回缺省值
+     * 如果 Result 为 Success.EMPTY 或 Failure，返回缺省值
      *
      * @param s 缺省值生成函数
      * @return 容器存储数据（value）
      */
-    T getOrElse(final Supplier<T> s);
+    default T getOrElse(final Supplier<T> s) {
+        Objects.requireNonNull(s);
+        return get() != null ? get() : s.get();
+    }
 
     /**
      * 同 getOrElse()，返回的是 Result容器
@@ -111,8 +108,8 @@ public interface Result<T> extends Serializable {
 
     /**
      * 如果 Result 为 Success，将提供的映射函数应用于容器包含值，并将映射值用 Success 包含返回
+     * 如果 Result 为 Success.EMPTY，则返回 Success.EMPTY
      * 如果 Result 为 Failure，返回一个failure实例
-     * 如果 Result 为 Empty，返回一个empty实例
      *
      * @param <U>    映射目标类型
      * @param mapper 提供的映射函数
@@ -122,8 +119,8 @@ public interface Result<T> extends Serializable {
 
     /**
      * 如果 Result 为 Success，将提供的映射函数应用于容器包含值，并返回一个Result实例
+     * 如果 Result 为 Success.EMPTY，则返回 Success.EMPTY
      * 如果 Result 为 Failure，返回一个failure实例
-     * 如果 Result 为 Empty，返回一个empty实例
      *
      * @param <U>    映射目标类型
      * @param mapper 提供的映射函数
@@ -132,36 +129,36 @@ public interface Result<T> extends Serializable {
     <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
 
     /**
-     * 如果 Result 为 Success，循环处理 Result容器内数据，
-     * 如果 Result 为 Failure 或 Empty，这个方法什么也不做
+     * 如果存在值，则返回true ，否则返回false
      *
-     * @param action 处理函数
+     * @return 如果存在值，则返回true ，否则返回false
      */
-    void forEach(Consumer<? super T> action);
+    default boolean isPresent() {
+        return get() != null;
+    }
 
     /**
-     * 如果 Result 为 Success，循环处理 Result容器内数据
-     * 如果 Result 为 Failure，直接抛出异常
-     * 如果 Result 为 Empty，这个方法什么也不做
+     * 如果 Result 为 Success，且存在值，则使用该值调用指定的使用者，否则什么也不做
+     * 如果 Result 为 Failure，这个方法什么也不做
      *
      * @param action 处理函数
      */
-    void forEachOrThrow(Consumer<? super T> action);
+    void ifPresent(Consumer<? super T> action);
 
     /**
      * 判断操作
      * 如果 Result 为 Success，断言成功时返回 true，如果断言失败，返回 false
-     * 如果 Result 为 Failure 或 Empty，忽略断言，直接返回 false
+     * 如果 Result 为 Failure，忽略断言，直接返回 false
      *
      * @param predicate 判断函数
      * @return 如上
      */
-    Boolean exists(Predicate<T> predicate);
+    boolean exists(Predicate<T> predicate);
 
     /**
      * 断言操作
      * 如果 Result 为 Success，断言成功时返回自身，如果断言失败，返回 Failure
-     * 如果 Result 为 Failure 或 Empty，忽略断言，返回自身
+     * 如果 Result 为 Failure，忽略断言，返回自身
      *
      * @param predicate 判断函数
      * @return 如上
@@ -171,7 +168,7 @@ public interface Result<T> extends Serializable {
     /**
      * 断言操作
      * 如果 Result 为 Success，断言成功时返回自身，如果断言失败，返回 Failure
-     * 如果 Result 为 Failure 或 Empty，忽略断言，返回自身
+     * 如果 Result 为 Failure，忽略断言，返回自身
      *
      * @param predicate    判断函数
      * @param errorContext 错误上下文
@@ -180,18 +177,18 @@ public interface Result<T> extends Serializable {
     Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext);
 
     /**
+     * 如果 Result 为 Success，这个方法什么也不做
      * 如果 Result 为 Failure，抛出错误
-     * 如果 Result 为 Success 或 Empty，这个方法什么也不做
      */
     void orThrow();
 
     /**
+     * 如果 Result 为 Success，这个方法什么也不做
      * 如果 Result 为 Failure，抛出错误
-     * 如果 Result 为 Success 或 Empty，这个方法什么也不做
      *
      * @param errorContext 错误上下文
      * @apiNote {@code
-     * Result.of(var).asserting(Object::nonNull).thenThrow(VAR_IS_NULL_ERROR.as(" input data is null "));
+     * Result.of(var).asserting(Object::nonNull).orThrow(VAR_IS_NULL_ERROR.as(" input data is null "));
      * }
      */
     void orThrow(ErrorContext errorContext);
@@ -208,18 +205,18 @@ public interface Result<T> extends Serializable {
      * @return Success 实例
      */
     static <T> Result<T> success(T value) {
-        return new Success<>(value);
+        return ofNullable(value);
     }
 
     /**
-     * 工厂方法： 返回 Empty 实例
+     * 工厂方法： 返回 Success.EMPTY 实例
      *
      * @param <T> 预期成功结果的类型
-     * @return 操作 Empty 实例
+     * @return Success.EMPTY 实例
      */
     static <T> Result<T> empty() {
         @SuppressWarnings("unchecked")
-        Result<T> t = (Result<T>) Empty.INSTANCE;
+        Result<T> t = (Result<T>) Success.EMPTY;
         return t;
     }
 
@@ -382,10 +379,25 @@ public interface Result<T> extends Serializable {
 
         private static final long serialVersionUID = 4534013032218150349L;
 
+        /**
+         * Common instance for empty()
+         */
+        private static final Result<?> EMPTY = new Success<>();
+
         private final T value;
+
+        private Success() {
+            super();
+            this.value = null;
+        }
 
         private Success(T value) {
             super();
+
+            if (Objects.isNull(value)) {
+                throw RESULT_CONSTRUCTION_ERROR.as("When Success instance is constructed, the instantiation parameter is null").toException();
+            }
+
             this.value = Objects.requireNonNull(value);
         }
 
@@ -400,13 +412,8 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public Boolean isEmpty() {
-            return false;
-        }
-
-        @Override
         public T successValue() {
-            return this.value;
+            return value;
         }
 
         @Override
@@ -420,23 +427,10 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public T getOrElse(final T defaultValue) {
-            return successValue();
-        }
-
-        @Override
-        public T getOrElse(Supplier<T> s) {
-            return successValue();
-        }
-
-        @Override
-        public void forEach(Consumer<? super T> action) {
-            action.accept(this.value);
-        }
-
-        @Override
-        public void forEachOrThrow(Consumer<? super T> action) {
-            action.accept(this.value);
+        public void ifPresent(Consumer<? super T> action) {
+            if (value != null) {
+                action.accept(value);
+            }
         }
 
         @Override
@@ -470,7 +464,12 @@ public interface Result<T> extends Serializable {
         @Override
         public <U> Result<U> map(Function<? super T, ? extends U> mapper) {
             Objects.requireNonNull(mapper);
+
             try {
+                if (Objects.equals(this, EMPTY)) {
+                    return empty();
+                }
+
                 return success(mapper.apply(successValue()));
             } catch (BusinessException e) {
                 return Result.failure(e.getErrorContext());
@@ -483,6 +482,10 @@ public interface Result<T> extends Serializable {
         public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
             Objects.requireNonNull(mapper);
             try {
+                if (Objects.equals(this, EMPTY)) {
+                    return empty();
+                }
+
                 return mapper.apply(successValue());
             } catch (BusinessException e) {
                 return Result.failure(e.getErrorContext());
@@ -492,12 +495,7 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public String toString() {
-            return String.format("Success(%s)", successValue().toString());
-        }
-
-        @Override
-        public Boolean exists(Predicate<T> predicate) {
+        public boolean exists(Predicate<T> predicate) {
             return predicate.test(successValue());
         }
 
@@ -532,7 +530,7 @@ public interface Result<T> extends Serializable {
                 throw RESULT_CONSTRUCTION_ERROR.as("When failure instance is constructed, the instantiation parameter is null").toException();
             }
 
-            this.errorContext = errorContext;
+            this.errorContext = Objects.requireNonNull(errorContext);
         }
 
         @Override
@@ -543,11 +541,6 @@ public interface Result<T> extends Serializable {
         @Override
         public Boolean isFailure() {
             return true;
-        }
-
-        @Override
-        public Boolean isEmpty() {
-            return false;
         }
 
         @Override
@@ -566,19 +559,8 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public T getOrElse(final T defaultValue) {
-            return defaultValue;
-        }
-
-        @Override
-        public T getOrElse(Supplier<T> s) {
-            Objects.requireNonNull(s);
-            return s.get();
-        }
-
-        @Override
-        public void forEachOrThrow(Consumer<? super T> action) {
-            throw errorContext.toException();
+        public void ifPresent(Consumer<? super T> action) {
+            /* Do nothing */
         }
 
         @Override
@@ -612,11 +594,6 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public void forEach(Consumer<? super T> action) {
-            /* Do nothing */
-        }
-
-        @Override
         public <V> V foldLeft(V identity, Function<V, Function<T, V>> f) {
             return identity;
         }
@@ -627,135 +604,8 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public String toString() {
-            return String.format("Failure(%s)", failureValue());
-        }
-
-        @Override
-        public Boolean exists(Predicate<T> predicate) {
+        public boolean exists(Predicate<T> predicate) {
             return false;
-        }
-    }
-
-    /**
-     * 表示“无结果”，即数据缺失，对应可选数据 Option.empty()，即不是操作成功，也不是操作失败
-     *
-     * @param <T> 预期正常返回的数据类型
-     * @author xiaohongchao
-     * @since 1.0.0
-     */
-    class Empty<T> implements Result<T> {
-
-        private static final long serialVersionUID = 3499319831519197581L;
-
-        /**
-         * Common instance for empty()
-         */
-        private static final Result<?> INSTANCE = new Empty<>();
-
-        private Empty() {
-            super();
-        }
-
-        @Override
-        public Boolean isSuccess() {
-            return false;
-        }
-
-        @Override
-        public Boolean isFailure() {
-            return false;
-        }
-
-        @Override
-        public Boolean isEmpty() {
-            return true;
-        }
-
-        @Override
-        public T successValue() {
-            throw RESULT_INVOKE_ERROR.as("Method successValue() called on a Empty instance").toException();
-        }
-
-        @Override
-        public ErrorContext failureValue() {
-            throw RESULT_INVOKE_ERROR.as("Method failureValue() called on a Empty instance").toException();
-        }
-
-        @Override
-        public T get() {
-            return null;
-        }
-
-        @Override
-        public T getOrElse(final T defaultValue) {
-            return defaultValue;
-        }
-
-        @Override
-        public T getOrElse(Supplier<T> s) {
-            Objects.requireNonNull(s);
-            return s.get();
-        }
-
-        @Override
-        public void forEach(Consumer<? super T> action) {
-            /* Do nothing. */
-        }
-
-        @Override
-        public void forEachOrThrow(Consumer<? super T> action) {
-            /* Do nothing */
-        }
-
-        @Override
-        public Result<T> asserting(Predicate<? super T> predicate) {
-            return empty();
-        }
-
-        @Override
-        public Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext) {
-            return empty();
-        }
-
-        @Override
-        public void orThrow() {
-            /* Do nothing */
-        }
-
-        @Override
-        public void orThrow(ErrorContext errorContext) {
-            /* Do nothing */
-        }
-
-        @Override
-        public <U> Result<U> map(Function<? super T, ? extends U> mapper) {
-            return empty();
-        }
-
-        @Override
-        public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
-            return empty();
-        }
-
-        @Override
-        public String toString() {
-            return "Empty()";
-        }
-
-        @Override
-        public Boolean exists(Predicate<T> predicate) {
-            return false;
-        }
-
-        @Override
-        public <V> V foldLeft(V identity, Function<V, Function<T, V>> f) {
-            return identity;
-        }
-
-        @Override
-        public <V> V foldRight(V identity, Function<T, Function<V, V>> f) {
-            return identity;
         }
     }
 }
