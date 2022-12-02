@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * 测试Result类
  *
@@ -24,7 +26,18 @@ class ResultFactoryTest {
     void testOf() {
         val students = JacksonUtils.fromResource("json/student_array.json", new TypeReference<List<Student>>() {
         });
-        Result.of(students).get();
+        final List<Student> studentList = Result.of(students).get();
+
+        assertThat(studentList).isEqualTo(students);
+    }
+
+    @Test
+    void testOfNullable() {
+        final Result<Object> result = Result.ofNullable(null);
+
+        assertThat(result).isInstanceOf(Result.Success.class)
+                .isSameAs(Result.empty())
+                .hasFieldOrPropertyWithValue("value", null);
     }
 
     @Data
