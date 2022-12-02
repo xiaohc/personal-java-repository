@@ -20,9 +20,9 @@ import static org.example.xhc.demo.base.common.ErrorEnum.*;
 /**
  * 容器类 : 表示可能会失败的操作，其操作结果为有数据或错误
  * <p>
- * Success 子类型（表示操作成功、有数据）
- * Failure 子类型（表示操作失败、包含错误信息）
- * Empty 子类型（表示操作无效，即不是操作成功、也不是操作失败，也表示没有对应业务数据）
+ * Result.Success 子类型（表示操作成功，有数据）
+ * Result.Empty 子类型（表示数据缺失，对应可选数据 Option.empty()，对应数据为null，即不是操作成功，也不是操作失败）
+ * Result.Failure 子类型（表示操作失败，包含错误信息）
  * <p>
  * 容器存储元素：value数据（操作成功）
  * <p>
@@ -60,8 +60,6 @@ public interface Result<T> extends Serializable {
     /**
      * 如果 Result 为 Success，返回 Result容器存储的数据（value）
      * 如果 Result 为 Failure 或 Empty，则抛出异常
-     * <p>
-     * 同： T get()
      *
      * @return 容器存储数据（value）
      */
@@ -74,6 +72,14 @@ public interface Result<T> extends Serializable {
      * @return 错误上下文
      */
     ErrorContext failureValue();
+
+    /**
+     * 如果 Result 为 Success，返回 Result容器存储的数据（value）
+     * 如果 Result 为 Failure 或 Empty，则返回空
+     *
+     * @return 容器存储数据（value）
+     */
+    T get();
 
     /**
      * 如果 Result 为 Success，返回 Result容器存储的数据（value）
@@ -94,6 +100,38 @@ public interface Result<T> extends Serializable {
     T getOrElse(final Supplier<T> s);
 
     /**
+     * 同 getOrElse()，返回的是 Result容器
+     *
+     * @param s 缺省值生成函数
+     * @return Result容器
+     */
+    default Result<T> orElse(Supplier<Result<T>> s) {
+        return map(x -> this).getOrElse(s);
+    }
+
+    /**
+     * 如果 Result 为 Success，将提供的映射函数应用于容器包含值，并将映射值用 Success 包含返回
+     * 如果 Result 为 Failure，返回一个failure实例
+     * 如果 Result 为 Empty，返回一个empty实例
+     *
+     * @param <U>    映射目标类型
+     * @param mapper 提供的映射函数
+     * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
+     */
+    <U> Result<U> map(Function<? super T, ? extends U> mapper);
+
+    /**
+     * 如果 Result 为 Success，将提供的映射函数应用于容器包含值，并返回一个Result实例
+     * 如果 Result 为 Failure，返回一个failure实例
+     * 如果 Result 为 Empty，返回一个empty实例
+     *
+     * @param <U>    映射目标类型
+     * @param mapper 提供的映射函数
+     * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
+     */
+    <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
+
+    /**
      * 如果 Result 为 Success，循环处理 Result容器内数据，
      * 如果 Result 为 Failure 或 Empty，这个方法什么也不做
      *
@@ -109,6 +147,16 @@ public interface Result<T> extends Serializable {
      * @param action 处理函数
      */
     void forEachOrThrow(Consumer<? super T> action);
+
+    /**
+     * 判断操作
+     * 如果 Result 为 Success，断言成功时返回 true，如果断言失败，返回 false
+     * 如果 Result 为 Failure 或 Empty，忽略断言，直接返回 false
+     *
+     * @param predicate 判断函数
+     * @return 如上
+     */
+    Boolean exists(Predicate<T> predicate);
 
     /**
      * 断言操作
@@ -148,37 +196,9 @@ public interface Result<T> extends Serializable {
      */
     void orThrow(ErrorContext errorContext);
 
-    /**
-     * 如果 Result 为 Success，将提供的映射函数应用于容器包含值，并将映射值用 Success 包含返回
-     * 如果 Result 为 Failure，返回一个failure实例
-     * 如果 Result 为 Empty，返回一个empty实例
-     *
-     * @param <U>    映射目标类型
-     * @param mapper 提供的映射函数
-     * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
-     */
-    <U> Result<U> map(Function<? super T, U> mapper);
-
-    /**
-     * 如果 Result 为 Success，将提供的映射函数应用于容器包含值，并返回一个Result实例
-     * 如果 Result 为 Failure，返回一个failure实例
-     * 如果 Result 为 Empty，返回一个empty实例
-     *
-     * @param <U>    映射目标类型
-     * @param mapper 提供的映射函数
-     * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
-     */
-    <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
-
     <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
 
     <V> V foldRight(final V identity, Function<T, Function<V, V>> f);
-
-    Boolean exists(Predicate<T> p);
-
-    default Result<T> orElse(Supplier<Result<T>> s) {
-        return map(x -> this).getOrElse(s);
-    }
 
     /**
      * 工厂方法：返回 Success 实例
@@ -389,6 +409,11 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
+        public T get() {
+            return successValue();
+        }
+
+        @Override
         public T getOrElse(final T defaultValue) {
             return successValue();
         }
@@ -437,7 +462,8 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public <U> Result<U> map(Function<? super T, U> mapper) {
+        public <U> Result<U> map(Function<? super T, ? extends U> mapper) {
+            Objects.requireNonNull(mapper);
             try {
                 return success(mapper.apply(successValue()));
             } catch (BusinessException e) {
@@ -449,6 +475,7 @@ public interface Result<T> extends Serializable {
 
         @Override
         public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
+            Objects.requireNonNull(mapper);
             try {
                 return mapper.apply(successValue());
             } catch (BusinessException e) {
@@ -464,8 +491,8 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public Boolean exists(Predicate<T> p) {
-            return p.test(successValue());
+        public Boolean exists(Predicate<T> predicate) {
+            return predicate.test(successValue());
         }
 
         @Override
@@ -559,7 +586,7 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public <U> Result<U> map(Function<? super T, U> mapper) {
+        public <U> Result<U> map(Function<? super T, ? extends U> mapper) {
             return failure(this);
         }
 
@@ -574,11 +601,9 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public Boolean exists(Predicate<T> p) {
+        public Boolean exists(Predicate<T> predicate) {
             return false;
         }
-
-
     }
 
     /**
@@ -624,6 +649,11 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
+        public T get() {
+            return null;
+        }
+
+        @Override
         public T getOrElse(final T defaultValue) {
             return defaultValue;
         }
@@ -665,7 +695,7 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public <U> Result<U> map(Function<? super T, U> mapper) {
+        public <U> Result<U> map(Function<? super T, ? extends U> mapper) {
             return empty();
         }
 
@@ -680,7 +710,7 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public Boolean exists(Predicate<T> p) {
+        public Boolean exists(Predicate<T> predicate) {
             return false;
         }
 
