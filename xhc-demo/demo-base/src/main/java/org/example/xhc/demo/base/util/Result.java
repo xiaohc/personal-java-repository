@@ -278,7 +278,7 @@ public interface Result<T> extends Serializable {
      * @return 返回 Result 实例
      */
     static <T> Result<T> ofNullable(final T value) {
-        return value == null ? empty() : success(value);
+        return value == null ? empty() : new Success<>(value);
     }
 
     /**
@@ -291,6 +291,29 @@ public interface Result<T> extends Serializable {
      */
     static <T> Result<T> of(final T value, final ErrorContext errorContext) {
         return of(Objects::nonNull, value, errorContext);
+    }
+
+    /**
+     * 工厂方法
+     *
+     * @param predicate    判断函数
+     * @param value        返回结果内容
+     * @param errorContext 如果value为空，返回的错误上下文
+     * @param <T>          返回结果类型
+     * @return 返回 Result 实例
+     */
+    static <T> Result<T> of(final Predicate<T> predicate,
+                            final T value,
+                            final ErrorContext errorContext) {
+        try {
+            return predicate.test(value)
+                    ? Result.success(value)
+                    : Result.failure(errorContext);
+        } catch (BusinessException e) {
+            return Result.failure(e.getErrorContext());
+        } catch (Exception e) {
+            return Result.failure(errorContext.cause(e));
+        }
     }
 
     /**
@@ -316,29 +339,6 @@ public interface Result<T> extends Serializable {
         try {
             T value = callable.call();
             return of(value, errorContext);
-        } catch (BusinessException e) {
-            return Result.failure(e.getErrorContext());
-        } catch (Exception e) {
-            return Result.failure(errorContext.cause(e));
-        }
-    }
-
-    /**
-     * 工厂方法
-     *
-     * @param predicate    判断函数
-     * @param value        返回结果内容
-     * @param errorContext 如果value为空，返回的错误上下文
-     * @param <T>          返回结果类型
-     * @return 返回 Result 实例
-     */
-    static <T> Result<T> of(final Predicate<T> predicate,
-                            final T value,
-                            final ErrorContext errorContext) {
-        try {
-            return predicate.test(value)
-                    ? Result.success(value)
-                    : Result.failure(errorContext);
         } catch (BusinessException e) {
             return Result.failure(e.getErrorContext());
         } catch (Exception e) {
