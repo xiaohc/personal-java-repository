@@ -21,7 +21,7 @@ import static org.example.xhc.demo.base.common.ErrorEnum.*;
  * 容器类 : 表示可能会失败的操作，其操作结果为有数据或错误
  * <p>
  * Result.Success 子类型（表示操作成功，有数据）
- * Result.Empty 子类型（表示数据缺失，对应可选数据 Option.empty()，对应数据为null，即不是操作成功，也不是操作失败）
+ * Result.Empty 子类型（表示“无结果”，即数据缺失，对应可选数据 Option.empty()，即不是操作成功，也不是操作失败）
  * Result.Failure 子类型（表示操作失败，包含错误信息）
  * <p>
  * 容器存储元素：value数据（操作成功）
@@ -276,6 +276,17 @@ public interface Result<T> extends Serializable {
     /**
      * 工厂方法
      *
+     * @param value 返回结果内容
+     * @param <T>   返回结果类型
+     * @return 返回 Result 实例
+     */
+    static <T> Result<T> ofNullable(final T value) {
+        return value == null ? empty() : success(value);
+    }
+
+    /**
+     * 工厂方法
+     *
      * @param value        返回结果内容
      * @param errorContext 如果value为空，返回的错误上下文
      * @param <T>          返回结果类型
@@ -371,16 +382,11 @@ public interface Result<T> extends Serializable {
 
         private static final long serialVersionUID = 4534013032218150349L;
 
-        /**
-         * Common instance for empty()
-         */
-        public static final Result<?> EMPTY = success(null);
-
         private final T value;
 
         private Success(T value) {
             super();
-            this.value = value;
+            this.value = Objects.requireNonNull(value);
         }
 
         @Override
@@ -513,7 +519,7 @@ public interface Result<T> extends Serializable {
      * @author xiaohongchao
      * @since 1.0.0
      */
-    class Failure<T> extends Empty<T> {
+    class Failure<T> implements Result<T> {
 
         private static final long serialVersionUID = -1426284204330352085L;
 
@@ -540,6 +546,11 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
+        public Boolean isEmpty() {
+            return false;
+        }
+
+        @Override
         public T successValue() {
             throw RESULT_INVOKE_ERROR.as("Method successValue() called on a Failure instance").toException();
         }
@@ -547,6 +558,11 @@ public interface Result<T> extends Serializable {
         @Override
         public ErrorContext failureValue() {
             return this.errorContext;
+        }
+
+        @Override
+        public T get() {
+            return null;
         }
 
         @Override
@@ -596,6 +612,21 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
+        public void forEach(Consumer<? super T> action) {
+            /* Do nothing */
+        }
+
+        @Override
+        public <V> V foldLeft(V identity, Function<V, Function<T, V>> f) {
+            return identity;
+        }
+
+        @Override
+        public <V> V foldRight(V identity, Function<T, Function<V, V>> f) {
+            return identity;
+        }
+
+        @Override
         public String toString() {
             return String.format("Failure(%s)", failureValue());
         }
@@ -607,7 +638,7 @@ public interface Result<T> extends Serializable {
     }
 
     /**
-     * 表示没有对应业务数据，即不是操作成功、也不是操作失败
+     * 表示“无结果”，即数据缺失，对应可选数据 Option.empty()，即不是操作成功，也不是操作失败
      *
      * @param <T> 预期正常返回的数据类型
      * @author xiaohongchao
@@ -617,6 +648,9 @@ public interface Result<T> extends Serializable {
 
         private static final long serialVersionUID = 3499319831519197581L;
 
+        /**
+         * Common instance for empty()
+         */
         private static final Result<?> INSTANCE = new Empty<>();
 
         private Empty() {
@@ -666,7 +700,7 @@ public interface Result<T> extends Serializable {
 
         @Override
         public void forEach(Consumer<? super T> action) {
-            /* Empty. Do nothing. */
+            /* Do nothing. */
         }
 
         @Override
