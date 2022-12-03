@@ -215,7 +215,7 @@ public interface Result<T> extends Serializable {
      * @return Success 实例
      */
     static <T> Result<T> success(T value) {
-        return ofNullable(value);
+        return of(value);
     }
 
     /**
@@ -277,30 +277,7 @@ public interface Result<T> extends Serializable {
      * @return 返回 Result 实例
      */
     static <T> Result<T> of(final T value) {
-        return of(value, ErrorContext.of(RESULT_CONTENT_ERROR));
-    }
-
-    /**
-     * 工厂方法
-     *
-     * @param value 返回结果内容
-     * @param <T>   返回结果类型
-     * @return 返回 Result 实例
-     */
-    static <T> Result<T> ofNullable(final T value) {
         return value == null ? empty() : new Success<>(value);
-    }
-
-    /**
-     * 工厂方法
-     *
-     * @param value        返回结果内容
-     * @param errorContext 如果value为空，返回的错误上下文
-     * @param <T>          返回结果类型
-     * @return 返回 Result 实例
-     */
-    static <T> Result<T> of(final T value, final ErrorContext errorContext) {
-        return of(Objects::nonNull, value, errorContext);
     }
 
     /**
@@ -311,6 +288,9 @@ public interface Result<T> extends Serializable {
      * @param errorContext 如果value为空，返回的错误上下文
      * @param <T>          返回结果类型
      * @return 返回 Result 实例
+     * @apiNote {@code
+     * of(Objects::nonNull, value, errorContext);
+     * }
      */
     static <T> Result<T> of(final Predicate<T> predicate,
                             final T value,
@@ -334,7 +314,7 @@ public interface Result<T> extends Serializable {
      * @return 返回 Result 实例
      */
     static <T> Result<T> of(final Callable<T> callable) {
-        return of(callable, ErrorContext.of(RESULT_CONTENT_ERROR));
+        return of(callable, ErrorContext.of(RESULT_CREATION_ERROR));
     }
 
     /**
@@ -348,7 +328,7 @@ public interface Result<T> extends Serializable {
     static <T> Result<T> of(final Callable<T> callable, final ErrorContext errorContext) {
         try {
             T value = callable.call();
-            return of(value, errorContext);
+            return of(value);
         } catch (BusinessException e) {
             return Result.failure(e.getErrorContext());
         } catch (Exception e) {

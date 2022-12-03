@@ -27,19 +27,24 @@ public enum ErrorEnum implements IResultEnum {
     RESULT_CONSTRUCTION_ERROR(9000, "Result instance construction error"),
 
     /**
+     * Result实例创建错误
+     */
+    RESULT_CREATION_ERROR(9001, "Result instance creation error"),
+
+    /**
      * Result实例内容错误
      */
-    RESULT_CONTENT_ERROR(9001, "Result instance content error"),
+    RESULT_CONTENT_ERROR(9002, "Result instance content error"),
 
     /**
      * Result实例调用错误
      */
-    RESULT_INVOKE_ERROR(9002, "Result instance calls the wrong method"),
+    RESULT_INVOKE_ERROR(9003, "Result instance calls the wrong method"),
 
     /**
      * Result实例调用Map出错
      */
-    RESULT_MAP_ERROR(9003, "When calling method map() on Result instance, throw an exception"),
+    RESULT_MAP_ERROR(9004, "When calling method map() on Result instance, throw an exception"),
     ;
 
     /**
