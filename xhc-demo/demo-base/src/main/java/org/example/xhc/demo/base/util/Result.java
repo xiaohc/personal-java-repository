@@ -218,7 +218,7 @@ public interface Result<T> extends Serializable {
      * @return Success 实例
      */
     static <T> Result<T> success(T value) {
-        return of(value);
+        return value == null ? empty() : new Success<>(value);
     }
 
     /**
@@ -277,10 +277,10 @@ public interface Result<T> extends Serializable {
      *
      * @param value 返回结果内容
      * @param <T>   返回结果类型
-     * @return 返回 Result 实例
+     * @return 返回 Success 实例
      */
     static <T> Result<T> of(final T value) {
-        return value == null ? empty() : new Success<>(value);
+        return success(value);
     }
 
     /**
