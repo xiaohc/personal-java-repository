@@ -12,7 +12,8 @@ import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class ResultTest {
@@ -43,25 +44,11 @@ class ResultTest {
     @Test
     void testOf() {
         assertEquals("Value", Result.of("Value").get());
-        assertTrue(Result.of((Object) null) instanceof Result.Failure);
-        assertEquals("Value", Result.of("Value", ErrorContext.instance()).get());
-        assertTrue(Result.of((Object) null, ErrorContext.instance()) instanceof Result.Failure);
-        assertTrue(Result.of((Object) null, null) instanceof Result.Failure);
+        assertTrue(Result.of((Object) null) instanceof Result.Success);
     }
 
     @Test
-    void testOf2() {
-        Result<Object> actualOfResult = Result.of(ErrorContext.instance());
-        assertTrue(actualOfResult.isPresent());
-        assertNull(((ErrorContext) actualOfResult.get()).getCause());
-        assertNull(((ErrorContext) actualOfResult.get()).getReason());
-        assertNull(((ErrorContext) actualOfResult.get()).getPrevious());
-        assertEquals(9001, ((ErrorContext) actualOfResult.get()).getCode().intValue());
-        assertEquals("Result instance content error", ((ErrorContext) actualOfResult.get()).getMessage());
-    }
-
-    @Test
-    void testOf3() throws Exception {
+    void testOf2() throws Exception {
         Callable<Object> callable = (Callable<Object>) mock(Callable.class);
         when(callable.call()).thenReturn("Call");
         assertEquals("Call", Result.of(callable).get());
@@ -69,9 +56,17 @@ class ResultTest {
     }
 
     @Test
-    void testOf4() throws Exception {
+    void testOf3() throws Exception {
         Callable<Object> callable = (Callable<Object>) mock(Callable.class);
         when(callable.call()).thenThrow(new BusinessException(ErrorContext.instance()));
+        assertTrue(Result.of(callable) instanceof Result.Failure);
+        verify(callable).call();
+    }
+
+    @Test
+    void testOf4() throws Exception {
+        Callable<Object> callable = (Callable<Object>) mock(Callable.class);
+        when(callable.call()).thenThrow(new Exception("foo"));
         assertTrue(Result.of(callable) instanceof Result.Failure);
         verify(callable).call();
     }
@@ -79,21 +74,13 @@ class ResultTest {
     @Test
     void testOf5() throws Exception {
         Callable<Object> callable = (Callable<Object>) mock(Callable.class);
-        when(callable.call()).thenThrow(new Exception("foo"));
-        assertTrue(Result.of(callable) instanceof Result.Failure);
+        when(callable.call()).thenReturn(null);
+        assertTrue(Result.of(callable) instanceof Result.Success);
         verify(callable).call();
     }
 
     @Test
     void testOf6() throws Exception {
-        Callable<Object> callable = (Callable<Object>) mock(Callable.class);
-        when(callable.call()).thenReturn(null);
-        assertTrue(Result.of(callable) instanceof Result.Failure);
-        verify(callable).call();
-    }
-
-    @Test
-    void testOf7() throws Exception {
         Callable<Object> callable = (Callable<Object>) mock(Callable.class);
         when(callable.call()).thenReturn("Call");
         assertEquals("Call", Result.of(callable, ErrorContext.instance()).get());
@@ -101,7 +88,7 @@ class ResultTest {
     }
 
     @Test
-    void testOf8() throws Exception {
+    void testOf7() throws Exception {
         Callable<Object> callable = (Callable<Object>) mock(Callable.class);
         when(callable.call()).thenThrow(new BusinessException(ErrorContext.instance()));
         assertTrue(Result.of(callable, ErrorContext.instance()) instanceof Result.Failure);
@@ -109,33 +96,24 @@ class ResultTest {
     }
 
     @Test
-    void testOf9() throws Exception {
+    void testOf8() throws Exception {
         Callable<Object> callable = (Callable<Object>) mock(Callable.class);
         when(callable.call()).thenThrow(new Exception("foo"));
         ErrorContext instanceResult = ErrorContext.instance();
         Result.of(callable, instanceResult);
         verify(callable).call();
-        assertEquals("\r\n>>> Cause: java.lang.Exception: foo", instanceResult.toString());
     }
 
     @Test
-    void testOf10() throws Exception {
+    void testOf9() throws Exception {
         Callable<Object> callable = (Callable<Object>) mock(Callable.class);
         when(callable.call()).thenReturn(null);
-        assertTrue(Result.of(callable, ErrorContext.instance()) instanceof Result.Failure);
+        assertTrue(Result.of(callable, ErrorContext.instance()) instanceof Result.Success);
         verify(callable).call();
     }
 
     @Test
-    void testOf11() throws Exception {
-        Callable<Object> callable = (Callable<Object>) mock(Callable.class);
-        when(callable.call()).thenReturn(null);
-        assertTrue(Result.of(callable, null) instanceof Result.Failure);
-        verify(callable).call();
-    }
-
-    @Test
-    void testOf12() {
+    void testOf10() {
         Predicate<Object> predicate = (Predicate<Object>) mock(Predicate.class);
         when(predicate.test((Object) any())).thenReturn(true);
         assertEquals("Value", Result.of(predicate, "Value", ErrorContext.instance()).get());
@@ -143,7 +121,7 @@ class ResultTest {
     }
 
     @Test
-    void testOf13() {
+    void testOf11() {
         Predicate<Object> predicate = (Predicate<Object>) mock(Predicate.class);
         when(predicate.test((Object) any())).thenThrow(new BusinessException(ErrorContext.instance()));
         assertTrue(Result.of(predicate, "Value", ErrorContext.instance()) instanceof Result.Failure);
@@ -151,7 +129,7 @@ class ResultTest {
     }
 
     @Test
-    void testOf14() {
+    void testOf12() {
         Predicate<Object> predicate = (Predicate<Object>) mock(Predicate.class);
         when(predicate.test((Object) any())).thenReturn(true);
         assertTrue(Result.of(predicate, null, ErrorContext.instance()) instanceof Result.Success);
@@ -159,7 +137,7 @@ class ResultTest {
     }
 
     @Test
-    void testOf15() {
+    void testOf13() {
         Predicate<Object> predicate = (Predicate<Object>) mock(Predicate.class);
         when(predicate.test((Object) any())).thenReturn(false);
         assertTrue(Result.of(predicate, "Value", ErrorContext.instance()) instanceof Result.Failure);
@@ -167,17 +145,11 @@ class ResultTest {
     }
 
     @Test
-    void testOf16() {
+    void testOf14() {
         Predicate<Object> predicate = (Predicate<Object>) mock(Predicate.class);
         when(predicate.test((Object) any())).thenReturn(false);
         assertTrue(Result.of(predicate, "Value", null) instanceof Result.Failure);
         verify(predicate).test((Object) any());
-    }
-
-    @Test
-    void testOfNullable() {
-        assertEquals("Value", Result.ofNullable("Value").get());
-        assertTrue(Result.ofNullable(null) instanceof Result.Success);
     }
 
     @Test

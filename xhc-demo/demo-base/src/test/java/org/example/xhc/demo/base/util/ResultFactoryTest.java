@@ -33,7 +33,7 @@ class ResultFactoryTest {
 
     @Test
     void testOfNullable() {
-        final Result<Object> result = Result.ofNullable(null);
+        final Result<Object> result = Result.of((Object) null);
 
         assertThat(result).isInstanceOf(Result.Success.class)
                 .isSameAs(Result.empty())
