@@ -199,7 +199,7 @@ public interface Result<T> extends Serializable {
      * 如果 Result 为 Failure，抛出错误
      *
      * @param errorContext 错误上下文
-     * @return
+     * @return 返回自身
      * @apiNote {@code
      * Result.of(var).asserting(Object::nonNull).orThrow(VAR_IS_NULL_ERROR.as(" input data is null "));
      * }

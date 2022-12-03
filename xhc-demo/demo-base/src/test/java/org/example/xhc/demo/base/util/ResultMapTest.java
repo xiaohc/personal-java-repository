@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * 测试Result类
  *
@@ -30,12 +32,16 @@ class ResultMapTest {
     void map() {
         final Result<Student> studentResult = Result.of(students)
                 .map(v -> v.get(0));
+
+        assertThat(studentResult).isNotNull().isInstanceOf(Result.Success.class);
     }
 
     @Test
     void flatMap() {
         final Result<Student> studentResult = Result.of(students)
                 .flatMap(v -> Result.of(v.get(0)));
+
+        assertThat(studentResult).isNotNull().isInstanceOf(Result.Success.class);
     }
 
     @Data
