@@ -187,21 +187,24 @@ public interface Result<T> extends Serializable {
     Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext);
 
     /**
-     * 如果 Result 为 Success，这个方法什么也不做
+     * 如果 Result 为 Success，这个方法直接返回自身
      * 如果 Result 为 Failure，抛出错误
+     *
+     * @return 返回自身
      */
-    void orThrow();
+    Result<T> orThrow();
 
     /**
-     * 如果 Result 为 Success，这个方法什么也不做
+     * 如果 Result 为 Success，这个方法直接返回自身
      * 如果 Result 为 Failure，抛出错误
      *
      * @param errorContext 错误上下文
+     * @return
      * @apiNote {@code
      * Result.of(var).asserting(Object::nonNull).orThrow(VAR_IS_NULL_ERROR.as(" input data is null "));
      * }
      */
-    void orThrow(ErrorContext errorContext);
+    Result<T> orThrow(ErrorContext errorContext);
 
     <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
 
@@ -442,13 +445,13 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public void orThrow() {
-            /* Do nothing */
+        public Result<T> orThrow() {
+            return this;
         }
 
         @Override
-        public void orThrow(ErrorContext errorContext) {
-            /* Do nothing */
+        public Result<T> orThrow(ErrorContext errorContext) {
+            return this;
         }
 
         @Override
@@ -564,12 +567,12 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public void orThrow() {
+        public Result<T> orThrow() {
             throw errorContext.toException();
         }
 
         @Override
-        public void orThrow(ErrorContext errorContext) {
+        public Result<T> orThrow(ErrorContext errorContext) {
             throw errorContext.toException();
         }
 

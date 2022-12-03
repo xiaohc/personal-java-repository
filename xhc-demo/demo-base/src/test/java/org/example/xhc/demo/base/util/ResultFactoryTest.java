@@ -44,7 +44,7 @@ class ResultFactoryTest {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class Student {
+    private static class Student {
         /**
          * 学号
          */
