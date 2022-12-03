@@ -22,6 +22,7 @@ import static org.example.xhc.demo.base.common.ErrorEnum.*;
  * <p>
  * Result.Success 子类型（表示操作成功）
  * Result.Failure 子类型（表示操作失败，包含错误信息）
+ * Result.empty() 表示“无结果”，即数据缺失，对应可选数据 Option.empty()
  * <p>
  * 容器存储元素：value数据（操作成功）
  * <p>
@@ -40,14 +41,23 @@ public interface Result<T> extends Serializable {
      *
      * @return true -操作成功
      */
-    Boolean isSuccess();
+    boolean isSuccess();
 
     /**
      * 判断操作结果
      *
      * @return true - 操作失败
      */
-    Boolean isFailure();
+    boolean isFailure();
+
+    /**
+     * 判断操作结果
+     *
+     * @return true - 操作失败
+     */
+    default boolean isEmpty() {
+        return Objects.equals(Success.EMPTY, this);
+    }
 
     /**
      * 如果 Result 为 Success，返回 Result容器存储的数据（value）
@@ -402,12 +412,12 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public Boolean isSuccess() {
+        public boolean isSuccess() {
             return true;
         }
 
         @Override
-        public Boolean isFailure() {
+        public boolean isFailure() {
             return false;
         }
 
@@ -466,7 +476,7 @@ public interface Result<T> extends Serializable {
             Objects.requireNonNull(mapper);
 
             try {
-                if (Objects.equals(this, EMPTY)) {
+                if (isEmpty()) {
                     return empty();
                 }
 
@@ -482,7 +492,7 @@ public interface Result<T> extends Serializable {
         public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
             Objects.requireNonNull(mapper);
             try {
-                if (Objects.equals(this, EMPTY)) {
+                if (isEmpty()) {
                     return empty();
                 }
 
@@ -534,12 +544,12 @@ public interface Result<T> extends Serializable {
         }
 
         @Override
-        public Boolean isSuccess() {
+        public boolean isSuccess() {
             return false;
         }
 
         @Override
-        public Boolean isFailure() {
+        public boolean isFailure() {
             return true;
         }
 
