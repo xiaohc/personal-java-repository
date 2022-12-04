@@ -241,6 +241,7 @@ public interface Result<T> extends Serializable {
      * @return Failure 实例
      */
     static <T> Result<T> failure(ErrorContext errorContext) {
+        Objects.requireNonNull(errorContext, "When calling failure(ErrorContext) method, The input parameter is null");
         return new Failure<>(errorContext);
     }
 
@@ -386,11 +387,6 @@ public interface Result<T> extends Serializable {
 
         private Success(T value) {
             super();
-
-            if (Objects.isNull(value)) {
-                throw RESULT_CONSTRUCTION_ERROR.as("When Success instance is constructed, the instantiation parameter is null").toException();
-            }
-
             this.value = Objects.requireNonNull(value);
         }
 
@@ -518,11 +514,6 @@ public interface Result<T> extends Serializable {
 
         private Failure(ErrorContext errorContext) {
             super();
-
-            if (Objects.isNull(errorContext)) {
-                throw RESULT_CONSTRUCTION_ERROR.as("When failure instance is constructed, the instantiation parameter is null").toException();
-            }
-
             this.errorContext = Objects.requireNonNull(errorContext);
         }
 

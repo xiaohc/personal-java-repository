@@ -22,11 +22,6 @@ public enum ErrorEnum implements IResultEnum {
     INTERNAL_SERVER_ERROR(9999, "System internal error"),
 
     /**
-     * Result实例构建错误
-     */
-    RESULT_CONSTRUCTION_ERROR(9000, "Result instance construction error"),
-
-    /**
      * Result实例创建错误
      */
     RESULT_CREATION_ERROR(9001, "Result instance creation error"),
