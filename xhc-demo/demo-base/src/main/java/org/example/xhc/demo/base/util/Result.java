@@ -37,23 +37,33 @@ import static org.example.xhc.demo.base.common.ErrorEnum.*;
 public interface Result<T> extends Serializable {
 
     /**
-     * 判断操作结果
+     * 判断操作成功
      *
      * @return true -操作成功
      */
     boolean isSuccess();
 
     /**
-     * 判断操作结果
+     * 判断操作成功，且有操作结果
+     * 如果存在值，则返回true ，否则返回false
+     *
+     * @return 如果存在值，则返回true ，否则返回false
+     */
+    default boolean isPresent() {
+        return get() != null;
+    }
+
+    /**
+     * 判断操作失败
      *
      * @return true - 操作失败
      */
     boolean isFailure();
 
     /**
-     * 判断操作结果
+     * 判断操作成功，但“无结果”
      *
-     * @return true - 操作失败
+     * @return true -操作成功，但“无结果”
      */
     default boolean isEmpty() {
         return Objects.equals(Success.EMPTY, this);
@@ -137,15 +147,6 @@ public interface Result<T> extends Serializable {
      * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
      */
     <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
-
-    /**
-     * 如果存在值，则返回true ，否则返回false
-     *
-     * @return 如果存在值，则返回true ，否则返回false
-     */
-    default boolean isPresent() {
-        return get() != null;
-    }
 
     /**
      * 如果 Result 为 Success，且存在值，则使用该值调用指定的使用者，否则什么也不做
