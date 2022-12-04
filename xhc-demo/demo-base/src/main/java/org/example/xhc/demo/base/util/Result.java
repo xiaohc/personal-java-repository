@@ -123,7 +123,7 @@ public interface Result<T> extends Serializable {
      * @return Result容器
      */
     default Result<T> orElse(Supplier<Result<T>> s) {
-        return map(x -> this).getOrElse(s);
+        return map(v -> this).getOrElse(s);
     }
 
     /**
@@ -134,6 +134,16 @@ public interface Result<T> extends Serializable {
      * @param <U>    映射目标类型
      * @param mapper 提供的映射函数
      * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
+     * @apiNote 复合如下三个方法
+     * {@code
+     * Integer function1(String str);
+     * Long function2(Integer str);
+     * String function3(Long str);
+     * <p>
+     * Result<String> result = Result.of("test").map(Class1::function1).Map(Class2::function2).Map(Class3::function3)
+     * }
+     * 注意：一般来说，缺失数据是错误的情况，但上面处理会直接返回Result.Success.empty()而没有抛出异常，类似捕获了异常并吞掉了。
+     * 所有如果有对应要求，需要各个function自己抛出异常，或在中间穿插asserting()检查
      */
     <U> Result<U> map(Function<? super T, ? extends U> mapper);
 
@@ -145,6 +155,17 @@ public interface Result<T> extends Serializable {
      * @param <U>    映射目标类型
      * @param mapper 提供的映射函数
      * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
+     * @apiNote 复合如下三个方法
+     * 1、函数复合的流式处理
+     * {@code
+     * Result<String> function1(String str);
+     * Result<String> function2(String str);
+     * Result<String> function3(String str);
+     * <p>
+     * Result<String> result = Object1.function1("test").flatMap(Class2::function2).flatMap(Class3::function3)
+     * }
+     * 注意：一般来说，缺失数据是错误的情况，但上面处理会直接返回Result.Success.empty()而没有抛出异常，类似捕获了异常并吞掉了。
+     * 所有如果有对应要求，需要各个function自己抛出异常，或在中间穿插asserting()检查
      */
     <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
 
@@ -307,7 +328,8 @@ public interface Result<T> extends Serializable {
         } catch (BusinessException e) {
             return Result.failure(e.getErrorContext());
         } catch (Exception e) {
-            return Result.failure(errorContext.cause(e));
+            final ErrorContext error = Objects.nonNull(errorContext) ? errorContext : ErrorContext.of(RESULT_CREATION_ERROR);
+            return Result.failure(error.cause(e));
         }
     }
 
@@ -319,7 +341,7 @@ public interface Result<T> extends Serializable {
      * @return 返回 Result 实例
      */
     static <T> Result<T> of(final Callable<T> callable) {
-        return of(callable, ErrorContext.of(RESULT_CREATION_ERROR));
+        return of(callable, null);
     }
 
     /**
@@ -337,7 +359,8 @@ public interface Result<T> extends Serializable {
         } catch (BusinessException e) {
             return Result.failure(e.getErrorContext());
         } catch (Exception e) {
-            return Result.failure(errorContext.cause(e));
+            final ErrorContext error = Objects.nonNull(errorContext) ? errorContext : ErrorContext.of(RESULT_CREATION_ERROR);
+            return Result.failure(error.cause(e));
         }
     }
 
@@ -425,7 +448,7 @@ public interface Result<T> extends Serializable {
 
         @Override
         public Result<T> asserting(Predicate<? super T> predicate) {
-            return asserting(predicate, ErrorContext.of(RESULT_CONTENT_ERROR));
+            return asserting(predicate, null);
         }
 
         @Override
@@ -437,7 +460,8 @@ public interface Result<T> extends Serializable {
             } catch (BusinessException e) {
                 return Result.failure(e.getErrorContext());
             } catch (Exception e) {
-                return Result.failure(errorContext.cause(e));
+                final ErrorContext error = Objects.nonNull(errorContext) ? errorContext : ErrorContext.of(RESULT_CONTENT_ERROR);
+                return Result.failure(error.cause(e));
             }
         }
 
