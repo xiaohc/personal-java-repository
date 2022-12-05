@@ -10,10 +10,7 @@ import org.example.xhc.demo.base.exception.BusinessException;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.concurrent.Callable;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 import static org.example.xhc.demo.base.common.ErrorEnum.*;
 
@@ -190,6 +187,17 @@ public interface Result<T> extends Serializable {
     <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
 
     /**
+     * 提取 Result<Result<T>> 包含的 Result<T> 内容
+     *
+     * @param result Result<Result<T>>
+     * @param <T> 返回结果类型
+     * @return 返回 Result<T>
+     */
+    static <T> Result<T> flatten(Result<Result<T>> result) {
+        return result.flatMap(v -> v);
+    }
+
+    /**
      * 如果 Result 为 Success，且存在值，则使用该值调用指定的使用者，否则什么也不做
      * 如果 Result 为 Failure，这个方法什么也不做
      *
@@ -247,6 +255,9 @@ public interface Result<T> extends Serializable {
      * }
      */
     Result<T> orThrow(ErrorContext errorContext);
+
+
+//    <V, R> R fold(V identity, BiFunction<T, V, R> f);
 
     <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
 
@@ -392,10 +403,6 @@ public interface Result<T> extends Serializable {
             final ErrorContext error = Objects.nonNull(errorContext) ? errorContext : ErrorContext.of(RESULT_CREATION_ERROR);
             return Result.failure(error.cause(e));
         }
-    }
-
-    static <T> Result<T> flatten(Result<Result<T>> result) {
-        return result.flatMap(x -> x);
     }
 
     /**
