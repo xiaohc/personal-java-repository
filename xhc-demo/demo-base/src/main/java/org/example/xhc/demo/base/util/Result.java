@@ -256,13 +256,6 @@ public interface Result<T> extends Serializable {
      */
     Result<T> orThrow(ErrorContext errorContext);
 
-
-//    <V, R> R fold(V identity, BiFunction<T, V, R> f);
-
-    <V> V foldLeft(final V identity, Function<V, Function<T, V>> f);
-
-    <V> V foldRight(final V identity, Function<T, Function<V, V>> f);
-
     /**
      * 工厂方法：返回 Success 实例
      *
@@ -543,16 +536,6 @@ public interface Result<T> extends Serializable {
         public boolean exists(Predicate<T> predicate) {
             return predicate.test(successValue());
         }
-
-        @Override
-        public <V> V foldLeft(V identity, Function<V, Function<T, V>> f) {
-            return f.apply(identity).apply(successValue());
-        }
-
-        @Override
-        public <V> V foldRight(V identity, Function<T, Function<V, V>> f) {
-            return f.apply(successValue()).apply(identity);
-        }
     }
 
     /**
@@ -631,16 +614,6 @@ public interface Result<T> extends Serializable {
         @Override
         public <U> Result<U> flatMap(Function<? super T, Result<U>> mapper) {
             return failure(this);
-        }
-
-        @Override
-        public <V> V foldLeft(V identity, Function<V, Function<T, V>> f) {
-            return identity;
-        }
-
-        @Override
-        public <V> V foldRight(V identity, Function<T, Function<V, V>> f) {
-            return identity;
         }
 
         @Override
