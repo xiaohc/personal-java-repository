@@ -14,8 +14,10 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.example.xhc.demo.base.util.Result.success;
 
 /**
  * 测试Result类
@@ -42,6 +44,56 @@ class ResultMapTest {
                 .flatMap(v -> Result.of(v.get(0)));
 
         assertThat(studentResult).isNotNull().isInstanceOf(Result.Success.class);
+    }
+
+    @Test
+    void testCompose() {
+        Function<Integer, Integer> f1 = v -> v + 1;
+        Function<Integer, Integer> f2 = v -> v + 1;
+        Function<Integer, Integer> f3 = v -> v + 1;
+
+        Function<Integer, Integer> composeFunction = v -> f1.apply(f2.apply(f3.apply(0)));
+        final Integer ret = composeFunction.apply(0);
+        assertThat(ret).isEqualTo(3);
+    }
+
+    @Test
+    void testCompose1() {
+        final Result<String> result = Result.of("1").map(Integer::valueOf).map(Long::valueOf).map(String::valueOf);
+
+        assertThat(result).isNotNull().isInstanceOf(Result.Success.class);
+        assertThat(result.get()).isEqualTo("1");
+    }
+
+    @Test
+    void testColi() {
+        Function<Integer, Function<Integer, Function<Integer, Integer>>> add = x -> y -> z -> x + y + z;
+        final Integer ret = add.apply(3).apply(5).apply(7);
+
+        assertThat(ret).isEqualTo(15);
+    }
+
+    @Test
+    void testColi2() {
+        Result<Integer> result1 = success(1);
+        Result<Integer> result2 = success(2);
+        Result<Integer> result3 = success(3);
+        Result<Integer> result4 = success(4);
+        Result<Integer> result5 = success(5);
+
+        Result<Integer> result = result1
+                .flatMap(p1 -> result2
+                        .flatMap(p2 -> result3
+                                .flatMap(p3 -> result4
+                                        .flatMap(p4 -> result5
+                                                .map(p5 -> compute(p1, p2, p3, p4, p5))))));
+
+        assertThat(result).isNotNull().isInstanceOf(Result.Success.class);
+        assertThat(result.get()).isEqualTo(15);
+    }
+
+    private int compute(int p1, int p2, int p3, int p4, int p5) {
+        return p1 + p2 + p3 + p4 + p5;
     }
 
     @Data

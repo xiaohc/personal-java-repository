@@ -135,6 +135,7 @@ public interface Result<T> extends Serializable {
      * @param mapper 提供的映射函数
      * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
      * @apiNote 复合如下三个方法
+     * 函数复合: arg -> f3.apply(f2.apply(f1.apply(arg)))
      * {@code
      * Integer function1(String str);
      * Long function2(Integer str);
@@ -156,7 +157,7 @@ public interface Result<T> extends Serializable {
      * @param mapper 提供的映射函数
      * @return 如果映射成功，返回带映射数据的 Success，如果失败，返回 Failure
      * @apiNote 复合如下三个方法
-     * 1、函数复合的流式处理
+     * 1、函数复合: arg -> f3.apply(f2.apply(f1.apply(arg)))
      * {@code
      * Result<String> function1(String str);
      * Result<String> function2(String str);
@@ -166,6 +167,26 @@ public interface Result<T> extends Serializable {
      * }
      * 注意：一般来说，缺失数据是错误的情况，但上面处理会直接返回Result.Success.empty()而没有抛出异常，类似捕获了异常并吞掉了。
      * 所有如果有对应要求，需要各个function自己抛出异常，或在中间穿插asserting()检查
+     * 2. 柯里化多参函数: add.apply(3).apply(5)).apply(7)
+     * Function<Integer, Function<Integer, Function<Integer, Integer>>> add = x -> y -> z -> x + y + z
+     * {@code
+     * private int compute(int p1, int p2, int p3, int p4, int p5) {  return p1 + p2 + p3 + p4 + p5;  }
+     * <p>
+     * Result<Integer> result1 = success(1);
+     * Result<Integer> result2 = success(2);
+     * Result<Integer> result3 = success(3);
+     * Result<Integer> result4 = success(4);
+     * Result<Integer> result5 = success(5);
+     * <p>
+     * Result<Integer> result = result1.flatMap(p1 -> result2
+     * .flatMap(p2 -> result3
+     * .flatMap(p3 -> result4
+     * .flatMap(p4 -> result5
+     * .map(p5 -> compute(p1, p2, p3, p4, p5))))));
+     * <p>
+     * assertThat(result).isNotNull().isInstanceOf(Result.Success.class);
+     * assertThat(result.get()).isEqualTo(15);
+     * }
      */
     <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
 
