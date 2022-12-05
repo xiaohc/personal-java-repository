@@ -8,23 +8,23 @@
 
 ### 技术理解
 
-  函数式编程是面向数学的抽象，函数是指数学中的函数，表示自变量的映射，即源集（ source set ）的目标集（ target set ）之间的对应关系。
+函数式编程是面向数学的抽象，函数是指数学中的函数，表示自变量的映射，即源集（ source set ）的目标集（ target set ）之间的对应关系。
 
 > 一句话，函数式程序就是一个表达式。也就是说一个函数的值仅决定于函数参数的值，不依赖其他状态。  
-> 比如sqrt(x)函数计算x的平方根，只要x不变，不论什么时候调用，调用几次，值都是不变的。  
+> 比如sqrt(x)函数计算x的平方根，只要x不变，不论什么时候调用，调用几次，值都是不变的。
 
-  对比 <kbd>命令式编程</kbd> 和 <kbd>函数式编程</kbd>：函数式编程在解题时更抽象，更少关心具体步骤，故在求解复杂问题时更有优势
+对比 <kbd>命令式编程</kbd> 和 <kbd>函数式编程</kbd>：函数式编程在解题时更抽象，更少关心具体步骤，故在求解复杂问题时更有优势
 
 > 👉  <kbd>命令式编程</kbd>就像小学方法解数学题，正向思维一步一步算。  
 > 👉  <kbd>函数式编程</kbd>就像使用方程式解数学题，使用 y=ax+b 这种函数，用抽象来解决很复杂的问题。
 
 p.s. 技术的首要使命是管理软件的复杂度，实现方式为：模块化（分类分层管理） 和 信息隐藏（减少模块间耦合）
 
-  函数式编程其特点有：
+函数式编程其特点有：
 
 > 函数式编程就是用函数来编程， 返回结果， 没有任何副作用。  
 > 函数可以复合为新函数。  
-> 函数可以递归调用它自己，但是递归的深度受限于栈的大小。  
+> 函数可以递归调用它自己，但是递归的深度受限于栈的大小。
 
 ### lambda表达式
 
@@ -40,7 +40,7 @@ p.s. 技术的首要使命是管理软件的复杂度，实现方式为：模块
   ```
 
 > 👉  <kbd>方法引用</kbd> ` ClassName::methodName `，等价Lambda表达式，引用方法的一种语法表示，对齐C++的函数指针  
-> 👉  <kbd>Lambda</kbd> 和 <kbd>方法引用</kbd> 可以用于需要函数式接口的地方。  
+> 👉  <kbd>Lambda</kbd> 和 <kbd>方法引用</kbd> 可以用于需要函数式接口的地方。
 
 应用1：流式处理语法糖，可提升代码可读性。如下：
 
@@ -73,7 +73,9 @@ p.s. 技术的首要使命是管理软件的复杂度，实现方式为：模块
   ```
 
 ### 函数复合+多态
+
 多态高阶函数
+
   ``` java
     /* 一个多态高阶函数例子 */
     public static <T, U, V> Function<Function<U, V>, Function<Function<T, U>, Function<T, V>>> higherCompose() {
@@ -102,6 +104,12 @@ p.s. 技术的首要使命是管理软件的复杂度，实现方式为：模块
 
 ### 多参函数柯里化
 
+  ``` java
+        Function<Integer, Function<Integer, Function<Integer, Integer>>> add = x -> y -> z -> x + y + z;
+        final Integer ret = add.apply(3).apply(5).apply(7);
+
+        assertThat(ret).isEqualTo(15);
+  ```
 
 ## Stream API
 
@@ -379,8 +387,8 @@ example:
 ##### 收集器
 
 > - `Collectors.toCollection(Supplier collectionFactory)`：返回一个收集器，可将流元素转存到指定集合，collectionFactory为集合创建工厂方法
-> - `Collectors.toList()`：返回一个收集器，可将流元素转存为一个 List  
-> - `Collectors.toSet()`：返回一个收集器，可将流元素转存为一个 Set  
+> - `Collectors.toList()`：返回一个收集器，可将流元素转存为一个 List
+> - `Collectors.toSet()`：返回一个收集器，可将流元素转存为一个 Set
 > - `Collectors.joining()`：返回一个收集器，可将流元素连接成一个 String
 > - `Collectors.joining(CharSequence delimiter)`：同上，其由指定的分隔符 delimiter 分隔
 > - `Collectors.joining(CharSequence delimiter, CharSequence prefix, CharSequence suffix)`：同上，具有指定的前缀和后缀
@@ -399,7 +407,7 @@ example:
 > - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper)`：返回的Map是ConcurrentHashMap
 > - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction)`：返回的Map是ConcurrentHashMap
 > - `Collectors.toConcurrentMap(Function keyMapper, Function valueMapper,BinaryOperator mergeFunction, Supplier mapSupplier)`：返回的Map是在mapSupplier中创建的ConcurrentMap子类
- 
+
 分组收集器 ： 其根据分类函数对元素进行分组，并在Map中返回结果
 > - `Collectors.groupingBy(Function classifier)`：效果类似：groupingBy(classifier, toList())
 > - `Collectors.groupingBy(Function classifier, Collector downstream)`：其分组元素由downstream归约为值
@@ -452,7 +460,6 @@ students.stream()
       7:
       - "eva"
   ```
-
 
 ##### 定制收集器
 
