@@ -277,6 +277,16 @@ public interface Result<T> extends Serializable {
     }
 
     /**
+     * empty实例转化为 Failure实例
+     *
+     * @param errorContext 操作失败信息
+     * @return Failure 实例
+     */
+    default Result<T> emptyToFailure(ErrorContext errorContext) {
+        return isEmpty() ? failure(errorContext) : this;
+    }
+
+    /**
      * 工厂方法：返回 Failure 实例
      *
      * @param errorContext 操作失败信息
@@ -389,8 +399,16 @@ public interface Result<T> extends Serializable {
         return result.flatMap(x -> x);
     }
 
+    /**
+     * 将从 A 到 B 的函数转换为从 Result<A> 到 Result<B> 的函数
+     *
+     * @param f   从 A 到 B 的函数
+     * @param <A> 源类型
+     * @param <B> 目标类型
+     * @return 从 Result<A> 到 Result<B> 的函数
+     */
     static <A, B> Function<Result<A>, Result<B>> lift(final Function<A, B> f) {
-        return x -> x.map(f);
+        return v -> v.map(f);
     }
 
     static <A, B, C> Function<Result<A>, Function<Result<B>, Result<C>>> lift2(final Function<A, Function<B, C>> f) {
