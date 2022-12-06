@@ -6,10 +6,17 @@ package org.example.xhc.demo.base.util;
 
 import org.example.xhc.demo.base.common.IResultEnum;
 import org.example.xhc.demo.base.exception.BusinessException;
+import org.hibernate.validator.HibernateValidator;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.groups.Default;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -17,6 +24,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
+import static org.example.xhc.common.util.SetUtils.isNotOnlyNullElement;
 import static org.example.xhc.demo.base.common.ErrorEnum.*;
 
 /**
@@ -231,6 +240,29 @@ public interface Result<T> extends Serializable {
     Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext);
 
     /**
+     * JSR-303 校验实体类是否有错误
+     * <p>
+     * 如果 Result 为 Success，校验成功时返回自身，如果校验失败，返回 Failure
+     * 如果 Result 为 Failure，忽略校验，返回自身
+     *
+     * @return 如上
+     */
+    default Function<ErrorContext, Result<T>> validating() {
+        return validating(Default.class);
+    }
+
+    /**
+     * JSR-303 通过组来校验实体类是否有错误
+     * <p>
+     * 如果 Result 为 Success，校验成功时返回自身，如果校验失败，返回 Failure
+     * 如果 Result 为 Failure，忽略校验，返回自身
+     *
+     * @param groups 检验分组
+     * @return 如上
+     */
+    Function<ErrorContext, Result<T>> validating(Class<?>... groups);
+
+    /**
      * 如果 Result 为 Success，这个方法直接返回自身
      * 如果 Result 为 Failure，抛出错误
      *
@@ -441,12 +473,24 @@ public interface Result<T> extends Serializable {
 
         private static final long serialVersionUID = 4534013032218150349L;
 
+        private final T value;
+
         /**
          * Common instance for empty()
          */
         private static final Result<?> EMPTY = new Success<>();
 
-        private final T value;
+        /**
+         * Java Bean 校验器
+         */
+        private static final Validator VALIDATOR;
+
+        static {
+            ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure()
+                    .failFast(false)
+                    .buildValidatorFactory();
+            VALIDATOR = validatorFactory.getValidator();
+        }
 
         private Success() {
             super();
@@ -508,6 +552,25 @@ public interface Result<T> extends Serializable {
                 final ErrorContext error = ErrorContext.orElse(errorContext, RESULT_CONTENT_ERROR);
                 return Result.failure(error.cause(e));
             }
+        }
+
+        @Override
+        public Function<ErrorContext, Result<T>> validating(Class<?>... groups) {
+            return error -> {
+                try {
+                    Set<ConstraintViolation<T>> validatedSet = VALIDATOR.validate(successValue(), groups);
+
+                    if (isNotEmpty(validatedSet) && isNotOnlyNullElement(validatedSet)) {
+                        return failure(ErrorContext.orElse(error, RESULT_CONTENT_ERROR));
+                    }
+
+                    return this;
+                } catch (BusinessException e) {
+                    return Result.failure(e.getErrorContext());
+                } catch (Exception e) {
+                    return Result.failure(ErrorContext.orElse(error, RESULT_CONTENT_ERROR).cause(e));
+                }
+            };
         }
 
         @Override
@@ -615,6 +678,11 @@ public interface Result<T> extends Serializable {
         @Override
         public Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext) {
             return failure(this);
+        }
+
+        @Override
+        public Function<ErrorContext, Result<T>> validating(Class<?>... groups) {
+            return x -> failure(this);
         }
 
         @Override
