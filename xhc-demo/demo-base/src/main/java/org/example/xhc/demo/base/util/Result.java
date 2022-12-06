@@ -8,9 +8,14 @@ import org.example.xhc.demo.base.common.IResultEnum;
 import org.example.xhc.demo.base.exception.BusinessException;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
-import java.util.function.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static org.example.xhc.demo.base.common.ErrorEnum.*;
 
@@ -185,17 +190,6 @@ public interface Result<T> extends Serializable {
      * }
      */
     <U> Result<U> flatMap(Function<? super T, Result<U>> mapper);
-
-    /**
-     * 提取 Result<Result<T>> 包含的 Result<T> 内容
-     *
-     * @param result Result<Result<T>>
-     * @param <T> 返回结果类型
-     * @return 返回 Result<T>
-     */
-    static <T> Result<T> flatten(Result<Result<T>> result) {
-        return result.flatMap(v -> v);
-    }
 
     /**
      * 如果 Result 为 Success，且存在值，则使用该值调用指定的使用者，否则什么也不做
@@ -408,6 +402,31 @@ public interface Result<T> extends Serializable {
      */
     static <A, B> Function<Result<A>, Result<B>> lift(final Function<A, B> f) {
         return v -> v.map(f);
+    }
+
+    /**
+     * 提取 Result<Result<T>> 包含的 Result<T> 内容
+     *
+     * @param result Result<Result<T>>
+     * @param <T>    操作结果的类型
+     * @return 返回 Result<T>
+     */
+    static <T> Result<T> flatten(Result<Result<T>> result) {
+        Objects.requireNonNull(result);
+        return result.flatMap(v -> v);
+    }
+
+    /**
+     * 提取 List<Result<T>> 中值到新列表，其包含原始列表中所有值为 Success 的元素， 并忽略 Failure 和 Empty
+     * emp ty 值。
+     *
+     * @param list 原始列表
+     * @param <T>  操作结果的类型
+     * @return 返回  List<A>
+     */
+    static <T> List<T> flattenList(List<Result<T>> list) {
+        Objects.requireNonNull(list);
+        return list.stream().map(Result::get).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     /**
