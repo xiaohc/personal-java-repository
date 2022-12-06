@@ -31,6 +31,15 @@ class ResultValidateTest {
     });
 
     @Test
+    void validatingOk() {
+        final Student value = students.get(0);
+        final Result<Student> result = Result.of(value).validating().apply(RESULT_CONTENT_ERROR.as("validate error"));
+
+        assertThat(result).isInstanceOf(Result.Success.class);
+        assertThat(result.successValue()).isEqualTo(value);
+    }
+
+    @Test
     void validating() {
         final Student value = students.get(0);
         value.setName("");
