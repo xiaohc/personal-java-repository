@@ -9,7 +9,6 @@ import org.example.xhc.demo.base.exception.BusinessException;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Callable;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -150,30 +149,6 @@ class ResultTest {
         when(predicate.test((Object) any())).thenReturn(false);
         assertTrue(Result.of(predicate, "Value", null) instanceof Result.Failure);
         verify(predicate).test((Object) any());
-    }
-
-    @Test
-    void testLift2() {
-        // TODO: This test is incomplete.
-        //   Reason: R004 No meaningful assertions found.
-        //   Diffblue Cover was unable to create an assertion.
-        //   Make sure that fields modified by lift2(Function)
-        //   have package-private, protected, or public getters.
-        //   See https://diff.blue/R004 to resolve this issue.
-
-        Result.lift2((Function<Object, Function<Object, Object>>) mock(Function.class)).apply(null);
-    }
-
-    @Test
-    void testLift3() {
-        // TODO: This test is incomplete.
-        //   Reason: R004 No meaningful assertions found.
-        //   Diffblue Cover was unable to create an assertion.
-        //   Make sure that fields modified by lift3(Function)
-        //   have package-private, protected, or public getters.
-        //   See https://diff.blue/R004 to resolve this issue.
-
-        Result.lift3((Function<Object, Function<Object, Function<Object, Object>>>) mock(Function.class)).apply(null);
     }
 }
 

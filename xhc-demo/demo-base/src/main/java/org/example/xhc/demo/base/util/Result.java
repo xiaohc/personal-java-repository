@@ -350,13 +350,14 @@ public interface Result<T> extends Serializable {
                             final T value,
                             final ErrorContext errorContext) {
         try {
-            return predicate.test(value)
-                    ? Result.success(value)
-                    : Result.failure(errorContext);
+            if (predicate.test(value)) {
+                return Result.success(value);
+            }
+            return Result.failure(ErrorContext.orElse(errorContext, RESULT_CREATION_ERROR));
         } catch (BusinessException e) {
             return Result.failure(e.getErrorContext());
         } catch (Exception e) {
-            final ErrorContext error = Objects.nonNull(errorContext) ? errorContext : ErrorContext.of(RESULT_CREATION_ERROR);
+            final ErrorContext error = ErrorContext.orElse(errorContext, RESULT_CREATION_ERROR);
             return Result.failure(error.cause(e));
         }
     }
@@ -387,7 +388,7 @@ public interface Result<T> extends Serializable {
         } catch (BusinessException e) {
             return Result.failure(e.getErrorContext());
         } catch (Exception e) {
-            final ErrorContext error = Objects.nonNull(errorContext) ? errorContext : ErrorContext.of(RESULT_CREATION_ERROR);
+            final ErrorContext error = ErrorContext.orElse(errorContext, RESULT_CREATION_ERROR);
             return Result.failure(error.cause(e));
         }
     }
@@ -497,13 +498,14 @@ public interface Result<T> extends Serializable {
         @Override
         public Result<T> asserting(Predicate<? super T> predicate, ErrorContext errorContext) {
             try {
-                return predicate.test(successValue())
-                        ? this
-                        : failure(errorContext);
+                if (predicate.test(successValue())) {
+                    return this;
+                }
+                return failure(ErrorContext.orElse(errorContext, RESULT_CONTENT_ERROR));
             } catch (BusinessException e) {
                 return Result.failure(e.getErrorContext());
             } catch (Exception e) {
-                final ErrorContext error = Objects.nonNull(errorContext) ? errorContext : ErrorContext.of(RESULT_CONTENT_ERROR);
+                final ErrorContext error = ErrorContext.orElse(errorContext, RESULT_CONTENT_ERROR);
                 return Result.failure(error.cause(e));
             }
         }

@@ -157,6 +157,17 @@ public class ErrorContext implements Serializable {
     }
 
     /**
+     * 如果 errorContext 非空返回 errorContext，否则返回 ErrorContext.of(errorRecord)
+     *
+     * @param errorContext ErrorContext对象
+     * @param errorRecord  错误记录
+     * @return ErrorContext对象
+     */
+    public static ErrorContext orElse(ErrorContext errorContext, final IResultEnum errorRecord) {
+        return errorContext != null ? errorContext : ErrorContext.of(errorRecord);
+    }
+
+    /**
      * 重置原ErrorContext内容为指定内容
      *
      * @param errorRecord 错误记录
