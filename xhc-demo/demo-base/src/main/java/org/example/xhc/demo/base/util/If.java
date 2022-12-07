@@ -6,12 +6,9 @@ package org.example.xhc.demo.base.util;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
@@ -30,18 +27,6 @@ import static org.example.xhc.demo.base.common.ErrorEnum.INTERNAL_SERVER_ERROR;
  */
 public final class If {
     /**
-     * Java Bean 校验器
-     */
-    private static final Validator VALIDATOR;
-
-    static {
-        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure()
-                .failFast(false)
-                .buildValidatorFactory();
-        VALIDATOR = validatorFactory.getValidator();
-    }
-
-    /**
      * 防止实例化
      */
     private If() {
@@ -56,7 +41,8 @@ public final class If {
      * @return 校验处理
      */
     public static <T> IfHandle haveError(T t, Class<?>... groups) {
-        Set<ConstraintViolation<T>> validatedSet = VALIDATOR.validate(t, groups);
+        final Validator validator = ValidatorProvider.get();
+        Set<ConstraintViolation<T>> validatedSet = validator.validate(t, groups);
 
         return error -> {
             if (isNotEmpty(validatedSet) && isNotOnlyNullElement(validatedSet)) {

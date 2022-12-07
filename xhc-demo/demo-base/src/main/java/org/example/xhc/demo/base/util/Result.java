@@ -6,12 +6,9 @@ package org.example.xhc.demo.base.util;
 
 import org.example.xhc.demo.base.common.IResultEnum;
 import org.example.xhc.demo.base.exception.BusinessException;
-import org.hibernate.validator.HibernateValidator;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import javax.validation.groups.Default;
 import java.io.Serializable;
 import java.util.List;
@@ -480,18 +477,6 @@ public interface Result<T> extends Serializable {
          */
         private static final Result<?> EMPTY = new Success<>();
 
-        /**
-         * Java Bean 校验器
-         */
-        private static final Validator VALIDATOR;
-
-        static {
-            ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure()
-                    .failFast(false)
-                    .buildValidatorFactory();
-            VALIDATOR = validatorFactory.getValidator();
-        }
-
         private Success() {
             super();
             this.value = null;
@@ -558,7 +543,8 @@ public interface Result<T> extends Serializable {
         public Function<ErrorContext, Result<T>> validating(Class<?>... groups) {
             return error -> {
                 try {
-                    Set<ConstraintViolation<T>> validatedSet = VALIDATOR.validate(successValue(), groups);
+                    final Validator validator = ValidatorProvider.get();
+                    Set<ConstraintViolation<T>> validatedSet = validator.validate(successValue(), groups);
 
                     if (isNotEmpty(validatedSet) && isNotOnlyNullElement(validatedSet)) {
                         return failure(ErrorContext.orElse(error, RESULT_CONTENT_ERROR));
