@@ -27,6 +27,7 @@
         <commons-crypto_version>1.1.0</commons-crypto_version>
         <guava_version>31.1-jre</guava_version>
         <jackson_version>2.13.4</jackson_version>
+        <mybatis_version>3.5.2</mybatis_version>
         <hibernate-validator_version>6.2.5.Final</hibernate-validator_version>
         <javax.el_version>3.0.0</javax.el_version>
         <swagger_version>3.0.0</swagger_version>
@@ -90,6 +91,11 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis_version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
