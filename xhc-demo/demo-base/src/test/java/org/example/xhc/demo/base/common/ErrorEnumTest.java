@@ -50,7 +50,7 @@ class ErrorEnumTest {
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
-                LINE_SEPARATOR + ">>> The error code is 9999" +
+                LINE_SEPARATOR + ">>> The error code is BASE-COMM-999" +
                 LINE_SEPARATOR + ">>> 随机读取文件错误： 期望 success， 实际 failed" +
                 LINE_SEPARATOR + ">>> Cause: java.io.FileNotFoundException: \\error.file (系统找不到指定的文件。)");
 //        Optional<IRecordable> iErrorContext = REQUEST_ERROR.assertIsTrue(1 == 1);

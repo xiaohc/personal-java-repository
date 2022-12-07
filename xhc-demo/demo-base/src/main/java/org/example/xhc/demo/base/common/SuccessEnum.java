@@ -19,13 +19,13 @@ public enum SuccessEnum implements IResultEnum {
     /**
      * 处理成功
      */
-    SUCCESS(0, "success"),
+    SUCCESS("0", "success"),
     ;
 
     /**
      * 应答码
      */
-    private final Integer code;
+    private final String code;
 
     /**
      * 应答消息

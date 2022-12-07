@@ -47,7 +47,7 @@ class ResultValidateTest {
 
         assertThat(result).isInstanceOf(Result.Failure.class);
         assertThat(result.isFailure()).isTrue();
-        assertThat(result.failureValue().getCode()).isEqualTo(9002);
+        assertThat(result.failureValue().getCode()).isEqualTo("BASE-COMM-902");
     }
 
     @Test
@@ -56,7 +56,7 @@ class ResultValidateTest {
 
         assertThat(result).isInstanceOf(Result.Failure.class);
         assertThat(result.isFailure()).isTrue();
-        assertThat(result.failureValue().getCode()).isEqualTo(9002);
+        assertThat(result.failureValue().getCode()).isEqualTo("BASE-COMM-902");
     }
 
     @Data

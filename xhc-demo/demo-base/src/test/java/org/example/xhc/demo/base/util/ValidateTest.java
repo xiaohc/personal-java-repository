@@ -38,7 +38,7 @@ class ValidateTest {
         BusinessException exception = assertThrows(BusinessException.class, validate);
 
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
-                LINE_SEPARATOR + ">>> The error code is 9999" +
+                LINE_SEPARATOR + ">>> The error code is BASE-COMM-999" +
                 LINE_SEPARATOR + ">>> test" +
                 LINE_SEPARATOR + ">>> JSR-303 bean validation failed, details are as follows:" +
                 LINE_SEPARATOR + ">>>     ValidateTest.RequestDTO(ip=null, requestTime=null)" +

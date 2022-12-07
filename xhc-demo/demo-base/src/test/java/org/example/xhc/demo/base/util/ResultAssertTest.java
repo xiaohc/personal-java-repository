@@ -51,7 +51,7 @@ class ResultAssertTest {
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> Result instance content error" +
-                LINE_SEPARATOR + ">>> The error code is 9002");
+                LINE_SEPARATOR + ">>> The error code is BASE-COMM-902");
     }
 
     @Test
@@ -60,7 +60,7 @@ class ResultAssertTest {
 
         BusinessException exception = assertThrows(BusinessException.class, validate);
         assertThat(exception).hasMessage(LINE_SEPARATOR + ">>> System internal error" +
-                LINE_SEPARATOR + ">>> The error code is 9999" +
+                LINE_SEPARATOR + ">>> The error code is BASE-COMM-999" +
                 LINE_SEPARATOR + ">>> 测试断言");
     }
 

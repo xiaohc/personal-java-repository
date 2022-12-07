@@ -41,7 +41,7 @@ public class ErrorContext implements Serializable {
     /**
      * 错误码
      */
-    private Integer code;
+    private String code;
 
     /**
      * 错误消息

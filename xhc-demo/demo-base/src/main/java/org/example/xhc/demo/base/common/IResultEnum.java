@@ -16,11 +16,14 @@ import java.io.Serializable;
  */
 public interface IResultEnum extends Serializable {
     /**
-     * 获取标识码
+     * 获取应答标识码
+     * 组成结构：
+     * 正常码：0
+     * 异常码：4位业务域简码 + 4位服务简码 + 3位流水号
      *
      * @return 标识码
      */
-    Integer getCode();
+    String getCode();
 
     /**
      * 获取描述信息
