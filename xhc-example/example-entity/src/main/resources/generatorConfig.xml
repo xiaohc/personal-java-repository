@@ -31,7 +31,7 @@
         </javaTypeResolver>
 
         <!-- targetPackage 文件生成在指定包下，targetProject 路径-->
-        <javaModelGenerator targetPackage="org.example.xhc.dao" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="org.example.xhc.entity" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
