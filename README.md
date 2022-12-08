@@ -40,7 +40,8 @@ personal-java-repository
 | Seata                  | 全局事务管理框架        |        | [官网](https://github.com/seata/seata)                      |
 | JDK                    | Java开发包            | 1.8    | [下载地址](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) |
 
-- `Spring Cloud`和`Spring Boot`之间的依赖关系：[JSON文档](https://start.spring.io/actuator/info)
+- `Spring Cloud`和`Spring Boot`之间的依赖关系：[JSON文档](https://start.spring.io/actuator/info)  
+- 金融级系统不建议使用`Hutool`（非千锤百炼代码，部分实现不够严谨），供参考。
 
 #### 数据中间件
 
@@ -110,8 +111,8 @@ personal-java-repository
 | GenerateAllSetter     | 编码效率  |   一键生成所有setter方法                                                 |
 | GsonFormatPlus        | 编码效率  |   一键根据json文本生成java类                                             |
 | Java bean to json     | 编码效率  |   一键根据java类生成json文本                                             |
-| MyBatisX              | 编码效率  |   数据库操作增强                                                         |
-| MyBatisCodeHelperPro  | 编码效率  |   数据库操作增强                                                         |
+| MyBatisX              | 编码效率  |   数据库操作增强（自动生成代码有依赖三方，金融级系统不建议使用其自动生成的代码）                                                         |
+| EasyCode-MybatisCodeHelper  | 编码效率  |   自动生成entity、DAO、Mapper文件（无侵入）                                                         |
 | CamelCase             | 编码效率  |   代码的大小写切换                                                       |
 | String Manipulation   | 编码效率  |   字符串操作增强                                                         |
 | Diffblue cover        | 编码效率  |   自动生成单元测试                                                       |
