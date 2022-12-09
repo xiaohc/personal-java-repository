@@ -19,6 +19,8 @@
         <commentGenerator>
             <property name="addRemarkComments" value="true"/>
             <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <!--            <property name="suppressAllComments" value="true"/>-->
         </commentGenerator>
 
         <!-- 数据库连接信息 -->
@@ -49,13 +51,20 @@
 
 
         <!-- domainObjectName 即生成后entity的名字 -->
-        <table tableName="sms_coupon" domainObjectName="Coupon"/>
+        <table tableName="sms_coupon" domainObjectName="Coupon"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
         <table tableName="oms_order" domainObjectName="Order">
             <generatedKey column="id" sqlStatement="DB2" identity="true"/>
             <columnRenamingRule searchString="^receiver_" replaceString="rcv_"/>
             <columnOverride column="create_time" property="createDate"/>
             <ignoreColumn column="modify_time"/>
         </table>
+
         <table tableName="cms_subject" domainObjectName="subject">
             <domainObjectRenamingRule searchString="^Sys" replaceString=""/>
             <columnRenamingRule searchString="_count$" replaceString="_cnt"/>
