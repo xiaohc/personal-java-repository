@@ -9,10 +9,11 @@
 
 <generatorConfiguration>
     <!-- mysql-connector-java 版本需要与pom中引得版本一致 -->
-    <classPathEntry location="C:\Users\xiaohongchao\.m2\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
+    <classPathEntry
+            location="C:\Users\xiaohongchao\.m2\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
 
     <context id="generateMyBatisFile" targetRuntime="MyBatis3Simple">
-<!--    <context id="generateMyBatisFile" targetRuntime="MyBatis3">-->
+        <!--    <context id="generateMyBatisFile" targetRuntime="MyBatis3">-->
 
         <!-- 不加注释，因为默认注释是英文的 -->
         <commentGenerator>
@@ -31,7 +32,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <!-- targetPackage 文件生成在指定包下，targetProject 路径-->
+        <!-- targetPackage 文件生成在指定包下，targetProject 为生成路径-->
         <javaModelGenerator targetPackage="org.example.xhc.entity" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -41,13 +42,26 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="org.example.xhc.dao" targetProject="src/main/java">
+        <javaClientGenerator targetPackage="org.example.xhc.dao" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
+
         <!-- domainObjectName 即生成后entity的名字 -->
         <table tableName="sms_coupon" domainObjectName="Coupon"/>
-        <table tableName="oms_order" domainObjectName="Order"/>
+        <table tableName="oms_order" domainObjectName="Order">
+            <generatedKey column="id" sqlStatement="DB2" identity="true"/>
+            <columnRenamingRule searchString="^receiver_" replaceString="rcv_"/>
+            <columnOverride column="create_time" property="createDate"/>
+            <ignoreColumn column="modify_time"/>
+        </table>
+        <table tableName="cms_subject" domainObjectName="subject">
+            <domainObjectRenamingRule searchString="^Sys" replaceString=""/>
+            <columnRenamingRule searchString="_count$" replaceString="_cnt"/>
+            <ignoreColumnsByRegex pattern="(?i)category_.*">
+                <except column="category_id"/>
+            </ignoreColumnsByRegex>
+        </table>
 
     </context>
 </generatorConfiguration>
