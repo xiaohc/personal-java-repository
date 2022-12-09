@@ -11,7 +11,8 @@
     <!-- mysql-connector-java 版本需要与pom中引得版本一致 -->
     <classPathEntry location="C:\Users\xiaohongchao\.m2\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
 
-    <context id="DB2Tables" targetRuntime="MyBatis3">
+    <context id="generateMyBatisFile" targetRuntime="MyBatis3Simple">
+<!--    <context id="generateMyBatisFile" targetRuntime="MyBatis3">-->
 
         <!-- 不加注释，因为默认注释是英文的 -->
         <commentGenerator>
@@ -45,7 +46,7 @@
         </javaClientGenerator>
 
         <!-- domainObjectName 即生成后entity的名字 -->
-        <table tableName="sms_coupon" domainObjectName="Category"/>
+        <table tableName="sms_coupon" domainObjectName="Coupon"/>
         <table tableName="oms_order" domainObjectName="Order"/>
 
     </context>
