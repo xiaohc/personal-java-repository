@@ -30,6 +30,7 @@
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
+            <property name="useJSR310Types" value="true"/>
         </javaTypeResolver>
 
         <!-- targetPackage 文件生成在指定包下，targetProject 为生成路径-->
