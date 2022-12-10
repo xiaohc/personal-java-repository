@@ -16,7 +16,7 @@
     </parent>
 
     <groupId>org.example.xhc.example</groupId>
-    <artifactId>example-entity</artifactId>
+    <artifactId>example-mybatis-generator</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>

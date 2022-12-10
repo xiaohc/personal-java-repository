@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>example-entity</module>
+        <module>example-mybatis-generator</module>
         <module>example-stream</module>
     </modules>
 
