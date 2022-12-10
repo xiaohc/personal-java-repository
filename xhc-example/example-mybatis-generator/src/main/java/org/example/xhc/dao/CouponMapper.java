@@ -5,6 +5,11 @@ import org.example.xhc.entity.Coupon;
 
 import java.util.List;
 
+/**
+ * sms_coupon
+ * @author xiaohongchao
+ * @since 1.0.0
+ */
 @Mapper
 public interface CouponMapper {
     int deleteByPrimaryKey(Long id);

@@ -1,9 +1,15 @@
 package org.example.xhc.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.example.xhc.entity.subject;
 
+import java.util.List;
+
+/**
+ * cms_subject
+ * @author xiaohongchao
+ * @since 1.0.0
+ */
 @Mapper
 public interface subjectMapper {
     int deleteByPrimaryKey(Long id);

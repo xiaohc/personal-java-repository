@@ -1,9 +1,15 @@
 package org.example.xhc.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.example.xhc.entity.Order;
 
+import java.util.List;
+
+/**
+ * oms_order
+ * @author xiaohongchao
+ * @since 1.0.0
+ */
 @Mapper
 public interface OrderMapper {
     int deleteByPrimaryKey(Long id);

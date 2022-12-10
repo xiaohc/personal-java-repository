@@ -37,16 +37,16 @@ public class LombokPlugin extends PluginAdapter {
         return true;
     }
 
-    private void addFileHeader(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        topLevelClass.addJavaDocLine("/**");
+    private void addFileHeader(JavaElement element, IntrospectedTable introspectedTable) {
+        element.addJavaDocLine("/**");
 
-        addJavaDocLineOnElement(topLevelClass, introspectedTable.getRemarks());
+        addJavaDocLineOnElement(element, introspectedTable.getRemarks());
 
-        topLevelClass.addJavaDocLine(" * " + introspectedTable.getFullyQualifiedTable());
-        topLevelClass.addJavaDocLine(" * @author xiaohongchao");
-        topLevelClass.addJavaDocLine(" * @since 1.0.0");
+        element.addJavaDocLine(" * " + introspectedTable.getFullyQualifiedTable());
+        element.addJavaDocLine(" * @author xiaohongchao");
+        element.addJavaDocLine(" * @since 1.0.0");
 
-        topLevelClass.addJavaDocLine(" */");
+        element.addJavaDocLine(" */");
     }
 
     private void addLombokContent(TopLevelClass topLevelClass) {
@@ -77,6 +77,8 @@ public class LombokPlugin extends PluginAdapter {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper"));
         // 添加Mapper的注解
         interfaze.addAnnotation("@Mapper");
+        // 添加文件头注释
+        addFileHeader(interfaze, introspectedTable);
         return true;
     }
 
