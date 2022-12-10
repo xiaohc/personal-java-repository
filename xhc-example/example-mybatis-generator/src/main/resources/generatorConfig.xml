@@ -27,6 +27,7 @@
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
 
+        <!-- 插件设置 -->
         <!-- 生成的 POJO 实体类实现java.io.Serializable接口 -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <!-- 生成的 POJO 实体类中使用lombok注解-->
@@ -34,7 +35,7 @@
             <property name="hasLombok" value="true"/>
         </plugin>
 
-        <!-- 不加注释，因为默认注释是英文的 -->
+        <!-- 注释设置 -->
         <commentGenerator>
             <!-- 将数据库中表的字段描述信息添加到注释 -->
             <property name="addRemarkComments" value="true"/>
@@ -51,6 +52,7 @@
                         password="20140120">
         </jdbcConnection>
 
+        <!-- 字段转化设置 -->
         <javaTypeResolver>
             <!--  true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型
                   false：默认,
