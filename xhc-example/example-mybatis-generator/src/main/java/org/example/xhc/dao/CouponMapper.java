@@ -1,8 +1,7 @@
 package org.example.xhc.dao;
 
-import org.example.xhc.entity.Coupon;
-
 import java.util.List;
+import org.example.xhc.entity.Coupon;
 
 public interface CouponMapper {
     /**
