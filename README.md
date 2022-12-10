@@ -11,8 +11,8 @@ personal-java-repository
 ├── xhc-parent   -- 统一的Maven父类，统一管理第三方软件版本
 ├── xhc-common   -- 通用代码
 ├── xhc-example  -- 范例代码
-│   ├── example-entity    -- DAO实体演示范例
-│   ├── example-stream    -- Stream演示范例
+│   ├── example-mybatis-generator    -- DAO实体演示范例
+│   ├── example-stream               -- Stream演示范例
 ├── xhc-demo     -- 演示项目
 │   ├── demo-parent    -- DEMO服务的统一Maven父类
 │   ├── demo-base      -- DEMO服务的基础件
