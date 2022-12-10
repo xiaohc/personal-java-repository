@@ -15,6 +15,11 @@
     <context id="generateMyBatisFile" targetRuntime="MyBatis3Simple">
         <!--    <context id="generateMyBatisFile" targetRuntime="MyBatis3">-->
 
+        <!-- 实体类中使用lombok注解-->
+        <plugin type="org.mybatis.generator.plugins.LombokPlugin">
+            <property name="hasLombok" value="true"/>
+        </plugin>
+
         <!-- 不加注释，因为默认注释是英文的 -->
         <commentGenerator>
             <property name="addRemarkComments" value="true"/>
