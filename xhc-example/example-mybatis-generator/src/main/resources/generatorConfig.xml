@@ -81,12 +81,7 @@
 
 
         <!-- domainObjectName 即生成后entity的名字 -->
-        <table tableName="sms_coupon" domainObjectName="Coupon"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
+        <table tableName="sms_coupon" domainObjectName="Coupon"/>
 
         <table tableName="oms_order" domainObjectName="Order">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
