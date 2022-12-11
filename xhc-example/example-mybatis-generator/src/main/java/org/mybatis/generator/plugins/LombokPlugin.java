@@ -11,6 +11,7 @@ import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.internal.util.StringUtility;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 使用方法：
@@ -72,6 +73,18 @@ public class LombokPlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean modelSetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) { // 不生成getter
+        // 是否生成 Setter 方法
+        return !isHasLombok();
+    }
+
+    @Override
+    public boolean modelGetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) { // 不生成setter
+        // 是否生成 Getter 方法
+        return !isHasLombok();
+    }
+
+    @Override
     public boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
         // 添加Mapper的import
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper"));
@@ -83,17 +96,90 @@ public class LombokPlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean modelSetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) { // 不生成getter
-        return !isHasLombok();
+    public boolean clientInsertMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 添加 insert 方法注释
+        method.addJavaDocLine("/**");
+        method.addJavaDocLine(" * 插入数据");
+        method.addJavaDocLine(" * ");
+        method.addJavaDocLine(" * @param row 待插入数据");
+        method.addJavaDocLine(" * @return 插入成功行数");
+        method.addJavaDocLine(" */");
+        return true;
     }
 
     @Override
-    public boolean modelGetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) { // 不生成setter
-        return !isHasLombok();
+    public boolean clientSelectAllMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 添加 selectAll 方法注释
+        method.addJavaDocLine("/**");
+        method.addJavaDocLine(" * 查询当前业务所有数据");
+        method.addJavaDocLine(" * ");
+        method.addJavaDocLine(" * @return 当前业务所有数据内容");
+        method.addJavaDocLine(" */");
+        return true;
     }
 
+    @Override
+    public boolean clientSelectByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 添加 selectByPrimaryKey 方法注释
+        method.addJavaDocLine("/**");
+        method.addJavaDocLine(" * 按主键查询数据");
+        method.addJavaDocLine(" * ");
+        method.addJavaDocLine(" * @param id 待查询数据的主键");
+        method.addJavaDocLine(" * @return 当前业务数据内容");
+        method.addJavaDocLine(" */");
+        return true;
+    }
+
+    @Override
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 添加 updateByPrimaryKey 方法注释
+        method.addJavaDocLine("/**");
+        method.addJavaDocLine(" * 按主键更新数据");
+        method.addJavaDocLine(" * ");
+        method.addJavaDocLine(" * @param row 待更新数据内容");
+        method.addJavaDocLine(" * @return 更新成功行数");
+        method.addJavaDocLine(" */");
+        return true;
+    }
+
+    @Override
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 添加 updateByPrimaryKey 方法注释
+        method.addJavaDocLine("/**");
+        method.addJavaDocLine(" * 按主键更新数据");
+        method.addJavaDocLine(" * ");
+        method.addJavaDocLine(" * @param row 待更新数据内容");
+        method.addJavaDocLine(" * @return 更新成功行数");
+        method.addJavaDocLine(" */");
+        return true;
+    }
+
+    @Override
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable) {
+        // 添加 deleteByPrimaryKey 方法注释
+        method.addJavaDocLine("/**");
+        method.addJavaDocLine(" * 按主键删除数据");
+        method.addJavaDocLine(" * ");
+        method.addJavaDocLine(" * @param id 待删除数据的主键");
+        method.addJavaDocLine(" * @return 删除成功行数");
+        method.addJavaDocLine(" */");
+        return true;
+    }
+
+    /**
+     * 读取配置参数：是否启用 Lombok 注解
+     *
+     * <plugin type="org.mybatis.generator.plugins.LombokPlugin">
+     * <property name="hasLombok" value="true"/>
+     * </plugin>
+     *
+     * @return true - 启用， false- 不启用（默认）
+     */
     private boolean isHasLombok() {
-        return Boolean.parseBoolean(properties.getProperty("hasLombok", "false"));
+        return Optional.ofNullable(properties)
+                .map(v -> v.getProperty("hasLombok"))
+                .map(Boolean::parseBoolean)
+                .orElse(false);
     }
 
     private void addJavaDocLineOnElement(JavaElement element, String remarks) {
