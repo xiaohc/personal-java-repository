@@ -44,6 +44,7 @@ public class LombokPlugin extends PluginAdapter {
         addJavaDocLineOnElement(element, introspectedTable.getRemarks());
 
         element.addJavaDocLine(" * " + introspectedTable.getFullyQualifiedTable());
+        element.addJavaDocLine(" * ");
         element.addJavaDocLine(" * @author xiaohongchao");
         element.addJavaDocLine(" * @since 1.0.0");
 
