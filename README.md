@@ -15,7 +15,7 @@ personal-java-repository
 │   ├── example-stream               -- Stream演示范例
 ├── xhc-demo     -- 演示项目
 │   ├── demo-parent    -- DEMO服务的统一Maven父类
-│   ├── demo-base      -- DEMO服务的基础件
+│   ├── demo-base      -- DEMO服务的基础件（重点Result容器）
 │   ├── demo-provider  -- 服务提供者
 └   └── demo-consumer  -- 服务消费者
 ```
