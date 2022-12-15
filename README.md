@@ -31,7 +31,7 @@ personal-java-repository
 | Spring Cloud Alibaba   | 微服务框架             | 2021.0.4.0 | [官网](https://github.com/alibaba/spring-cloud-alibaba)     |
 | Spring Security Oauth2 | 认证和授权框架          |        | [官网](https://spring.io/projects/spring-security-oauth)    |
 | MyBatis                | ORM框架               | 3.5.2  | [官网](https://mybatis.org/mybatis-3/zh/index.html)      |
-| MyBatisGenerator       | 数据层代码生成          |        | [官网](https://mybatis.org/generator/)         |
+| MyBatisGenerator       | 数据层代码生成          | 1.4.1  | [官网](https://mybatis.org/generator/)         |
 | PageHelper             | MyBatis物理分页插件     |        | [官网](http://git.oschina.net/free/Mybatis_PageHelper)      |
 | Swagger                | 文档生产工具            | 3.0.0 |      |
 | Druid                  | 数据库连接池            |        | [官网](https://github.com/alibaba/druid)                    |
