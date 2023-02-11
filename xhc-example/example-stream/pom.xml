@@ -19,15 +19,10 @@
     <artifactId>example-stream</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
-    <properties>
-        <xhc-common_version>1.0.0-SNAPSHOT</xhc-common_version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.example.xhc</groupId>
             <artifactId>xhc-common</artifactId>
-            <version>${xhc-common_version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
