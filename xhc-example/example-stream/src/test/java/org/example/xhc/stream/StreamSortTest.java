@@ -7,7 +7,7 @@ package org.example.xhc.stream;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.val;
 import org.example.xhc.common.util.JacksonUtils;
-import org.example.xhc.entity.Student;
+import org.example.xhc.stream.entity.Student;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;

@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.xhc.entity.type.SexEnum;
+import org.example.xhc.stream.entity.type.SexEnum;
 
 import java.time.LocalDateTime;
 
