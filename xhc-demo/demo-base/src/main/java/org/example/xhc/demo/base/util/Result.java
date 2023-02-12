@@ -4,6 +4,7 @@
 
 package org.example.xhc.demo.base.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.example.xhc.demo.base.common.IResultEnum;
 import org.example.xhc.demo.base.exception.BusinessException;
 
@@ -57,6 +58,7 @@ public interface Result<T> extends Serializable {
      *
      * @return 如果存在值，则返回true ，否则返回false
      */
+    @JsonIgnore
     default boolean isPresent() {
         return get() != null;
     }
@@ -66,6 +68,7 @@ public interface Result<T> extends Serializable {
      *
      * @return true - 操作失败
      */
+    @JsonIgnore
     boolean isFailure();
 
     /**
@@ -73,6 +76,7 @@ public interface Result<T> extends Serializable {
      *
      * @return true -操作成功，但“无结果”
      */
+    @JsonIgnore
     default boolean isEmpty() {
         return Objects.equals(Success.EMPTY, this);
     }
@@ -100,6 +104,16 @@ public interface Result<T> extends Serializable {
      * @return 容器存储数据（value）
      */
     T get();
+
+    /**
+     * 如果 Result 为 Success，返回 Result容器存储的数据（value）
+     * 如果 Result 为 Failure，则返回空
+     *
+     * @return 容器存储数据（value）
+     */
+    default T getData() {
+        return get();
+    }
 
     /**
      * 如果 Result 为 Success，返回 Result容器存储的数据（value）
