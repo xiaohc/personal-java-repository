@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.val;
 import org.example.xhc.common.util.JacksonUtils;
 import org.example.xhc.stream.entity.Student;
+import org.example.xhc.stream.entity.type.SexEnum;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -32,6 +33,7 @@ class StreamFilterTest {
         val ret =
                 students.stream()
                         .filter(this::isSevenYearOld)
+                        .filter(this::isMale)
                         .collect(toList());
 
         val str = JacksonUtils.toYaml(ret);
@@ -41,5 +43,9 @@ class StreamFilterTest {
     private boolean isSevenYearOld(Student student) {
         return student != null
                 && Objects.equals(student.getAge(), 7);
+    }
+
+    private boolean isMale(Student v) {
+        return SexEnum.MALE.equals(v.getSex());
     }
 }
